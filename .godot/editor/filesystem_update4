@@ -1,0 +1,5 @@
+res://Entities/Player/player.tscn
+res://Common/Components/FollowCamera.gd
+res://Common/Components/TransitionCamera.gd
+res://Common/FiniteStateMachine/Finite_State_machine.gd
+res://Common/FiniteStateMachine/State.gd
