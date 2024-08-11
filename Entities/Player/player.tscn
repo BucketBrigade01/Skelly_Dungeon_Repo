@@ -1,9 +1,19 @@
-[gd_scene load_steps=36 format=3 uid="uid://bgjok2jf65yne"]
+[gd_scene load_steps=46 format=3 uid="uid://bgjok2jf65yne"]
 
 [ext_resource type="Script" path="res://Entities/Player/Scripts/player.gd" id="1_rqppq"]
 [ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="2_pmmbf"]
 [ext_resource type="Script" path="res://Common/Components/Cameras/FollowCamera.gd" id="3_7gq3q"]
 [ext_resource type="Script" path="res://Common/Components/Cameras/TransitionCamera.gd" id="4_rgvow"]
+[ext_resource type="Script" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="5_pq454"]
+[ext_resource type="Script" path="res://Entities/Player/States/Idle.gd" id="6_5rrt8"]
+[ext_resource type="Script" path="res://Entities/Player/States/Fall.gd" id="7_etom1"]
+[ext_resource type="Script" path="res://Entities/Player/States/Jump.gd" id="8_ssifo"]
+[ext_resource type="Script" path="res://Entities/Player/States/Walk.gd" id="9_yn2dp"]
+[ext_resource type="Script" path="res://Entities/Player/Boost.gd" id="10_k0tat"]
+[ext_resource type="Script" path="res://Entities/Player/States/Hover.gd" id="11_rj1gi"]
+[ext_resource type="Script" path="res://Entities/Player/States/WallJump.gd" id="12_iguxa"]
+[ext_resource type="Script" path="res://Entities/Player/Dying.gd" id="13_kbokf"]
+[ext_resource type="Script" path="res://Entities/Player/States/Shoot.gd" id="14_eja27"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f1nm4"]
 size = Vector2(10, 18)
@@ -136,7 +146,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_nehyo")
 }],
 "loop": true,
-"name": &"boost",
+"name": &"charge",
 "speed": 5.0
 }, {
 "frames": [{
@@ -256,13 +266,15 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_rqppq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 7)
 shape = SubResource("RectangleShape2D_f1nm4")
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="HitBox" type="Area2D" parent="." groups=["Player"]]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(-1.5, 7.5)
@@ -271,13 +283,14 @@ debug_color = Color(0.886789, 0.266542, 0.502231, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wfwjy")
-animation = &"idle"
+animation = &"charge"
 autoplay = "idle"
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(0, 10)
 rotation = -1.5708
 target_position = Vector2(0, 13)
+collide_with_areas = true
 
 [node name="FollowCamera" type="Camera2D" parent="."]
 script = ExtResource("3_7gq3q")
@@ -285,22 +298,54 @@ script = ExtResource("3_7gq3q")
 [node name="TransitionCamera" type="Camera2D" parent="."]
 script = ExtResource("4_rgvow")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("5_pq454")
+initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine"]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+script = ExtResource("6_5rrt8")
+character_body = NodePath("../..")
+animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Fall" type="Node" parent="StateMachine"]
+[node name="Fall" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+script = ExtResource("7_etom1")
+character_body = NodePath("../..")
+animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Jump" type="Node" parent="StateMachine"]
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+script = ExtResource("8_ssifo")
+character_body = NodePath("../..")
+animated_sprite = NodePath("../../AnimatedSprite2D")
+JUMP_HORIZONTAL_SPEED = 20.0
+MAX_HORIZONTAL_JUMP_SPEED = 80.0
 
-[node name="Walk" type="Node" parent="StateMachine"]
+[node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+script = ExtResource("9_yn2dp")
+character_body = NodePath("../..")
+animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Boost" type="Node" parent="StateMachine"]
+[node name="Boost" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+script = ExtResource("10_k0tat")
+character_body = NodePath("../..")
+animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Hover" type="Node" parent="StateMachine"]
+[node name="Hover" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+script = ExtResource("11_rj1gi")
+character_body = NodePath("../..")
+animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="WallJump" type="Node" parent="StateMachine"]
+[node name="WallJump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+script = ExtResource("12_iguxa")
+character_body = NodePath("../..")
+animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Dying" type="Node" parent="StateMachine"]
+[node name="Dying" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+script = ExtResource("13_kbokf")
+character_body = NodePath("../..")
+animated_sprite = NodePath("../../AnimatedSprite2D")
 
 [node name="Shoot" type="Node" parent="StateMachine"]
+script = ExtResource("14_eja27")
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

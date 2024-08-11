@@ -53,14 +53,14 @@ func _process(delta):
 			# We subtract from the x of our local position to account for 0 index
 			if normal.x == 1:
 				local_position.x -= 1
-			if tile_map.get_cell_tile_data(0, local_position) is TileData:
+			if tile_map.get_cell_tile_data(1, local_position) is TileData:
 				var data = tile_map.get_cell_tile_data(0, local_position)
 				can_walljump = true
 			else:
 				can_walljump = false
 	else: 
 		can_walljump = false
-		
+	print(can_walljump)
 # Check if raycast is colliding
 func is_near_wall():
 	return ray_cast.is_colliding() 
@@ -71,11 +71,6 @@ func _is_crouched(message : String):
 		crouched = message
 	if message == "uncrouched":
 		crouched = message
-
-# Used for the Energy bar to communicate with Player of animation state
-func _on_chargebar_energy_animation(frame, animation):
-	Utils.player_animation_frame = int(frame)
-	Utils.player_animation = animation
 
 # Extra jump detection for hitbox for bodys entered
 func _on_hit_box_body_entered(body):
@@ -92,3 +87,8 @@ func _on_hit_box_area_entered(area):
 		is_dying = true
 	if area.is_in_group("Lava"):
 		is_dying = true
+
+# Used for the Energy bar to communicate with Player of animation state
+func _on_charge_bar_energy_animation(frame, animation):
+	Utils.player_animation_frame = int(frame)
+	Utils.player_animation = animation
