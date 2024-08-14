@@ -62,6 +62,7 @@ func enter():
 	animated_sprite.play("cling")
 	
 func exit():
+	character_body.previous_state = "walljump"
 	timer.stop()
 	animated_sprite.stop()
 	

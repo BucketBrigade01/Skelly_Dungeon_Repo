@@ -63,6 +63,7 @@ func enter():
 	animated_sprite.play("charge")
 	
 func exit():
+	character_body.previous_state = "boost"
 	animated_sprite.stop()
 
 func get_gravity() -> float:

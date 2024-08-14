@@ -1,3 +1,6 @@
+res://Entities/Damagables/Projectiles
+res://Entities/Player/Assets
+res://Entities/Tile_Map
 res://Entities/Damagables/Lava
 res://UI/Charge_Bar/Scripts
 res://UI/Charge_Bar/Assets
@@ -6,7 +9,6 @@ res://Common/FiniteStateMachine
 res://Entities/Player/States
 res://Entities/Player
 res://Common/Components
-res://Entities/Player/Assets
 C:/Program Files/Aseprite
 res://Utilities
 res://Entities/Player/Scripts

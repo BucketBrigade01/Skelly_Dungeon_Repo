@@ -60,7 +60,6 @@ func _process(delta):
 				can_walljump = false
 	else: 
 		can_walljump = false
-	print(can_walljump)
 # Check if raycast is colliding
 func is_near_wall():
 	return ray_cast.is_colliding() 

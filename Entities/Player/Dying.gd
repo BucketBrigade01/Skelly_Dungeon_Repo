@@ -23,6 +23,7 @@ func enter():
 	get_reset_timer()
 	
 func exit():
+	character_body.previous_state = "dying"
 	animated_sprite.stop()
 
 func get_reset_timer():

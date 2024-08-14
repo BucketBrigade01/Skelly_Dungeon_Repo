@@ -81,6 +81,10 @@ func on_physics_process(delta : float):
 	if character_body.is_dying:
 		transition.emit("dying")
 	
+	# TRANSITION TO SHOOT STATE
+	if GameInput.shoot_input():
+		transition.emit("Shoot")
+	
 func enter():
 	crouched.emit("uncrouched")
 	coyote_jump = true
@@ -88,6 +92,7 @@ func enter():
 	animated_sprite.play("jump")
 	
 func exit():
+	character_body.previous_state = "jump"
 	coyote_jump = false
 	animated_sprite.stop()
 

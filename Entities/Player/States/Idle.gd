@@ -40,8 +40,9 @@ func on_physics_process(delta : float):
 	if character_body.is_dying:
 		transition.emit("dying")
 	
-	if GameInput.aim_input():
-		transition.emit("StandningAim")
+	# TRANSITION TO SHOOT STATE
+	if GameInput.shoot_input():
+		transition.emit("Shoot")
 	
 func enter():
 	crouched.emit("uncrouched")

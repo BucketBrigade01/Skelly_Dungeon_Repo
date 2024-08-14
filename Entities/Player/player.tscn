@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://bgjok2jf65yne"]
+[gd_scene load_steps=48 format=3 uid="uid://bgjok2jf65yne"]
 
 [ext_resource type="Script" path="res://Entities/Player/Scripts/player.gd" id="1_rqppq"]
 [ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="2_pmmbf"]
@@ -44,6 +44,14 @@ region = Rect2(144, 0, 16, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_2q3x4"]
 atlas = ExtResource("2_pmmbf")
 region = Rect2(160, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sr6e5"]
+atlas = ExtResource("2_pmmbf")
+region = Rect2(176, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_acjek"]
+atlas = ExtResource("2_pmmbf")
+region = Rect2(192, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hch5s"]
 atlas = ExtResource("2_pmmbf")
@@ -147,7 +155,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"charge",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -166,9 +174,15 @@ animations = [{
 }],
 "loop": true,
 "name": &"fall",
-"speed": 5.0
+"speed": 8.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sr6e5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_acjek")
+}],
 "loop": true,
 "name": &"hover",
 "speed": 5.0
@@ -228,7 +242,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"lava_death",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -245,7 +259,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"spike_death",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -262,12 +276,15 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_rqppq")
+
+[node name="ProjectileSpawner" type="Marker2D" parent="."]
+position = Vector2(4, 7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 7)
@@ -283,8 +300,9 @@ debug_color = Color(0.886789, 0.266542, 0.502231, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wfwjy")
-animation = &"charge"
+animation = &"walk"
 autoplay = "idle"
+frame_progress = 0.587144
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(0, 10)
@@ -293,6 +311,7 @@ target_position = Vector2(0, 13)
 collide_with_areas = true
 
 [node name="FollowCamera" type="Camera2D" parent="."]
+enabled = false
 script = ExtResource("3_7gq3q")
 
 [node name="TransitionCamera" type="Camera2D" parent="."]
@@ -344,8 +363,11 @@ script = ExtResource("13_kbokf")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Shoot" type="Node" parent="StateMachine"]
+[node name="Shoot" type="Node" parent="StateMachine" node_paths=PackedStringArray("projectile_spawner", "character_body", "animated_sprite")]
 script = ExtResource("14_eja27")
+projectile_spawner = NodePath("../../ProjectileSpawner")
+character_body = NodePath("../..")
+animated_sprite = NodePath("../../AnimatedSprite2D")
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
