@@ -1,5 +1,5 @@
-res://Entities/Damagables/Projectiles
 res://Entities/Player/Assets
+res://Entities/Damagables/Projectiles
 res://Entities/Tile_Map
 res://Entities/Damagables/Lava
 res://UI/Charge_Bar/Scripts

@@ -22,25 +22,25 @@ region = Rect2(112, 80, 16, 16)
 atlas = ExtResource("1_7sijh")
 region = Rect2(128, 80, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r54sp"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3ten"]
 atlas = ExtResource("1_7sijh")
-region = Rect2(144, 80, 16, 16)
+region = Rect2(150, 80, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c62f7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2lus2"]
 atlas = ExtResource("1_7sijh")
-region = Rect2(160, 80, 16, 16)
+region = Rect2(166, 80, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lbqck"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4taj"]
 atlas = ExtResource("1_7sijh")
-region = Rect2(176, 80, 16, 16)
+region = Rect2(182, 80, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_74reh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax35r"]
 atlas = ExtResource("1_7sijh")
-region = Rect2(192, 80, 16, 16)
+region = Rect2(198, 80, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rlyn2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_db81o"]
 atlas = ExtResource("1_7sijh")
-region = Rect2(208, 80, 16, 16)
+region = Rect2(214, 80, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kit4e"]
 animations = [{
@@ -63,19 +63,19 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r54sp")
+"texture": SubResource("AtlasTexture_w3ten")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_c62f7")
+"texture": SubResource("AtlasTexture_2lus2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lbqck")
+"texture": SubResource("AtlasTexture_r4taj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_74reh")
+"texture": SubResource("AtlasTexture_ax35r")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rlyn2")
+"texture": SubResource("AtlasTexture_db81o")
 }],
 "loop": false,
 "name": &"wall_hit",
@@ -92,7 +92,6 @@ shape = SubResource("CircleShape2D_s74uc")
 sprite_frames = SubResource("SpriteFrames_kit4e")
 animation = &"in_air"
 autoplay = "in_air"
-frame_progress = 0.618454
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
