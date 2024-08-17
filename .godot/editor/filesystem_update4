@@ -1,2 +1,15 @@
 res://Stages/world_1_level_1.tscn
 res://Entities/Damagables/Projectiles/simple_projectile.tscn
+res://Entities/Damagables/Spikes/spikes_floor_double.tscn
+res://Entities/Damagables/Spikes/spikes_floor_single.tscn
+res://Entities/Damagables/Spikes/spikes_cieling_single.tscn
+res://Entities/Player/player.tscn
+res://Entities/Player/Dying.gd
+res://Entities/Damagables/Spikes/spikes_cieling_double.tscn
+res://Entities/Player/Scripts/player.gd
+res://Entities/Birds/LazerBird/lazer_bird.tscn
+res://Entities/Birds/LazerBird/Scripts/Idle.gd
+res://Entities/Birds/LazerBird/Scripts/Hatching.gd
+res://Entities/Birds/LazerBird/Scripts/Flying.gd
+res://Entities/Birds/LazerBird/Scripts/lazer_bird.gd
+res://Entities/Birds/LazerBird/Scripts/IdleHatch.gd

@@ -4,7 +4,7 @@ signal crouched
 
 @export var character_body : CharacterBody2D
 @export var animated_sprite : AnimatedSprite2D
-@export var timer : float = 2.0
+@export var timer : float = 1.0
 
 const GRAVITY = 700
 

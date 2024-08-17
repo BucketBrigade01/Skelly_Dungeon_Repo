@@ -53,14 +53,12 @@ func _process(delta):
 			# We subtract from the x of our local position to account for 0 index
 			if normal.x == 1:
 				local_position.x -= 1
+			# This is where we get out tileData	
 			if tile_map.get_cell_tile_data(1, local_position) is TileData:
-				var data = tile_map.get_cell_tile_data(0, local_position)
-				can_walljump = true
-			else:
-				can_walljump = false
-	else: 
-		can_walljump = false
-# Check if raycast is colliding
+				var data = tile_map.get_cell_tile_data(1, local_position)
+				var custom_data = data.get_custom_data("walljump")
+				can_walljump = custom_data
+				
 func is_near_wall():
 	return ray_cast.is_colliding() 
 	

@@ -16,10 +16,10 @@
 [ext_resource type="Script" path="res://Entities/Player/States/Shoot.gd" id="14_eja27"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f1nm4"]
-size = Vector2(10, 18)
+size = Vector2(10, 19)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nwly3"]
-size = Vector2(7, 17)
+size = Vector2(7, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p2awl"]
 atlas = ExtResource("2_pmmbf")
@@ -256,6 +256,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2v6cx")
+}, {
+"duration": 1.0,
+"texture": null
 }],
 "loop": false,
 "name": &"spike_death",
@@ -287,22 +290,21 @@ script = ExtResource("1_rqppq")
 position = Vector2(4, 7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 7)
+position = Vector2(-1, 6.5)
 shape = SubResource("RectangleShape2D_f1nm4")
 
 [node name="HitBox" type="Area2D" parent="." groups=["Player"]]
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(-1.5, 7.5)
+position = Vector2(-1.5, 6)
 shape = SubResource("RectangleShape2D_nwly3")
 debug_color = Color(0.886789, 0.266542, 0.502231, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wfwjy")
-animation = &"walk"
+animation = &"spike_death"
 autoplay = "idle"
-frame_progress = 0.587144
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(0, 10)
@@ -315,6 +317,9 @@ enabled = false
 script = ExtResource("3_7gq3q")
 
 [node name="TransitionCamera" type="Camera2D" parent="."]
+position = Vector2(77, -53)
+limit_smoothed = true
+position_smoothing_enabled = true
 script = ExtResource("4_rgvow")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]

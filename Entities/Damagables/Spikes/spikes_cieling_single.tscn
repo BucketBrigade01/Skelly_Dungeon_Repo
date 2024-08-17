@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvn67o6bq6ms"]
+
+[ext_resource type="Texture2D" uid="uid://04ibgk5m67jv" path="res://Entities/Damagables/Spikes/Assets/spikes-assets.aseprite" id="1_pima1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x07jm"]
+size = Vector2(12, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k5x1m"]
+size = Vector2(14, 6)
+
+[node name="SpikesCielingSingle" type="StaticBody2D" groups=["Spikes"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5.5)
+shape = SubResource("RectangleShape2D_x07jm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_pima1")
+region_enabled = true
+region_rect = Rect2(0, 15, 16, 17)
+
+[node name="HitBox" type="Area2D" parent="." groups=["Spikes"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_k5x1m")
+debug_color = Color(0.768754, 0.429873, 0.328386, 0.42)
