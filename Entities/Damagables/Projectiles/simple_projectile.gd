@@ -18,6 +18,13 @@ func _on_body_entered(body):
 	if body is TileMap:
 		in_air = false
 		animated_sprite.play("wall_hit")
+
 		
 func _on_animated_sprite_2d_animation_finished():
 	queue_free()
+
+
+func _on_area_entered(area):
+	if area.is_in_group("LazerBird"):
+		in_air = false
+		animated_sprite.play("wall_hit")

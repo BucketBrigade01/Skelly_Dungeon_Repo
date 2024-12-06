@@ -1,21 +1,28 @@
 extends State
+class_name BirdFlying
 
-signal crouched
+@export var bird : LazerBird
+@export var animation_sprite : AnimatedSprite2D
+@export var speed : int
+@export var ray_cast : RayCast2D
 
-@export var character_body : CharacterBody2D
-@export var animated_sprite : AnimatedSprite2D
-
-func on_process(delta : float):
-	pass
-	
 func on_physics_process(delta : float):
-	var position_difference = character_body.target.global_position - character_body.global_position
-	print(position_difference)
-	
+	var difference = bird.target.global_position - bird.global_position
+	if difference.length() < 80:
+		bird.velocity = difference * speed * delta
+		if difference.x > 0:
+			animation_sprite.flip_h = false
+		else:
+			animation_sprite.flip_h = true
+	else:
+		bird.velocity.y = -speed
+		if ray_cast.is_colliding():
+			bird.velocity = Vector2.ZERO
+			transition.emit("idlehatched")
+			
+	bird.move_and_slide()
 func enter():
-	animated_sprite.play("flying")
+	animation_sprite.play("flying")
 	
 func exit():
-	animated_sprite.stop()
-	
-
+	animation_sprite.stop()

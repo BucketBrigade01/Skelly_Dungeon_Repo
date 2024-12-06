@@ -1,44 +1,14 @@
-[gd_scene load_steps=67 format=3 uid="uid://dci0t6k8mxkjm"]
+[gd_scene load_steps=54 format=3 uid="uid://dci0t6k8mxkjm"]
 
 [ext_resource type="Script" path="res://Entities/Birds/LazerBird/Scripts/lazer_bird.gd" id="1_u0e1u"]
 [ext_resource type="Texture2D" uid="uid://c4gs5j2jmgn8o" path="res://Entities/Birds/LazerBird/Assets/laserbird-Sheet.png" id="1_xoqgb"]
-[ext_resource type="Script" path="res://Common/Resources/Enemy_Stats.gd" id="2_og48n"]
 [ext_resource type="Texture2D" uid="uid://3bxs5fjdq7v7" path="res://Entities/Birds/LazerBird/Assets/egg-Sheet.png" id="2_wmmn3"]
 [ext_resource type="Texture2D" uid="uid://c8ie2yxclu32s" path="res://Entities/Birds/LazerBird/Assets/idle-hatched.png" id="3_6halc"]
-[ext_resource type="Shader" uid="uid://chjc4wcw4160e" path="res://Entities/Birds/LazerBird/Shader/Hit_Animation.tres" id="3_llqq3"]
-[ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="4_xuqut"]
 [ext_resource type="Script" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="4_yta5y"]
 [ext_resource type="Script" path="res://Entities/Birds/LazerBird/Scripts/Idle.gd" id="5_dnmeh"]
 [ext_resource type="Script" path="res://Entities/Birds/LazerBird/Scripts/Hatch.gd" id="7_cgsci"]
 [ext_resource type="Script" path="res://Entities/Birds/LazerBird/Scripts/IdleHatched.gd" id="8_7lkxc"]
 [ext_resource type="Script" path="res://Entities/Birds/LazerBird/Scripts/Flying.gd" id="8_pvc8w"]
-[ext_resource type="Script" path="res://Entities/Birds/LazerBird/Scripts/Dead.gd" id="10_lbiv8"]
-
-[sub_resource type="Resource" id="Resource_0f1in"]
-script = ExtResource("2_og48n")
-attack = 1
-health = 3
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1wlu8"]
-shader = ExtResource("3_llqq3")
-shader_parameter/enable = false
-shader_parameter/tint = Color(1, 1, 1, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e38sn"]
-atlas = ExtResource("4_xuqut")
-region = Rect2(0, 64, 16, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pe1ai"]
-atlas = ExtResource("4_xuqut")
-region = Rect2(16, 64, 16, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1i57s"]
-atlas = ExtResource("4_xuqut")
-region = Rect2(32, 64, 16, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4at7s"]
-atlas = ExtResource("4_xuqut")
-region = Rect2(48, 64, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5wsp1"]
 atlas = ExtResource("1_xoqgb")
@@ -208,23 +178,6 @@ region = Rect2(0, 0, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_e38sn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pe1ai")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1i57s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4at7s")
-}],
-"loop": false,
-"name": &"death",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_5wsp1")
 }, {
 "duration": 1.0,
@@ -371,80 +324,30 @@ animations = [{
 radius = 4.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d4biu"]
-radius = 5.0
+radius = 6.0
 
-[sub_resource type="Animation" id="Animation_1xm43"]
-resource_name = "hit"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [false, true, false, true, false]
-}
-
-[sub_resource type="Animation" id="Animation_rdbgx"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_wgedu"]
-_data = {
-"RESET": SubResource("Animation_rdbgx"),
-"hit": SubResource("Animation_1xm43")
-}
-
-[node name="LazerBird" type="CharacterBody2D" node_paths=PackedStringArray("animation_player") groups=["LazerBird"]]
+[node name="LazerBird" type="CharacterBody2D" groups=["LazerBird"]]
 collision_layer = 4
-collision_mask = 33
+collision_mask = 0
 script = ExtResource("1_u0e1u")
-stats = SubResource("Resource_0f1in")
-animation_player = NodePath("")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_1wlu8")
 sprite_frames = SubResource("SpriteFrames_srbww")
-animation = &"death"
+animation = &"idle_hatched"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_eibqy")
 
 [node name="HurtBox" type="Area2D" parent="." groups=["LazerBird"]]
-visible = false
 collision_layer = 4
-collision_mask = 34
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_d4biu")
 debug_color = Color(0.794749, 0.307929, 0.742482, 0.42)
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(0, -7)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_wgedu")
-}
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_yta5y")
@@ -465,16 +368,10 @@ script = ExtResource("8_7lkxc")
 bird = NodePath("../..")
 animation_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Flying" type="Node" parent="StateMachine" node_paths=PackedStringArray("bird", "animation_sprite", "ray_cast")]
+[node name="Flying" type="Node" parent="StateMachine" node_paths=PackedStringArray("bird", "animation_sprite")]
 script = ExtResource("8_pvc8w")
 bird = NodePath("../..")
 animation_sprite = NodePath("../../AnimatedSprite2D")
 speed = 30
-ray_cast = NodePath("../../RayCast2D")
 
-[node name="Dead" type="Node" parent="StateMachine"]
-script = ExtResource("10_lbiv8")
-
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Hatch" method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

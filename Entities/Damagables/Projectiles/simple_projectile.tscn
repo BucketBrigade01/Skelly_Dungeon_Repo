@@ -82,7 +82,9 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="SimpleProjectile" type="Area2D"]
+[node name="SimpleProjectile" type="Area2D" groups=["Bullet"]]
+collision_layer = 32
+collision_mask = 5
 script = ExtResource("1_a5jjj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -93,5 +95,6 @@ sprite_frames = SubResource("SpriteFrames_kit4e")
 animation = &"in_air"
 autoplay = "in_air"
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
