@@ -27,4 +27,3 @@ func exit():
 	character_body.previous_state = "shoot"
 	animated_sprite.stop()
 	
-

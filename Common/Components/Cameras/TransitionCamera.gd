@@ -17,4 +17,3 @@ func _process(delta):
 func _update_screen(new_screen : Vector2):
 	current_screen = new_screen
 	global_position = current_screen * SCREEN_SIZE + SCREEN_SIZE * 0.5
-

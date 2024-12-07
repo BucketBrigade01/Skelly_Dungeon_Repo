@@ -14,4 +14,3 @@ func _process(_delta):
 		limit_left_val = parent_screen.x * SCREEN_SIZE.x
 		entered = true
 	limit_left = limit_left_val
-

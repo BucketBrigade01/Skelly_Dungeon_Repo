@@ -66,4 +66,3 @@ func exit():
 	timer.stop()
 	animated_sprite.stop()
 	
-

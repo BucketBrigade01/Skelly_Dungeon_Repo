@@ -9,8 +9,7 @@ func on_process(delta : float):
 	pass
 	
 func enter():
-	bird.dead = true
+	pass
 	
 func exit():
-	animation_sprite.stop()
-
+	pass

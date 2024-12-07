@@ -1,8 +1,8 @@
-res://Entities/Player/Assets
+res://Entities/Birds/LazerBird/Assets
 res://Entities/Birds/LazerBird/Shader
 res://Entities/Birds/LazerBird/Scripts
+res://Entities/Player/Assets
 res://Entities/Birds/LazerBird
-res://Entities/Birds/LazerBird/Assets
 res://Entities/Damagables/Spikes
 res://Entities/Damagables/Projectiles
 res://Entities/Tile_Map
