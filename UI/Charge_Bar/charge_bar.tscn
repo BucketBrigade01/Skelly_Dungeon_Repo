@@ -272,6 +272,7 @@ animations = [{
 }]
 
 [node name="ChargeBar" type="CanvasLayer"]
+visible = false
 script = ExtResource("1_6i0m4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -279,5 +280,3 @@ position = Vector2(44, 8)
 sprite_frames = SubResource("SpriteFrames_myh0n")
 animation = &"decharge"
 autoplay = "empty"
-frame = 15
-frame_progress = 1.0

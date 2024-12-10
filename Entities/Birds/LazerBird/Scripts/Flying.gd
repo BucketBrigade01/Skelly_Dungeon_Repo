@@ -5,7 +5,7 @@ class_name BirdFlying
 @export var animation_sprite : AnimatedSprite2D
 @export var speed : int
 @export var ray_cast : RayCast2D
-@export var lazer : Lazer
+@export var lazer : LazerBeam
 @export var upward_speed : int
 
 func on_physics_process(delta : float):

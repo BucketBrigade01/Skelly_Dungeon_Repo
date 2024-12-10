@@ -86,7 +86,6 @@ func on_physics_process(delta : float):
 		transition.emit("Shoot")
 	
 func enter():
-	crouched.emit("uncrouched")
 	coyote_jump = true
 	buffer_jump = false
 	animated_sprite.play("jump")

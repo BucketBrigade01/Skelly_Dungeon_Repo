@@ -45,7 +45,6 @@ func on_physics_process(delta : float):
 		transition.emit("Shoot")
 	
 func enter():
-	crouched.emit("uncrouched")
 	animated_sprite.play("idle")
 	
 func exit():

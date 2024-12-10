@@ -63,4 +63,3 @@ func exit():
 func get_hover_timer():
 	await get_tree().create_timer(hover_timer).timeout
 	can_hover = false
-

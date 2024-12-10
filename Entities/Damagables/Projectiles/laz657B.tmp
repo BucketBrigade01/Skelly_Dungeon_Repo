@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://dcqfsr421wedc"]
+
+[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/Scripts/lazer.gd" id="1_v5tfu"]
+[ext_resource type="Script" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="2_bcvju"]
+[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/Scripts/idle.gd" id="3_877il"]
+[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/Scripts/chargin.gd" id="3_s76lv"]
+[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/Scripts/fire.gd" id="4_53edv"]
+[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/Scripts/fade.gd" id="5_ymljo"]
+
+[node name="Lazer" type="RayCast2D"]
+enabled = false
+script = ExtResource("1_v5tfu")
+
+[node name="Line2D" type="Line2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+width = 1.0
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_bcvju")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("lazer", "line")]
+script = ExtResource("3_877il")
+lazer = NodePath("../..")
+line = NodePath("../../Line2D")
+
+[node name="Charging" type="Node" parent="StateMachine" node_paths=PackedStringArray("lazer", "line")]
+script = ExtResource("3_s76lv")
+lazer = NodePath("../..")
+line = NodePath("../../Line2D")
+
+[node name="Fire" type="Node" parent="StateMachine" node_paths=PackedStringArray("lazer", "line")]
+script = ExtResource("4_53edv")
+lazer = NodePath("../..")
+line = NodePath("../../Line2D")
+
+[node name="Fade" type="Node" parent="StateMachine" node_paths=PackedStringArray("lazer", "line")]
+script = ExtResource("5_ymljo")
+lazer = NodePath("../..")
+line = NodePath("../../Line2D")

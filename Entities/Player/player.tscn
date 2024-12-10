@@ -1,6 +1,7 @@
-[gd_scene load_steps=48 format=3 uid="uid://bgjok2jf65yne"]
+[gd_scene load_steps=51 format=3 uid="uid://bgjok2jf65yne"]
 
 [ext_resource type="Script" path="res://Entities/Player/Scripts/player.gd" id="1_rqppq"]
+[ext_resource type="Script" path="res://Common/Resources/Player_Stats.gd" id="2_mcb0g"]
 [ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="2_pmmbf"]
 [ext_resource type="Script" path="res://Common/Components/Cameras/FollowCamera.gd" id="3_7gq3q"]
 [ext_resource type="Script" path="res://Common/Components/Cameras/TransitionCamera.gd" id="4_rgvow"]
@@ -14,6 +15,12 @@
 [ext_resource type="Script" path="res://Entities/Player/States/WallJump.gd" id="12_iguxa"]
 [ext_resource type="Script" path="res://Entities/Player/Dying.gd" id="13_kbokf"]
 [ext_resource type="Script" path="res://Entities/Player/States/Shoot.gd" id="14_eja27"]
+[ext_resource type="Script" path="res://Entities/Player/States/textbox.gd" id="16_0wwxk"]
+
+[sub_resource type="Resource" id="Resource_kkb2k"]
+script = ExtResource("2_mcb0g")
+attack = 1
+health = 100
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f1nm4"]
 size = Vector2(10, 19)
@@ -285,6 +292,7 @@ animations = [{
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_rqppq")
+stats = SubResource("Resource_kkb2k")
 
 [node name="ProjectileSpawner" type="Marker2D" parent="."]
 position = Vector2(4, 7)
@@ -295,6 +303,7 @@ shape = SubResource("RectangleShape2D_f1nm4")
 
 [node name="HitBox" type="Area2D" parent="." groups=["Player"]]
 collision_layer = 2
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(-1.5, 6)
@@ -373,6 +382,9 @@ script = ExtResource("14_eja27")
 projectile_spawner = NodePath("../../ProjectileSpawner")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
+
+[node name="Textbox" type="Node" parent="StateMachine"]
+script = ExtResource("16_0wwxk")
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

@@ -1,10 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://bar56ft3wci3x"]
+[gd_scene load_steps=16 format=3 uid="uid://bar56ft3wci3x"]
 
 [ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="1_7sijh"]
 [ext_resource type="Script" path="res://Entities/Damagables/Projectiles/simple_projectile.gd" id="1_a5jjj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s74uc"]
 radius = 4.0
+
+[sub_resource type="Curve" id="Curve_pq07l"]
+_data = [Vector2(0.0280899, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1ogyj"]
 atlas = ExtResource("1_7sijh")
@@ -82,6 +86,14 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="Environment" id="Environment_jq7lf"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 1.71
+glow_strength = 0.91
+glow_blend_mode = 0
+glow_hdr_threshold = 0.58
+
 [node name="SimpleProjectile" type="Area2D" groups=["Bullet"]]
 collision_layer = 32
 collision_mask = 5
@@ -90,11 +102,29 @@ script = ExtResource("1_a5jjj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_s74uc")
 
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 3
+lifetime = 0.7
+speed_scale = 3.0
+gravity = Vector2(-50, 0)
+scale_amount_min = 2.5
+scale_amount_max = 2.5
+scale_amount_curve = SubResource("Curve_pq07l")
+color = Color(0.572549, 0.329412, 0.74902, 1)
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kit4e")
 animation = &"in_air"
 autoplay = "in_air"
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jq7lf")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(2.5, -1.43051e-07)
+scale = Vector2(0.15, 0.4)
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

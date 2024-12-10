@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://calfbi8ptoin1"]
+
+[ext_resource type="Texture2D" uid="uid://xn8ucesmekwn" path="res://UI/Health_Bar/Assets/health-bar.aseprite" id="1_tw0tk"]
+[ext_resource type="Script" path="res://UI/Health_Bar/Scripts/health_bar.gd" id="1_xqvvi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_61q0c"]
+bg_color = Color(0.343709, 0.0880549, 0.147678, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1h2ec"]
+bg_color = Color(0.713726, 0.239216, 0.345098, 1)
+
+[node name="HealthBar" type="CanvasLayer" node_paths=PackedStringArray("health_bar")]
+script = ExtResource("1_xqvvi")
+health_bar = NodePath("ProgressBar")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = 130.0
+offset_top = 5.0
+offset_right = 147.0
+offset_bottom = 11.0
+theme_override_styles/background = SubResource("StyleBoxFlat_61q0c")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1h2ec")
+value = 70.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(127, 5)
+texture = ExtResource("1_tw0tk")

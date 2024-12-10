@@ -29,4 +29,3 @@ func exit():
 func get_reset_timer():
 	await get_tree().create_timer(timer).timeout
 	get_tree().reload_current_scene()
-

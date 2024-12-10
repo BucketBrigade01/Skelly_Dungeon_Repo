@@ -22,6 +22,7 @@ var WEAK_JUMP_VELOCITY : float = ((2.0 * WEAK_JUMP_HEIGHT) / JUMP_TIME_PEAK) * -
 var SUPER_WEAK_JUMP_VELOCITY : float = ((2.0 * SUPER_WEAK_JUMP_HEIGHT) / JUMP_TIME_PEAK) * -1
 var JUMP_GRAVITY : float = ((-2.0 * JUMP_HEIGHT) / (JUMP_TIME_PEAK * JUMP_TIME_PEAK)) * -1
 var FALL_GRAVITY : float = ((-2.0 * JUMP_HEIGHT) / (JUMP_TIME_DESCENT * JUMP_TIME_DESCENT)) * -1
+var timer : SceneTreeTimer
 
 func on_process(delta : float):
 	pass
@@ -31,20 +32,39 @@ func on_physics_process(delta : float):
 	character_body.velocity.x = move_toward(character_body.velocity.x, 0, FRICTION)
 	character_body.velocity.y += get_gravity() * delta
 	
-	# This is the maximum boost jump, activated when energy bar is full
-	if character_body.is_on_floor() and Utils.player_animation == "full" and GameInput.jump_input():
+	if timer.time_left == 0:
+		Utils.player_crouch_val += 1
+		timer = get_tree().create_timer(0.05)
+
+	
+	if Utils.player_crouch_val >= 20 and character_body.is_on_floor() and GameInput.jump_input():
 		character_body.velocity.y = JUMP_VELOCITY
 		transition.emit("fall")
-	
-	# This is the min boost jump, activated whenever bar is not full
-	if (character_body.is_on_floor() and (Utils.player_animation == "charge" and Utils.player_animation_frame > 8) or (Utils.player_animation == "decharge" and Utils.player_animation_frame < 8)) and GameInput.jump_input():
+		
+	if Utils.player_crouch_val >= 10 and Utils.player_crouch_val < 20 and character_body.is_on_floor() and GameInput.jump_input():
+		print("Weak Jump")
 		character_body.velocity.y = WEAK_JUMP_VELOCITY
 		transition.emit("fall")
 	
-	# This is for the super weak jump when the bar is hardly full	
-	if (character_body.is_on_floor() and (Utils.player_animation == "charge" and Utils.player_animation_frame < 8) or (Utils.player_animation == "decharge" and Utils.player_animation_frame > 8)) and GameInput.jump_input():
+	if Utils.player_crouch_val < 10 and character_body.is_on_floor() and GameInput.jump_input():
+		print("Super Weak Jump")
 		character_body.velocity.y = SUPER_WEAK_JUMP_VELOCITY
 		transition.emit("fall")
+	
+	# This is the maximum boost jump, activated when energy bar is full
+	#if character_body.is_on_floor() and Utils.player_animation == "full" and GameInput.jump_input():
+	#	character_body.velocity.y = JUMP_VELOCITY
+	#	transition.emit("fall")
+	
+	# This is the min boost jump, activated whenever bar is not full
+	#if (character_body.is_on_floor() and (Utils.player_animation == "charge" and Utils.player_animation_frame > 8) or (Utils.player_animation == "decharge" and Utils.player_animation_frame < 8)) and GameInput.jump_input():
+	#	character_body.velocity.y = WEAK_JUMP_VELOCITY
+	#	transition.emit("fall")
+	
+	# This is for the super weak jump when the bar is hardly full	
+	#if (character_body.is_on_floor() and (Utils.player_animation == "charge" and Utils.player_animation_frame < 8) or (Utils.player_animation == "decharge" and Utils.player_animation_frame > 8)) and GameInput.jump_input():
+	#	character_body.velocity.y = SUPER_WEAK_JUMP_VELOCITY
+	#	transition.emit("fall")
 		
 	character_body.move_and_slide()
 	# TRANSITION STATES
@@ -56,14 +76,15 @@ func on_physics_process(delta : float):
 	# TRANSITION TO DYING STATE 
 	if character_body.is_dying:
 		transition.emit("dying")
-		
 func enter():
 	# Emited so Player knows crouch state
-	crouched.emit("crouched")
+	timer = get_tree().create_timer(0.5)
+	Utils.player_crouched = true
 	animated_sprite.play("charge")
 	
 func exit():
 	character_body.previous_state = "boost"
+	Utils.player_crouched = false
 	animated_sprite.stop()
 
 func get_gravity() -> float:

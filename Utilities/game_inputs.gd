@@ -35,3 +35,7 @@ static func aim_input() -> bool:
 static func shoot_input() -> bool:
 	var shoot : bool = Input.is_action_just_pressed("shoot")
 	return shoot
+
+static func interact_input() -> bool:
+	var interact : bool = Input.is_action_just_pressed("interact")
+	return interact

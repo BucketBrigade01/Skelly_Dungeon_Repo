@@ -58,7 +58,6 @@ func enter():
 	timer.one_shot = true
 	timer.wait_time = 3
 	timer.start()
-	crouched.emit("uncrouched")
 	animated_sprite.play("cling")
 	
 func exit():

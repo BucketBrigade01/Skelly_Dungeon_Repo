@@ -80,13 +80,13 @@ func on_physics_process(delta : float):
 		transition.emit("Shoot")
 	
 func enter():
-	crouched.emit("uncrouched")
-	if character_body.previous_state == "hover":
-		can_hover = false
-	else:
-		animated_sprite.play("fall")
 	coyote_jump = true
 	buffer_jump = false
+	if character_body.previous_state == "hover":
+		can_hover = false
+		coyote_jump = false
+	else:
+		animated_sprite.play("fall")
 	
 func exit():
 	character_body.previous_state = "fall"

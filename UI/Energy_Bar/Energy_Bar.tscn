@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://busotwqt058qo"]
+
+[ext_resource type="Script" path="res://UI/Energy_Bar/Scripts/energy_bar.gd" id="1_aojfl"]
+[ext_resource type="Texture2D" uid="uid://bst1aj5fx7mu6" path="res://UI/Charge_Bar/Assets/energy_bar.aseprite" id="2_aorxm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7k1eg"]
+bg_color = Color(0.509804, 0.180392, 0.141176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bf167"]
+bg_color = Color(0.784314, 0.568627, 0.243137, 1)
+
+[node name="EnergyBar" type="CanvasLayer" node_paths=PackedStringArray("energy")]
+script = ExtResource("1_aojfl")
+energy = NodePath("ProgressBar")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = 51.0
+offset_top = 4.0
+offset_right = 82.0
+offset_bottom = 12.0
+theme_override_styles/background = SubResource("StyleBoxFlat_7k1eg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bf167")
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(42, 5)
+texture = ExtResource("2_aorxm")

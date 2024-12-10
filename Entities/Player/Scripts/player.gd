@@ -1,7 +1,7 @@
 class_name Player extends CharacterBody2D
 
 signal player_status
-
+@export var stats : PlayerStats
 @export var tile_map : TileMap
 
 # Used to communicate with the Energy Bar of the players status
@@ -17,28 +17,26 @@ var current_animation : String
 var current_frame : int
 var extra_jump : bool = false
 var can_walljump : bool
-var is_dying : bool 
-var is_dying_spikes : bool
+var is_dying : bool = false
+var is_dying_spikes : bool = false
 var previous_state : String
 
 # These signal calls get the crouch state of our Player
 func _ready():
-	$StateMachine/Boost.crouched.connect(_is_crouched)
-	$StateMachine/Idle.crouched.connect(_is_crouched)
-	$StateMachine/Walk.crouched.connect(_is_crouched)
-	$StateMachine/Fall.crouched.connect(_is_crouched)
-	$StateMachine/Jump.crouched.connect(_is_crouched)
+	Utils.player_health = 3
 	
 func _process(delta):
 	# Emits tp Charge Bar so we know how long player is crouching for
 	player_status.emit(crouched)
-	
+	stats.health = Utils.player_health
 	# Get mocment direction so we can change raycast position
 	var direction = GameInput.movment_input()
-
 	if direction != 0:
 		ray_cast.rotation_degrees = 90 * -direction
 	
+	if stats.get_health() == 0:
+		is_dying_spikes = true
+		is_dying = true
 	# Wall Jump check using tileData
 	if is_near_wall():
 		# Check if raycast is colliding
@@ -63,11 +61,6 @@ func is_near_wall():
 	return ray_cast.is_colliding() 
 	
 # Used to communicate with States on weather they are a crouch or uncrouched state
-func _is_crouched(message : String):
-	if message == "crouched":
-		crouched = message
-	if message == "uncrouched":
-		crouched = message
 
 # Extra jump detection for hitbox for bodys entered
 func _on_hit_box_body_entered(body):
@@ -84,8 +77,3 @@ func _on_hit_box_area_entered(area):
 		is_dying = true
 	if area.is_in_group("Lava"):
 		is_dying = true
-
-# Used for the Energy bar to communicate with Player of animation state
-func _on_charge_bar_energy_animation(frame, animation):
-	Utils.player_animation_frame = int(frame)
-	Utils.player_animation = animation

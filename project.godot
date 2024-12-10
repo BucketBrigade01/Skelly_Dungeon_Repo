@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Skelly_Dungeon_Version2"
-run/main_scene="res://Stages/world_1_level_1.tscn"
+run/main_scene="res://Stages/world_1_level_0.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
 
@@ -81,6 +81,11 @@ grab={
 shoot={
 "deadzone": 0.5,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":5,"axis_value":1.0,"script":null)
+]
+}
+interact={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 
