@@ -4,6 +4,7 @@ class_name LazerCharge
 @export var lazer : LazerBeam
 @export var line : Line2D
 @export var glow : WorldEnvironment
+@export var charge_duration : float
 
 var difference : Vector2
 var pixel_size : float = 1.0
@@ -32,8 +33,8 @@ func on_tween_finished():
 func enter():
 	glow.environment.glow_enabled = true
 	tween = get_tree().create_tween().set_parallel(true)
-	tween.tween_property(line, "modulate:a", 1.0, 3).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
-	tween.tween_property(line, "width", 1.0, 3).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
+	tween.tween_property(line, "modulate:a", 1.0, charge_duration).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
+	tween.tween_property(line, "width", 1.0, charge_duration).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
 	tween.connect("finished", on_tween_finished)
 	pass
 

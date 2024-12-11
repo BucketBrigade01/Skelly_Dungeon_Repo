@@ -11,7 +11,7 @@ class_name BirdFlying
 func on_physics_process(delta : float):
 	var difference = bird.target.global_position - bird.global_position
 	
-	if difference.length() < 80 and difference.length() > 30 and bird.stats.get_health() != 0:
+	if difference.length() < 100 and difference.length() > 30 and bird.stats.get_health() != 0:
 		bird.velocity = difference * speed * delta
 		if difference.x > 0:
 			animation_sprite.flip_h = false

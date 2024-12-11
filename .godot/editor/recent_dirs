@@ -1,4 +1,6 @@
 res://Stages
+res://Entities/Birds/SquishBird/Scripst
+res://Entities/Birds/SquishBird/Assets
 res://Stages/Scripts
 res://Entities/Player/States
 res://UI/Text_Box/Scripts
@@ -18,6 +20,4 @@ res://Entities/Damagables/Spikes
 res://Entities/Tile_Map
 res://Entities/Damagables/Lava
 res://UI/Charge_Bar/Scripts
-res://UI/Charge_Bar/Assets
-res://UI/Charge_Bar
 C:/Program Files/Aseprite

@@ -9,7 +9,7 @@ var animation_complete : bool
 
 func on_process(delta : float):
 	difference = bird.target.global_position - bird.position
-	if difference.length() < 60:
+	if difference.length() < 100:
 		transition.emit("flying")
 	
 func enter():

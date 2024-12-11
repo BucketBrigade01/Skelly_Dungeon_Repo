@@ -8,7 +8,7 @@ var difference : Vector2
 
 func on_process(delta : float):
 	difference = bird.target.global_position - bird.position
-	if difference.length() < 60:
+	if difference.length() < 70:
 		transition.emit("hatch")
 	
 func enter():

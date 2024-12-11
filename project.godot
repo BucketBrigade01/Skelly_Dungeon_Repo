@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Skelly_Dungeon_Version2"
-run/main_scene="res://Stages/world_1_level_0.tscn"
+run/main_scene="res://Stages/Title.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
 

@@ -40,6 +40,7 @@ script = ExtResource("3_s76lv")
 lazer = NodePath("../..")
 line = NodePath("../../Line2D")
 glow = NodePath("../../WorldEnvironment")
+charge_duration = 1.5
 
 [node name="Fire" type="Node" parent="StateMachine" node_paths=PackedStringArray("lazer", "line", "glow")]
 script = ExtResource("4_53edv")

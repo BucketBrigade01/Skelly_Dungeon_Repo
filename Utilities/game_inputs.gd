@@ -3,6 +3,14 @@ class_name GameInput extends Node
 static func movment_input() -> float:
 	var direction = Input.get_axis("left", "right")
 	return direction 
+
+static func selection_input() -> float:
+	var direction = 0
+	if Input.is_action_just_pressed("up"):
+		direction = 1
+	if Input.is_action_just_pressed("down"):
+		direction = -1
+	return direction 
 	
 static func jump_input() -> bool:
 	var jump : bool = Input.is_action_just_pressed("jump")
