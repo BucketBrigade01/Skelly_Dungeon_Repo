@@ -1,7 +1,5 @@
 extends State
 
-signal crouched
-
 var coyote_jump : bool
 var buffer_jump : bool
 var can_hover : bool
@@ -16,9 +14,6 @@ var can_hover : bool
 @export var jump_buffer_timer : float = 0.1
 
 const GRAVITY = 700
-
-func on_process(delta : float):
-	pass
 	
 func on_physics_process(delta : float):
 	# Conditionals for our buffer time and coyote time, first check is for coyote
@@ -80,6 +75,7 @@ func on_physics_process(delta : float):
 		transition.emit("Shoot")
 	
 func enter():
+	print("fall")
 	coyote_jump = true
 	buffer_jump = false
 	if character_body.previous_state == "hover":

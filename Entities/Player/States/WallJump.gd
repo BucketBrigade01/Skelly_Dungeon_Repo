@@ -1,12 +1,11 @@
 extends State
 
-signal crouched
-
-var timer : Timer = Timer.new()
+var timer : SceneTreeTimer
 var wall_normal : Vector2
 
 @export var character_body : CharacterBody2D
 @export var animated_sprite : AnimatedSprite2D
+@export var tile_data : TileDataDetection
 
 @export_category("WallJump Properties")
 @export var SPEED : int = 20
@@ -16,32 +15,29 @@ var wall_normal : Vector2
 
 const GRAVITY = 10
 const LOSS_GRIP_GRAVITY = 5
+const NO_GRIP_GRAVITY = 7
 
-func on_process(delta : float):
-	pass
-	
-func on_physics_process(delta : float):	
+func on_physics_process(_delta : float):	
 	# Basic horizontal ground movment
-	if timer.time_left != 0:
+	if timer.time_left != 0 and tile_data.tile_type == "walljump":
 		character_body.velocity.y = GRAVITY
+	elif timer.time_left != 0 and tile_data.tile_type == "wall":
+		character_body.velocity.y += NO_GRIP_GRAVITY
 	else:
 		character_body.velocity.y += LOSS_GRIP_GRAVITY
 	
-	var direction = GameInput.movment_input()
-	
 	if GameInput.jump_input():
 		if character_body.get_wall_normal().x == 1:
-			character_body.velocity.x = 50 
+			character_body.velocity.x = 100 
 		if character_body.get_wall_normal().x == -1:
-			character_body.velocity.x = -50 
+			character_body.velocity.x = -100 
 	
 	
 	character_body.move_and_slide()
 	
 	# TRANSITION STATES
-	
 	# TRANSITION TO IDLE STATE
-	if !GameInput.grab_input() or !character_body.is_near_wall():
+	if !GameInput.grab_input() or character_body.on_wall == false:
 		transition.emit("fall")
 		
 	
@@ -52,16 +48,13 @@ func on_physics_process(delta : float):
 		
 	
 func enter():
+	print("walljump")
 	can_cling = true
-	add_child(timer)
-	timer.autostart = false
-	timer.one_shot = true
-	timer.wait_time = 3
-	timer.start()
+	timer = get_tree().create_timer(3)
 	animated_sprite.play("cling")
 	
 func exit():
+	tile_data.tile_type = ""
 	character_body.previous_state = "walljump"
-	timer.stop()
 	animated_sprite.stop()
 	

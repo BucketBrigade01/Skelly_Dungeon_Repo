@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cr2ymwlpu00dh"]
+[gd_scene load_steps=34 format=3 uid="uid://cr2ymwlpu00dh"]
 
 [ext_resource type="Script" path="res://Entities/Birds/SquishBird/Scripst/squish_bird.gd" id="1_8233s"]
 [ext_resource type="Texture2D" uid="uid://gggln8bxls8t" path="res://Entities/Birds/SquishBird/Assets/squishbird_spritesheet.aseprite" id="2_kydso"]
@@ -193,18 +193,30 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vsut2"]
 size = Vector2(33, 34)
 
-[node name="SquishBird" type="CharacterBody2D"]
-collision_layer = 4
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_byva3"]
+size = Vector2(28, 7)
+
+[node name="SquishBird" type="CharacterBody2D" groups=["SquishBird"]]
+collision_layer = 128
+collision_mask = 17
 script = ExtResource("1_8233s")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tmsub")
-animation = &"tilt"
+animation = &"reset"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3.5, -1)
 shape = SubResource("RectangleShape2D_vsut2")
+
+[node name="HurtBox" type="Area2D" parent="." groups=["SquishBird"]]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-4, 13.5)
+shape = SubResource("RectangleShape2D_byva3")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_d4nf6")

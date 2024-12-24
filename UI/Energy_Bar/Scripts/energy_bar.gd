@@ -9,7 +9,7 @@ func _ready() -> void:
 	energy.value = 0
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	energy.value = Utils.player_crouch_val * 5
 	
 	if not Utils.player_crouched and Utils.player_crouch_val > 0 and not timer_started: 

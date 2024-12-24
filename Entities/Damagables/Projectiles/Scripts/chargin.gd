@@ -10,7 +10,7 @@ var difference : Vector2
 var pixel_size : float = 1.0
 var tween : Tween
 
-func on_process(delta : float):
+func on_process(_delta : float):
 	# If Skelly gets away or Bird dies
 	if difference.length() > 70 or lazer.bird.stats.get_health() == 0:
 		transition.emit("fade")

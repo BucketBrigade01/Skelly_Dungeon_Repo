@@ -1,3 +1,11 @@
+res://Entities/Birds/DodgeBird/Assets
+res://Entities/Damagables/Projectiles/Scripts
+res://Entities/Birds/DodgeBird/Scripts
+res://Entities/Damagables/Projectiles/Assets
+res://UI/Coin_Box/Scripts
+res://Entities/Collectables/Coin/Assets
+res://Entities/Collectables/Coin/Scripts
+res://Entities/Player/Scripts
 res://Stages
 res://Entities/Birds/SquishBird/Scripst
 res://Entities/Birds/SquishBird/Assets
@@ -9,15 +17,7 @@ res://Entities/Birds/WiseBird
 res://Entities/Birds/WiseBird/Assets
 res://UI/Energy_Bar/Scripts
 res://UI/Health_Bar/Scripts
-res://Entities/Damagables/Projectiles/Scripts
 res://Entities/Damagables/Projectiles
 res://Entities/Birds/LazerBird/Assets
 res://Entities/Birds/LazerBird/Shader
-res://Entities/Birds/LazerBird/Scripts
-res://Entities/Player/Assets
-res://Entities/Birds/LazerBird
-res://Entities/Damagables/Spikes
-res://Entities/Tile_Map
-res://Entities/Damagables/Lava
-res://UI/Charge_Bar/Scripts
 C:/Program Files/Aseprite

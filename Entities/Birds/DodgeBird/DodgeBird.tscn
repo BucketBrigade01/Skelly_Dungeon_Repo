@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://cx8lgy4lcbt5o"]
+
+[ext_resource type="Script" path="res://Entities/Birds/DodgeBird/Scripts/dodge_bird.gd" id="1_5qio6"]
+[ext_resource type="Texture2D" uid="uid://dl4l727j0ilkl" path="res://Entities/Birds/DodgeBird/Assets/skelly_sprites.aseprite" id="2_wn311"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trf1g"]
+atlas = ExtResource("2_wn311")
+region = Rect2(64, 126, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h3bl"]
+atlas = ExtResource("2_wn311")
+region = Rect2(64, 126, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o7yuk"]
+atlas = ExtResource("2_wn311")
+region = Rect2(80, 126, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7cdn"]
+atlas = ExtResource("2_wn311")
+region = Rect2(96, 126, 16, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7gero"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trf1g")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h3bl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o7yuk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7cdn")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m3hua"]
+size = Vector2(13, 18)
+
+[node name="DodgeBird" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_5qio6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_7gero")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_m3hua")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(-1, 8)

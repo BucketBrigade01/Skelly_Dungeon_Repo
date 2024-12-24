@@ -13,5 +13,5 @@ func _process(delta: float) -> void:
 		if GameInput.interact_input():
 			world.activate_textbox = true
 
-func _on_bird_active_body_entered(body: Node2D) -> void:
+func _on_bird_active_body_entered(_body: Node2D) -> void:
 	bird_active = true

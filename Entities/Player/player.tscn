@@ -1,9 +1,10 @@
-[gd_scene load_steps=51 format=3 uid="uid://bgjok2jf65yne"]
+[gd_scene load_steps=53 format=3 uid="uid://bgjok2jf65yne"]
 
 [ext_resource type="Script" path="res://Entities/Player/Scripts/player.gd" id="1_rqppq"]
 [ext_resource type="Script" path="res://Common/Resources/Player_Stats.gd" id="2_mcb0g"]
 [ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="2_pmmbf"]
 [ext_resource type="Script" path="res://Common/Components/Cameras/FollowCamera.gd" id="3_7gq3q"]
+[ext_resource type="Script" path="res://Entities/Player/Scripts/tile_data_detection.gd" id="3_qdut2"]
 [ext_resource type="Script" path="res://Common/Components/Cameras/TransitionCamera.gd" id="4_rgvow"]
 [ext_resource type="Script" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="5_pq454"]
 [ext_resource type="Script" path="res://Entities/Player/States/Idle.gd" id="6_5rrt8"]
@@ -21,9 +22,13 @@
 script = ExtResource("2_mcb0g")
 attack = 1
 health = 100
+coins = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f1nm4"]
 size = Vector2(10, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iut7e"]
+size = Vector2(17, 3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nwly3"]
 size = Vector2(7, 20)
@@ -289,10 +294,15 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
+collision_mask = 137
 script = ExtResource("1_rqppq")
 stats = SubResource("Resource_kkb2k")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, 7)
+target_position = Vector2(17, 0)
 
 [node name="ProjectileSpawner" type="Marker2D" parent="."]
 position = Vector2(4, 7)
@@ -301,9 +311,19 @@ position = Vector2(4, 7)
 position = Vector2(-1, 6.5)
 shape = SubResource("RectangleShape2D_f1nm4")
 
+[node name="TileDataDetection" type="Area2D" parent="." groups=["Player"]]
+collision_layer = 0
+collision_mask = 9
+script = ExtResource("3_qdut2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileDataDetection"]
+position = Vector2(-0.5, 6.5)
+shape = SubResource("RectangleShape2D_iut7e")
+debug_color = Color(0.476413, 0.582776, 0.23994, 0.42)
+
 [node name="HitBox" type="Area2D" parent="." groups=["Player"]]
 collision_layer = 2
-collision_mask = 5
+collision_mask = 13
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(-1.5, 6)
@@ -312,24 +332,18 @@ debug_color = Color(0.886789, 0.266542, 0.502231, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wfwjy")
-animation = &"spike_death"
+animation = &"cling"
 autoplay = "idle"
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2(0, 10)
-rotation = -1.5708
-target_position = Vector2(0, 13)
-collide_with_areas = true
-
-[node name="FollowCamera" type="Camera2D" parent="."]
+[node name="FollowCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 enabled = false
 script = ExtResource("3_7gq3q")
+player = NodePath("..")
 
-[node name="TransitionCamera" type="Camera2D" parent="."]
+[node name="TransitionCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 position = Vector2(77, -53)
-limit_smoothed = true
-position_smoothing_enabled = true
 script = ExtResource("4_rgvow")
+player = NodePath("..")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("5_pq454")
@@ -345,10 +359,11 @@ script = ExtResource("7_etom1")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "tile_data")]
 script = ExtResource("8_ssifo")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
+tile_data = NodePath("../../TileDataDetection")
 JUMP_HORIZONTAL_SPEED = 20.0
 MAX_HORIZONTAL_JUMP_SPEED = 80.0
 
@@ -362,15 +377,17 @@ script = ExtResource("10_k0tat")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Hover" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+[node name="Hover" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "tile_data")]
 script = ExtResource("11_rj1gi")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
+tile_data = NodePath("../../TileDataDetection")
 
-[node name="WallJump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+[node name="WallJump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "tile_data")]
 script = ExtResource("12_iguxa")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
+tile_data = NodePath("../../TileDataDetection")
 
 [node name="Dying" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
 script = ExtResource("13_kbokf")
@@ -386,5 +403,6 @@ animated_sprite = NodePath("../../AnimatedSprite2D")
 [node name="Textbox" type="Node" parent="StateMachine"]
 script = ExtResource("16_0wwxk")
 
+[connection signal="body_shape_entered" from="TileDataDetection" to="TileDataDetection" method="_on_body_shape_entered"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

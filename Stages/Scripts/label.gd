@@ -4,7 +4,7 @@ extends Label
 
 var fade_in : bool = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if world.activate_textbox:
 		visible = false
 		

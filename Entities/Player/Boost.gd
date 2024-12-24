@@ -1,7 +1,5 @@
 extends State
 
-signal crouched
-
 @export_category("Jump Properties")
 @export var JUMP_HEIGHT : float = 56
 @export var WEAK_JUMP_HEIGHT : float = 48
@@ -24,9 +22,6 @@ var JUMP_GRAVITY : float = ((-2.0 * JUMP_HEIGHT) / (JUMP_TIME_PEAK * JUMP_TIME_P
 var FALL_GRAVITY : float = ((-2.0 * JUMP_HEIGHT) / (JUMP_TIME_DESCENT * JUMP_TIME_DESCENT)) * -1
 var timer : SceneTreeTimer
 
-func on_process(delta : float):
-	pass
-	
 func on_physics_process(delta : float):
 	# Slows down players initial horizontal velocity
 	character_body.velocity.x = move_toward(character_body.velocity.x, 0, FRICTION)
@@ -50,21 +45,6 @@ func on_physics_process(delta : float):
 		print("Super Weak Jump")
 		character_body.velocity.y = SUPER_WEAK_JUMP_VELOCITY
 		transition.emit("fall")
-	
-	# This is the maximum boost jump, activated when energy bar is full
-	#if character_body.is_on_floor() and Utils.player_animation == "full" and GameInput.jump_input():
-	#	character_body.velocity.y = JUMP_VELOCITY
-	#	transition.emit("fall")
-	
-	# This is the min boost jump, activated whenever bar is not full
-	#if (character_body.is_on_floor() and (Utils.player_animation == "charge" and Utils.player_animation_frame > 8) or (Utils.player_animation == "decharge" and Utils.player_animation_frame < 8)) and GameInput.jump_input():
-	#	character_body.velocity.y = WEAK_JUMP_VELOCITY
-	#	transition.emit("fall")
-	
-	# This is for the super weak jump when the bar is hardly full	
-	#if (character_body.is_on_floor() and (Utils.player_animation == "charge" and Utils.player_animation_frame < 8) or (Utils.player_animation == "decharge" and Utils.player_animation_frame > 8)) and GameInput.jump_input():
-	#	character_body.velocity.y = SUPER_WEAK_JUMP_VELOCITY
-	#	transition.emit("fall")
 		
 	character_body.move_and_slide()
 	# TRANSITION STATES

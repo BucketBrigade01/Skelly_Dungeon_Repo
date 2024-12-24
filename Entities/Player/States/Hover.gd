@@ -4,6 +4,7 @@ var can_hover : bool
 
 @export var character_body : CharacterBody2D
 @export var animated_sprite : AnimatedSprite2D
+@export var tile_data : TileDataDetection
 
 @export_category("Hover Properties")
 @export var HOVER_SPEED : int = 20
@@ -12,9 +13,6 @@ var can_hover : bool
 @export var FRICTION : int = 5
 @export var hover_timer : float = 0.5
 
-
-func on_process(delta : float):
-	pass
 	
 func on_physics_process(delta : float):
 	# Slows down upward velocity
@@ -45,12 +43,18 @@ func on_physics_process(delta : float):
 	if !GameInput.hover_input() or !can_hover:
 		transition.emit("fall")
 	
+	# TRANSITION TO WALLJUMP STATE
+	if GameInput.grab_input() and tile_data.tile_type == "walljump":
+		can_hover = true
+		transition.emit("walljump")
+	
 	# TRANSITION TO IDLE STATE
 	
 	if character_body.is_on_floor():
 		transition.emit("idle")
 		
 func enter():
+	print("hoover")
 	can_hover = true
 	animated_sprite.play("hover")
 	get_hover_timer()
@@ -62,4 +66,5 @@ func exit():
 # Sets hover to false after 0.5 second timer
 func get_hover_timer():
 	await get_tree().create_timer(hover_timer).timeout
+	print("hoovet timer stop")
 	can_hover = false

@@ -6,7 +6,7 @@ class_name BirdIdle
 
 var difference : Vector2
 
-func on_process(delta : float):
+func on_process(_delta : float):
 	difference = bird.target.global_position - bird.position
 	if difference.length() < 70:
 		transition.emit("hatch")

@@ -1,0 +1,126 @@
+[gd_scene load_steps=16 format=3 uid="uid://btamqevlm12ti"]
+
+[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/Scripts/small_projectile.gd" id="1_780ri"]
+[ext_resource type="Texture2D" uid="uid://cqgpf3i2nfgjs" path="res://Entities/Damagables/Projectiles/Assets/skelly_sprites.aseprite" id="2_48kuu"]
+[ext_resource type="Texture2D" uid="uid://dl4l727j0ilkl" path="res://Entities/Birds/DodgeBird/Assets/skelly_sprites.aseprite" id="3_k8m6p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s74uc"]
+radius = 4.0
+
+[sub_resource type="Curve" id="Curve_pq07l"]
+_data = [Vector2(0.0280899, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3b5bb"]
+atlas = ExtResource("2_48kuu")
+region = Rect2(80, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_43y1g"]
+atlas = ExtResource("2_48kuu")
+region = Rect2(96, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewvci"]
+atlas = ExtResource("2_48kuu")
+region = Rect2(112, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1blf"]
+atlas = ExtResource("2_48kuu")
+region = Rect2(128, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_na3f7"]
+atlas = ExtResource("3_k8m6p")
+region = Rect2(144, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dh834"]
+atlas = ExtResource("3_k8m6p")
+region = Rect2(160, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ttauj"]
+atlas = ExtResource("3_k8m6p")
+region = Rect2(176, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a1osl"]
+atlas = ExtResource("3_k8m6p")
+region = Rect2(192, 96, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kit4e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3b5bb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_43y1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ewvci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1blf")
+}],
+"loop": true,
+"name": &"in_air",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_na3f7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dh834")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ttauj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a1osl")
+}],
+"loop": false,
+"name": &"wall_hit",
+"speed": 8.0
+}]
+
+[sub_resource type="Environment" id="Environment_jq7lf"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 1.71
+glow_strength = 0.91
+glow_blend_mode = 0
+glow_hdr_threshold = 0.58
+
+[node name="SimpleProjectile" type="Area2D" groups=["Bullet"]]
+rotation = 1.5708
+collision_layer = 32
+collision_mask = 5
+script = ExtResource("1_780ri")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_s74uc")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+rotation = 1.5708
+amount = 3
+lifetime = 0.7
+speed_scale = 3.0
+gravity = Vector2(0, -90)
+scale_amount_min = 2.5
+scale_amount_max = 2.5
+scale_amount_curve = SubResource("Curve_pq07l")
+color = Color(0.545098, 1, 1, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kit4e")
+animation = &"wall_hit"
+autoplay = "in_air"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jq7lf")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(2.5, -1.43051e-07)
+scale = Vector2(0.15, 0.4)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

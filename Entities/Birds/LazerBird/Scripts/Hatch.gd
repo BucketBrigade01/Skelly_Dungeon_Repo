@@ -7,7 +7,7 @@ class_name BirdHatch
 var difference : Vector2
 var animation_complete : bool 
 
-func on_process(delta : float):
+func on_process(_delta : float):
 	if animation_complete:
 		transition.emit("idlehatched")
 	

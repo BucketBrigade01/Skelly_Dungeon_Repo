@@ -9,7 +9,7 @@ var difference : Vector2
 var pixel_size : float = 1.0
 var tween : Tween
 
-func on_process(delta : float):
+func on_process(_delta : float):
 	# Send to chargin if Skelly comes back in range
 	if difference.length() < 60 and not lazer.lazer_fired:
 		transition.emit("Charging")

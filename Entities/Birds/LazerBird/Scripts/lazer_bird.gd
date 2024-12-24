@@ -8,7 +8,7 @@ class_name LazerBird
 var dead : bool = false
 var speed : float = 30.0
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if dead:
 		velocity = Vector2.ZERO
 	move_and_slide()

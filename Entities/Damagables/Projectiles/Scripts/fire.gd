@@ -9,7 +9,7 @@ var difference : Vector2
 var pixel_size : float = 1.0
 var tween : Tween
 
-func on_process(delta : float):
+func on_process(_delta : float):
 	# Tracking Skelly	
 	difference = lazer.bird.target.global_position - lazer.bird.position
 	lazer.target_position = difference

@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://cr10f5qmt5dq3"]
+
+[ext_resource type="Script" path="res://UI/Coin_Box/Scripts/coin_box.gd" id="1_ixy4l"]
+[ext_resource type="Texture2D" uid="uid://c8xcgl8wq3xtp" path="res://UI/Coin_Box/Assets/coin_sheet.aseprite" id="2_dpj2e"]
+[ext_resource type="Script" path="res://Common/Resources/Player_Stats.gd" id="2_fiw81"]
+[ext_resource type="FontFile" uid="uid://bb4kub2tkaj1n" path="res://Assets/Fonts/TinyUnicode.ttf" id="3_oopsn"]
+
+[sub_resource type="Resource" id="Resource_ercts"]
+script = ExtResource("2_fiw81")
+attack = 0
+health = 0
+coins = 0
+
+[node name="CoinBox" type="CanvasLayer"]
+script = ExtResource("1_ixy4l")
+player_stats = SubResource("Resource_ercts")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(243, 5)
+texture = ExtResource("2_dpj2e")
+
+[node name="CoinCount" type="Label" parent="."]
+offset_left = 245.0
+offset_top = -1.0
+offset_right = 285.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(0.831373, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("3_oopsn")
+text = "0"

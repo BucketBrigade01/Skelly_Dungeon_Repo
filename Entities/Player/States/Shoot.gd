@@ -5,11 +5,8 @@ extends State
 @export var animated_sprite : AnimatedSprite2D
 
 var bullet = preload("res://Entities/Damagables/Projectiles/simple_projectile.tscn")
-
-func on_process(delta : float):
-	pass
 	
-func on_physics_process(delta : float):
+func on_physics_process(_delta : float):
 	if character_body.previous_state == "jump":
 		transition.emit("fall")
 	else:

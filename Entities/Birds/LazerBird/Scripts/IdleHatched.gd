@@ -7,7 +7,7 @@ class_name BirdIdleHatched
 var difference : Vector2
 var animation_complete : bool 
 
-func on_process(delta : float):
+func on_process(_delta : float):
 	difference = bird.target.global_position - bird.position
 	if difference.length() < 100:
 		transition.emit("flying")

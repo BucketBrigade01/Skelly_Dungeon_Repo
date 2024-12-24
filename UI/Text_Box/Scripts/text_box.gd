@@ -22,7 +22,7 @@ func _ready() -> void:
 	queue_twxt("Get me the 6 Golden Eggs and I will return you back home")
 	queue_twxt("Now go, SCRAM!")
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if world.activate_textbox == true:
 		text_box.visible = true
 		Utils.textbox_reading = true

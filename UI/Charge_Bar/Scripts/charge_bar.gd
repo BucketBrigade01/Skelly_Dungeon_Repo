@@ -12,7 +12,7 @@ func _ready():
 	animated_sprite.play("empty")
 
 # NOTE TRANSFORM THIS INTO STATE MACHINE 
-func _process(delta):
+func _process(_delta):
 	# This section is for when the bar is charging up
 	if player_crouched:
 		if animated_sprite.animation == "empty":

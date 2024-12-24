@@ -7,7 +7,7 @@ class_name LazerIdle
 var difference : Vector2
 var pixel_size : float = 1.0
 
-func on_process(delta : float):
+func on_process(_delta : float):
 	# If Skelly comes in range start charging Lazer
 	if difference.length() < 40 and lazer.enabled:
 		transition.emit("charging")

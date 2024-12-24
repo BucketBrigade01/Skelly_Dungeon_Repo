@@ -5,17 +5,13 @@ class_name SquishBirdIdle
 
 var timer : SceneTreeTimer
 
-func on_physics_process(delta : float) -> void:
-	pass
-
-func on_process(delta : float) -> void:
+func on_process(_delta : float) -> void:
 	if timer.time_left == 0:
 		transition.emit("charge")
 
 func enter():
-	print("idle")
 	animated_sprite.play("idle")
-	timer = get_tree().create_timer(4)
+	timer = get_tree().create_timer(3)
 	
 func exit():
 	animated_sprite.stop()

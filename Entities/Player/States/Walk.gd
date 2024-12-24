@@ -1,20 +1,15 @@
 extends State
 
-signal crouched
-
 @export var character_body : CharacterBody2D
 @export var animated_sprite : AnimatedSprite2D
 
 @export_category("WallJump Properties")
-@export var SPEED : int = 20
+@export var SPEED : int = 10
 @export var MAX_HORIZONTAL_SPEED = 100
 
 const GRAVITY = 700
-
-func on_process(delta : float):
-	pass
 	
-func on_physics_process(delta : float):
+func on_physics_process(_delta : float):
 	# Basic horizontal ground movment
 	var direction = GameInput.movment_input()
 	
@@ -50,7 +45,6 @@ func on_physics_process(delta : float):
 		transition.emit("Shoot")
 	
 func enter():
-	crouched.emit("uncrouched")
 	animated_sprite.play("walk")
 	
 func exit():

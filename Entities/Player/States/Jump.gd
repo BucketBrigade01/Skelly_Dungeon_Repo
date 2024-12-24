@@ -1,9 +1,8 @@
 extends State
 
-signal crouched
-
 @export var character_body : CharacterBody2D
 @export var animated_sprite : AnimatedSprite2D
+@export var tile_data : TileDataDetection
 
 @export_category("Jump Properties")
 @export var JUMP_HEIGHT : float = 32
@@ -22,11 +21,11 @@ var JUMP_GRAVITY : float = ((-2.0 * JUMP_HEIGHT) / (JUMP_TIME_PEAK * JUMP_TIME_P
 var FALL_GRAVITY : float = ((-2.0 * JUMP_HEIGHT) / (JUMP_TIME_DESCENT * JUMP_TIME_DESCENT)) * -1
 var EARLY_RELEASE_GRAVITY = (MIN_JUMP_HEIGHT - JUMP_VELOCITY * MIN_JUMP_TIME) / (MIN_JUMP_TIME * MIN_JUMP_TIME)
 
+var walljump_timer_node : Timer
+var walljump_timer : float = 0.5
+var can_grab_again : bool = false
 var coyote_jump : bool
 var buffer_jump : bool 
-
-func on_process(delta : float):
-	pass
 	
 func on_physics_process(delta : float):
 	# REDULAR JUMP / COYOTE JUMP + GRAVITY
@@ -74,7 +73,7 @@ func on_physics_process(delta : float):
 		transition.emit("idle")
 	
 	# TRANSITION TO WALLJUMP STATE
-	if GameInput.grab_input() and character_body.is_on_wall() and character_body.velocity.y > 0.0 and character_body.can_walljump:
+	if GameInput.grab_input() and tile_data.tile_type == "walljump" and (character_body.velocity.y > 0.0 or !can_grab_again):
 		transition.emit("walljump")
 	
 	# TRANSITION TO DYING STATE 
@@ -84,14 +83,28 @@ func on_physics_process(delta : float):
 	# TRANSITION TO SHOOT STATE
 	if GameInput.shoot_input():
 		transition.emit("Shoot")
-	
+
 func enter():
+	print("jump")
 	coyote_jump = true
 	buffer_jump = false
 	animated_sprite.play("jump")
+	if character_body.previous_state == "walljump":
+		can_grab_again = true
+		walljump_timer_node = Timer.new()
+		walljump_timer_node.wait_time = walljump_timer
+		walljump_timer_node.one_shot = true
+		walljump_timer_node.connect("timeout", get_walljump_buffer)
+		add_child(walljump_timer_node)
+		
 	
 func exit():
-	character_body.previous_state = "jump"
+	if character_body.previous_state == "walljump":
+		walljump_timer_node.stop()
+		can_grab_again = false
+		character_body.previous_state = "jump"
+	else:
+		character_body.previous_state = "jump"
 	coyote_jump = false
 	animated_sprite.stop()
 
@@ -102,6 +115,9 @@ func get_gravity() -> float:
 		return JUMP_GRAVITY
 		
 	return EARLY_RELEASE_GRAVITY
+
+func get_walljump_buffer():
+	can_grab_again = false	
 
 # Buffer jump timer set to 0.1 seconds	
 func get_buffer_timer():
