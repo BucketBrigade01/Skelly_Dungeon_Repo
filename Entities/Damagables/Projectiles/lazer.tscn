@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://dcqfsr421wedc"]
 
-[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/Scripts/lazer.gd" id="1_v5tfu"]
-[ext_resource type="Script" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="2_bcvju"]
-[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/Scripts/idle.gd" id="3_877il"]
-[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/Scripts/chargin.gd" id="3_s76lv"]
-[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/Scripts/fire.gd" id="4_53edv"]
-[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/Scripts/fade.gd" id="5_ymljo"]
+[ext_resource type="Script" uid="uid://bf6qnk2d4shdg" path="res://Entities/Damagables/Projectiles/Scripts/lazer.gd" id="1_v5tfu"]
+[ext_resource type="Script" uid="uid://b304ko867e0n" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="2_bcvju"]
+[ext_resource type="Script" uid="uid://boqa6oxqnh72e" path="res://Entities/Damagables/Projectiles/Scripts/idle.gd" id="3_877il"]
+[ext_resource type="Script" uid="uid://c6e0451pm6ot" path="res://Entities/Damagables/Projectiles/Scripts/chargin.gd" id="3_s76lv"]
+[ext_resource type="Script" uid="uid://cv237kelpfeja" path="res://Entities/Damagables/Projectiles/Scripts/fire.gd" id="4_53edv"]
+[ext_resource type="Script" uid="uid://c11jym57d8gyc" path="res://Entities/Damagables/Projectiles/Scripts/fade.gd" id="5_ymljo"]
 
 [sub_resource type="Environment" id="Environment_imnsh"]
 background_mode = 3

@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://bar56ft3wci3x"]
 
 [ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="1_7sijh"]
-[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/simple_projectile.gd" id="1_a5jjj"]
+[ext_resource type="Script" uid="uid://bc3u5ujfeu2hi" path="res://Entities/Damagables/Projectiles/simple_projectile.gd" id="1_a5jjj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s74uc"]
 radius = 4.0

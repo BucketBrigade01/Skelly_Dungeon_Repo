@@ -3,7 +3,7 @@ extends State
 var timer : SceneTreeTimer
 var wall_normal : Vector2
 
-@export var character_body : CharacterBody2D
+@export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
 @export var tile_data : TileDataDetection
 
@@ -48,10 +48,10 @@ func on_physics_process(_delta : float):
 		
 	
 func enter():
-	print("walljump")
 	can_cling = true
 	timer = get_tree().create_timer(3)
 	animated_sprite.play("cling")
+	character_body.current_state = "walljump"
 	
 func exit():
 	tile_data.tile_type = ""

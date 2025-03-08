@@ -18,6 +18,11 @@ func _process(_delta):
 	if timer.time_left == 0:
 		limit_smoothed = true
 		position_smoothing_enabled = true
+		
+	if player.player_camera_follow:
+		limit_smoothed = false
+		position_smoothing_enabled = false
+	
 	if not parent_screen.is_equal_approx(current_screen):
 		_update_screen(parent_screen)
 

@@ -1,14 +1,14 @@
 [gd_scene load_steps=34 format=3 uid="uid://cr2ymwlpu00dh"]
 
-[ext_resource type="Script" path="res://Entities/Birds/SquishBird/Scripst/squish_bird.gd" id="1_8233s"]
+[ext_resource type="Script" uid="uid://dexpo2gpehg7k" path="res://Entities/Birds/SquishBird/Scripst/squish_bird.gd" id="1_8233s"]
 [ext_resource type="Texture2D" uid="uid://gggln8bxls8t" path="res://Entities/Birds/SquishBird/Assets/squishbird_spritesheet.aseprite" id="2_kydso"]
-[ext_resource type="Script" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="3_d4nf6"]
-[ext_resource type="Script" path="res://Entities/Birds/SquishBird/Scripst/idle.gd" id="4_mu4hj"]
-[ext_resource type="Script" path="res://Entities/Birds/SquishBird/Scripst/charge.gd" id="5_dlwp8"]
-[ext_resource type="Script" path="res://Entities/Birds/SquishBird/Scripst/fall.gd" id="6_pr3ej"]
-[ext_resource type="Script" path="res://Entities/Birds/SquishBird/Scripst/squish.gd" id="7_u1hx1"]
-[ext_resource type="Script" path="res://Entities/Birds/SquishBird/Scripst/reset.gd" id="8_ovoxa"]
-[ext_resource type="Script" path="res://Entities/Birds/SquishBird/Scripst/tilt.gd" id="9_jyh37"]
+[ext_resource type="Script" uid="uid://b304ko867e0n" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="3_d4nf6"]
+[ext_resource type="Script" uid="uid://bgo427bayf4l" path="res://Entities/Birds/SquishBird/Scripst/idle.gd" id="4_mu4hj"]
+[ext_resource type="Script" uid="uid://b38wlwd5n24m" path="res://Entities/Birds/SquishBird/Scripst/charge.gd" id="5_dlwp8"]
+[ext_resource type="Script" uid="uid://dg4t2kw8xy4lk" path="res://Entities/Birds/SquishBird/Scripst/fall.gd" id="6_pr3ej"]
+[ext_resource type="Script" uid="uid://dm5scp4jumb7p" path="res://Entities/Birds/SquishBird/Scripst/squish.gd" id="7_u1hx1"]
+[ext_resource type="Script" uid="uid://cdmpxts8htmbf" path="res://Entities/Birds/SquishBird/Scripst/reset.gd" id="8_ovoxa"]
+[ext_resource type="Script" uid="uid://cps2534h8trhd" path="res://Entities/Birds/SquishBird/Scripst/tilt.gd" id="9_jyh37"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uloy0"]
 atlas = ExtResource("2_kydso")

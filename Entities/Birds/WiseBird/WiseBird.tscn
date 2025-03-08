@@ -1,6 +1,6 @@
 [gd_scene load_steps=58 format=3 uid="uid://jbfw4otx6yl8"]
 
-[ext_resource type="Script" path="res://Entities/Birds/WiseBird/Scripts/wise_bird.gd" id="1_g6jvc"]
+[ext_resource type="Script" uid="uid://dy038lk4nyc8e" path="res://Entities/Birds/WiseBird/Scripts/wise_bird.gd" id="1_g6jvc"]
 [ext_resource type="Texture2D" uid="uid://b7djwfnt5i4gt" path="res://Entities/Birds/WiseBird/Assets/wise_bird_sheet.aseprite" id="1_xko63"]
 [ext_resource type="Texture2D" uid="uid://dxy4dg3xp28sa" path="res://Entities/Birds/WiseBird/wise_bird_sheet.aseprite" id="3_72sgt"]
 

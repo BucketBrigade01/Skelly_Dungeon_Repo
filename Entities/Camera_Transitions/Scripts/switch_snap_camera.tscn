@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c00x3he3n7u6c"]
+
+[ext_resource type="Script" uid="uid://cuywbmhb1kk2e" path="res://Entities/Camera_Transitions/Scripts/switch_snap_camera.gd" id="1_blvdk"]
+
+[node name="SwitchSnapCamera" type="Area2D" groups=["SwitchSnapCamera"]]
+collision_mask = 2
+script = ExtResource("1_blvdk")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

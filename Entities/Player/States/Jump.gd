@@ -1,6 +1,6 @@
 extends State
 
-@export var character_body : CharacterBody2D
+@export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
 @export var tile_data : TileDataDetection
 
@@ -73,7 +73,8 @@ func on_physics_process(delta : float):
 		transition.emit("idle")
 	
 	# TRANSITION TO WALLJUMP STATE
-	if GameInput.grab_input() and tile_data.tile_type == "walljump" and (character_body.velocity.y > 0.0 or !can_grab_again):
+	if GameInput.grab_input() and !character_body.previous_state == "idle" and tile_data.tile_type == "walljump" and (character_body.velocity.y > 0.0 or !can_grab_again):
+		print(tile_data.tile_type)
 		transition.emit("walljump")
 	
 	# TRANSITION TO DYING STATE 
@@ -85,11 +86,11 @@ func on_physics_process(delta : float):
 		transition.emit("Shoot")
 
 func enter():
-	print("jump")
 	coyote_jump = true
 	buffer_jump = false
 	animated_sprite.play("jump")
-	if character_body.previous_state == "walljump":
+	character_body.current_state = "jump"
+	if character_body.previous_state == "walljump" and !character_body.is_on_floor():
 		can_grab_again = true
 		walljump_timer_node = Timer.new()
 		walljump_timer_node.wait_time = walljump_timer

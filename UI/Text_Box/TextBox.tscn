@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ho723eovs8r4"]
 
 [ext_resource type="FontFile" uid="uid://bb4kub2tkaj1n" path="res://Assets/Fonts/TinyUnicode.ttf" id="1_j3j6s"]
-[ext_resource type="Script" path="res://UI/Text_Box/Scripts/text_box.gd" id="1_m1ym8"]
+[ext_resource type="Script" uid="uid://cbbeskvxifvcn" path="res://UI/Text_Box/Scripts/text_box.gd" id="1_m1ym8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ottw"]
 bg_color = Color(0, 0, 0, 1)

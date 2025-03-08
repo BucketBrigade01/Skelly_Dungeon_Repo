@@ -1,19 +1,19 @@
 [gd_scene load_steps=68 format=3 uid="uid://dci0t6k8mxkjm"]
 
-[ext_resource type="Script" path="res://Entities/Birds/LazerBird/Scripts/lazer_bird.gd" id="1_u0e1u"]
+[ext_resource type="Script" uid="uid://cjxojvhbegf3p" path="res://Entities/Birds/LazerBird/Scripts/lazer_bird.gd" id="1_u0e1u"]
 [ext_resource type="Texture2D" uid="uid://c4gs5j2jmgn8o" path="res://Entities/Birds/LazerBird/Assets/laserbird-Sheet.png" id="1_xoqgb"]
-[ext_resource type="Script" path="res://Common/Resources/Enemy_Stats.gd" id="2_og48n"]
+[ext_resource type="Script" uid="uid://cpqm4ukg4u3gt" path="res://Common/Resources/Enemy_Stats.gd" id="2_og48n"]
 [ext_resource type="Texture2D" uid="uid://3bxs5fjdq7v7" path="res://Entities/Birds/LazerBird/Assets/egg-Sheet.png" id="2_wmmn3"]
 [ext_resource type="Texture2D" uid="uid://c8ie2yxclu32s" path="res://Entities/Birds/LazerBird/Assets/idle-hatched.png" id="3_6halc"]
 [ext_resource type="Shader" uid="uid://chjc4wcw4160e" path="res://Entities/Birds/LazerBird/Shader/Hit_Animation.tres" id="3_llqq3"]
 [ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="4_xuqut"]
-[ext_resource type="Script" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="4_yta5y"]
-[ext_resource type="Script" path="res://Entities/Birds/LazerBird/Scripts/Idle.gd" id="5_dnmeh"]
-[ext_resource type="Script" path="res://Entities/Birds/LazerBird/Scripts/Hatch.gd" id="7_cgsci"]
-[ext_resource type="Script" path="res://Entities/Birds/LazerBird/Scripts/IdleHatched.gd" id="8_7lkxc"]
-[ext_resource type="Script" path="res://Entities/Birds/LazerBird/Scripts/Flying.gd" id="8_pvc8w"]
+[ext_resource type="Script" uid="uid://b304ko867e0n" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="4_yta5y"]
+[ext_resource type="Script" uid="uid://8kluka407knt" path="res://Entities/Birds/LazerBird/Scripts/Idle.gd" id="5_dnmeh"]
+[ext_resource type="Script" uid="uid://yjoksy24x82r" path="res://Entities/Birds/LazerBird/Scripts/Hatch.gd" id="7_cgsci"]
+[ext_resource type="Script" uid="uid://duupmls71glr4" path="res://Entities/Birds/LazerBird/Scripts/IdleHatched.gd" id="8_7lkxc"]
+[ext_resource type="Script" uid="uid://b68xvix3qps3" path="res://Entities/Birds/LazerBird/Scripts/Flying.gd" id="8_pvc8w"]
 [ext_resource type="PackedScene" uid="uid://dcqfsr421wedc" path="res://Entities/Damagables/Projectiles/lazer.tscn" id="8_xng0p"]
-[ext_resource type="Script" path="res://Entities/Birds/LazerBird/Scripts/Dead.gd" id="10_lbiv8"]
+[ext_resource type="Script" uid="uid://c6ml0cbv7bs1r" path="res://Entities/Birds/LazerBird/Scripts/Dead.gd" id="10_lbiv8"]
 
 [sub_resource type="Resource" id="Resource_0f1in"]
 resource_local_to_scene = true
@@ -409,8 +409,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wgedu"]
 _data = {
-"RESET": SubResource("Animation_rdbgx"),
-"hit": SubResource("Animation_1xm43")
+&"RESET": SubResource("Animation_rdbgx"),
+&"hit": SubResource("Animation_1xm43")
 }
 
 [node name="LazerBird" type="CharacterBody2D" node_paths=PackedStringArray("animation_player") groups=["LazerBird"]]
@@ -426,7 +426,7 @@ bird = NodePath("..")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_1wlu8")
 sprite_frames = SubResource("SpriteFrames_srbww")
-animation = &"flying"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -449,7 +449,7 @@ collide_with_areas = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_wgedu")
+&"": SubResource("AnimationLibrary_wgedu")
 }
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]

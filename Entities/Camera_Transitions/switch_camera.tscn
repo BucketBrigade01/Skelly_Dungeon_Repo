@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://do3p83eng6p1u"]
+
+[ext_resource type="Script" uid="uid://w5ttylaw8bd0" path="res://Entities/Camera_Transitions/switch_camera.gd" id="1_7d581"]
+
+[node name="SwitchCamera" type="Area2D" groups=["SwitchCamera"]]
+collision_mask = 2
+script = ExtResource("1_7d581")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

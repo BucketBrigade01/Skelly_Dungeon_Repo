@@ -25,7 +25,6 @@ func shoot() -> void:
 	proj_inst.position = $Marker2D.position
 
 func start_timer() -> void:
-	print("start timer")
 	shoot_timer_node = Timer.new()
 	shoot_timer_node.wait_time = randf_range(1.5, 2.5)
 	shoot_timer_node.one_shot = true

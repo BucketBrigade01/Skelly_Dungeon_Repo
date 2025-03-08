@@ -4,7 +4,7 @@ var coyote_jump : bool
 var buffer_jump : bool
 var can_hover : bool
 
-@export var character_body : CharacterBody2D
+@export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
 
 @export_category("Fall Properties")
@@ -75,9 +75,9 @@ func on_physics_process(delta : float):
 		transition.emit("Shoot")
 	
 func enter():
-	print("fall")
 	coyote_jump = true
 	buffer_jump = false
+	character_body.current_state = "fall"
 	if character_body.previous_state == "hover":
 		can_hover = false
 		coyote_jump = false

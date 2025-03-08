@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://bxdbdhntnm70r"]
 
 [ext_resource type="Texture2D" uid="uid://cqwfr6sn76c72" path="res://Entities/Collectables/Coin/Assets/coin_sheet.aseprite" id="1_ij314"]
-[ext_resource type="Script" path="res://Entities/Collectables/Coin/Scripts/coin.gd" id="1_q4att"]
+[ext_resource type="Script" uid="uid://bg2jk5vy44jk3" path="res://Entities/Collectables/Coin/Scripts/coin.gd" id="1_q4att"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8bgl3"]
 size = Vector2(6, 8)

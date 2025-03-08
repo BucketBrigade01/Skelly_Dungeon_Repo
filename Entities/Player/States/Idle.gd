@@ -1,6 +1,6 @@
 extends State
 
-@export var character_body : CharacterBody2D
+@export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
 
 @export_category("Idle Properties")
@@ -40,8 +40,8 @@ func on_physics_process(_delta : float):
 		transition.emit("Shoot")
 	
 func enter():
-	print("idle")
 	animated_sprite.play("idle")
+	character_body.current_state = "idle"
 	
 func exit():
 	character_body.previous_state = "idle"

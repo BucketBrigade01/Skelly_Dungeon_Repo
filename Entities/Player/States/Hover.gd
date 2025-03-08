@@ -2,7 +2,7 @@ extends State
 
 var can_hover : bool
 
-@export var character_body : CharacterBody2D
+@export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
 @export var tile_data : TileDataDetection
 
@@ -39,6 +39,8 @@ func on_physics_process(delta : float):
 	# TRANSITION STATES
 	
 	# TRANSITION TO FALL STATE
+	if character_body.extra_jump:
+		transition.emit("jump")
 	
 	if !GameInput.hover_input() or !can_hover:
 		transition.emit("fall")
@@ -54,10 +56,10 @@ func on_physics_process(delta : float):
 		transition.emit("idle")
 		
 func enter():
-	print("hoover")
 	can_hover = true
 	animated_sprite.play("hover")
 	get_hover_timer()
+	character_body.current_state = "hoover"
 	
 func exit():
 	character_body.previous_state = "hover"
@@ -66,5 +68,4 @@ func exit():
 # Sets hover to false after 0.5 second timer
 func get_hover_timer():
 	await get_tree().create_timer(hover_timer).timeout
-	print("hoovet timer stop")
 	can_hover = false

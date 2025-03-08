@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cx8lgy4lcbt5o"]
 
-[ext_resource type="Script" path="res://Entities/Birds/DodgeBird/Scripts/dodge_bird.gd" id="1_5qio6"]
+[ext_resource type="Script" uid="uid://blgkgqpcf3syh" path="res://Entities/Birds/DodgeBird/Scripts/dodge_bird.gd" id="1_5qio6"]
 [ext_resource type="Texture2D" uid="uid://dl4l727j0ilkl" path="res://Entities/Birds/DodgeBird/Assets/skelly_sprites.aseprite" id="2_wn311"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_trf1g"]

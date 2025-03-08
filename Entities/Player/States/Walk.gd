@@ -1,6 +1,6 @@
 extends State
 
-@export var character_body : CharacterBody2D
+@export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
 
 @export_category("WallJump Properties")
@@ -46,6 +46,7 @@ func on_physics_process(_delta : float):
 	
 func enter():
 	animated_sprite.play("walk")
+	character_body.current_state = "walk"
 	
 func exit():
 	character_body.previous_state = "walk"

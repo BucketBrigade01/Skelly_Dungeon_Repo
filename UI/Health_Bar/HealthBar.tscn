@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://calfbi8ptoin1"]
 
 [ext_resource type="Texture2D" uid="uid://xn8ucesmekwn" path="res://UI/Health_Bar/Assets/health-bar.aseprite" id="1_tw0tk"]
-[ext_resource type="Script" path="res://UI/Health_Bar/Scripts/health_bar.gd" id="1_xqvvi"]
+[ext_resource type="Script" uid="uid://bvnogwc8ip78k" path="res://UI/Health_Bar/Scripts/health_bar.gd" id="1_xqvvi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_61q0c"]
 bg_color = Color(0.343709, 0.0880549, 0.147678, 1)

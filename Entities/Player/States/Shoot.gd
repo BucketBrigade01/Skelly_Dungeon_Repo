@@ -19,6 +19,7 @@ func enter():
 		bullet_instance.flip_projectile()
 	bullet_instance.position = projectile_spawner.global_position
 	animated_sprite.play("hover")
+	character_body.current_state = "shoot"
 	
 func exit():
 	character_body.previous_state = "shoot"

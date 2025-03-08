@@ -1,6 +1,6 @@
 extends State
 
-@export var character_body : CharacterBody2D
+@export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
 @export var timer : float = 1.0
 
@@ -12,6 +12,7 @@ func enter():
 	else:
 		animated_sprite.play("lava_death")
 	get_reset_timer()
+	character_body.current_state = "dying"
 	
 func exit():
 	character_body.previous_state = "dying"

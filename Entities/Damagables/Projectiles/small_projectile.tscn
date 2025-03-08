@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://btamqevlm12ti"]
 
-[ext_resource type="Script" path="res://Entities/Damagables/Projectiles/Scripts/small_projectile.gd" id="1_780ri"]
+[ext_resource type="Script" uid="uid://fm24t5vpcclw" path="res://Entities/Damagables/Projectiles/Scripts/small_projectile.gd" id="1_780ri"]
 [ext_resource type="Texture2D" uid="uid://cqgpf3i2nfgjs" path="res://Entities/Damagables/Projectiles/Assets/skelly_sprites.aseprite" id="2_48kuu"]
 [ext_resource type="Texture2D" uid="uid://dl4l727j0ilkl" path="res://Entities/Birds/DodgeBird/Assets/skelly_sprites.aseprite" id="3_k8m6p"]
 

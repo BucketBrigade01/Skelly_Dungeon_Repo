@@ -5,16 +5,34 @@ extends Camera2D
 var screen_max_limit : int 
 var entered : bool = false
 var limit_left_val : int
+var player_room : Vector2
+var SCREEN_MAX_X_LEFT : int
+var SCREEN_MAX_X_RIGHT : int 
 
-const SCREEN_MAX_X : int = 3
 const SCREEN_MAX_Y : int = 2
 const SCREEN_SIZE : Vector2 = Vector2(256,224)
 
-func _process(_delta: float) -> void:
-	var player_position : Vector2 = (player.global_position / SCREEN_SIZE).floor()
-	@warning_ignore("narrowing_conversion")
-	limit_top = 224 * ceilf(abs(player.global_position.y/224)) * player_position.y
-	@warning_ignore("narrowing_conversion")
-	limit_left = 256 * floorf(absf(player.global_position.x/256)) + (-256)
-	@warning_ignore("narrowing_conversion")
-	limit_bottom = ceilf(abs(player.global_position.y/224)) * player_position.y
+func _ready() -> void:
+	var switch_node := get_tree().get_nodes_in_group("SwitchCamera")
+	for node in switch_node:
+		node.room_count.connect(set_rooms)
+
+func _process(delta: float) -> void:
+	# Calculate which screen/room the player is in
+	if !player.player_camera_follow:
+		player_room = (player.global_position / SCREEN_SIZE).floor()
+	
+	# Set camera limits based on the current room
+	limit_top = player_room.y * SCREEN_SIZE.y
+	limit_bottom = limit_top + SCREEN_SIZE.y
+	limit_left = player_room.x * SCREEN_SIZE.x - (SCREEN_SIZE.x * SCREEN_MAX_X_LEFT)
+	limit_right = (player_room.x * SCREEN_SIZE.x) + (SCREEN_SIZE.x * SCREEN_MAX_X_RIGHT)
+	# Debug output
+	#print("Room: ", player_room)
+	#print("Limits - Left: ", limit_left, " Right: ", limit_right)
+	#print("Limits - Top: ", limit_top, " Bottom: ", limit_bottom)
+
+func set_rooms(right, left) -> void:
+	print("left ", left, " right ", right)
+	SCREEN_MAX_X_LEFT = left - 1
+	SCREEN_MAX_X_RIGHT = right

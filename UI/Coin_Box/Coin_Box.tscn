@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://cr10f5qmt5dq3"]
 
-[ext_resource type="Script" path="res://UI/Coin_Box/Scripts/coin_box.gd" id="1_ixy4l"]
+[ext_resource type="Script" uid="uid://ce8f0htqfr4jx" path="res://UI/Coin_Box/Scripts/coin_box.gd" id="1_ixy4l"]
 [ext_resource type="Texture2D" uid="uid://c8xcgl8wq3xtp" path="res://UI/Coin_Box/Assets/coin_sheet.aseprite" id="2_dpj2e"]
-[ext_resource type="Script" path="res://Common/Resources/Player_Stats.gd" id="2_fiw81"]
+[ext_resource type="Script" uid="uid://nhr35hmba3ur" path="res://Common/Resources/Player_Stats.gd" id="2_fiw81"]
 [ext_resource type="FontFile" uid="uid://bb4kub2tkaj1n" path="res://Assets/Fonts/TinyUnicode.ttf" id="3_oopsn"]
 
 [sub_resource type="Resource" id="Resource_ercts"]

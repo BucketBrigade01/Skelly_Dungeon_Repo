@@ -1,6 +1,6 @@
 [gd_scene load_steps=39 format=3 uid="uid://2ef0gwlph50v"]
 
-[ext_resource type="Script" path="res://UI/Charge_Bar/Scripts/charge_bar.gd" id="1_6i0m4"]
+[ext_resource type="Script" uid="uid://c3a8pnomuy3rs" path="res://UI/Charge_Bar/Scripts/charge_bar.gd" id="1_6i0m4"]
 [ext_resource type="Texture2D" uid="uid://bxyqjr17o8ndn" path="res://UI/Charge_Bar/Assets/charge_bar_assets.aseprite" id="2_oeyn8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_soku1"]

@@ -1,3 +1,11 @@
+res://Entities/Camera_Transitions
+res://Entities/Camera_Transitions/Scripts
+res://Entities/Player/Shaders
+res://Entities/Interactables/ExtraJump
+res://Entities/Interactables/ExtraJump/Scripts
+res://Entities/Interactables/ExtraJump/Assets
+res://Entities/Doors/Sliding_Door
+C:/Users/jakestyles/AppData/Local/Programs/Microsoft VS Code
 res://Entities/Birds/DodgeBird/Assets
 res://Entities/Damagables/Projectiles/Scripts
 res://Entities/Birds/DodgeBird/Scripts
@@ -12,12 +20,3 @@ res://Entities/Birds/SquishBird/Assets
 res://Stages/Scripts
 res://Entities/Player/States
 res://UI/Text_Box/Scripts
-res://Entities/Birds/WiseBird/Scripts
-res://Entities/Birds/WiseBird
-res://Entities/Birds/WiseBird/Assets
-res://UI/Energy_Bar/Scripts
-res://UI/Health_Bar/Scripts
-res://Entities/Damagables/Projectiles
-res://Entities/Birds/LazerBird/Assets
-res://Entities/Birds/LazerBird/Shader
-C:/Program Files/Aseprite

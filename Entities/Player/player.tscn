@@ -1,22 +1,23 @@
-[gd_scene load_steps=53 format=3 uid="uid://bgjok2jf65yne"]
+[gd_scene load_steps=58 format=3 uid="uid://bgjok2jf65yne"]
 
-[ext_resource type="Script" path="res://Entities/Player/Scripts/player.gd" id="1_rqppq"]
-[ext_resource type="Script" path="res://Common/Resources/Player_Stats.gd" id="2_mcb0g"]
+[ext_resource type="Script" uid="uid://j20hdkl2nb8u" path="res://Entities/Player/Scripts/player.gd" id="1_rqppq"]
+[ext_resource type="Script" uid="uid://nhr35hmba3ur" path="res://Common/Resources/Player_Stats.gd" id="2_mcb0g"]
 [ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="2_pmmbf"]
-[ext_resource type="Script" path="res://Common/Components/Cameras/FollowCamera.gd" id="3_7gq3q"]
-[ext_resource type="Script" path="res://Entities/Player/Scripts/tile_data_detection.gd" id="3_qdut2"]
-[ext_resource type="Script" path="res://Common/Components/Cameras/TransitionCamera.gd" id="4_rgvow"]
-[ext_resource type="Script" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="5_pq454"]
-[ext_resource type="Script" path="res://Entities/Player/States/Idle.gd" id="6_5rrt8"]
-[ext_resource type="Script" path="res://Entities/Player/States/Fall.gd" id="7_etom1"]
-[ext_resource type="Script" path="res://Entities/Player/States/Jump.gd" id="8_ssifo"]
-[ext_resource type="Script" path="res://Entities/Player/States/Walk.gd" id="9_yn2dp"]
-[ext_resource type="Script" path="res://Entities/Player/Boost.gd" id="10_k0tat"]
-[ext_resource type="Script" path="res://Entities/Player/States/Hover.gd" id="11_rj1gi"]
-[ext_resource type="Script" path="res://Entities/Player/States/WallJump.gd" id="12_iguxa"]
-[ext_resource type="Script" path="res://Entities/Player/Dying.gd" id="13_kbokf"]
-[ext_resource type="Script" path="res://Entities/Player/States/Shoot.gd" id="14_eja27"]
-[ext_resource type="Script" path="res://Entities/Player/States/textbox.gd" id="16_0wwxk"]
+[ext_resource type="Script" uid="uid://dndmbi1mm6et" path="res://Common/Components/Cameras/FollowCamera.gd" id="3_7gq3q"]
+[ext_resource type="Script" uid="uid://clpmoc6tqm0fe" path="res://Entities/Player/Scripts/tile_data_detection.gd" id="3_qdut2"]
+[ext_resource type="Shader" uid="uid://saae3voudxib" path="res://Entities/Player/Shaders/Hit_Animation.tres" id="4_1tgkf"]
+[ext_resource type="Script" uid="uid://dik0r3uoeqnh5" path="res://Common/Components/Cameras/TransitionCamera.gd" id="4_rgvow"]
+[ext_resource type="Script" uid="uid://b304ko867e0n" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="5_pq454"]
+[ext_resource type="Script" uid="uid://clq1wxwsr6uam" path="res://Entities/Player/States/Idle.gd" id="6_5rrt8"]
+[ext_resource type="Script" uid="uid://gfsqqcikv636" path="res://Entities/Player/States/Fall.gd" id="7_etom1"]
+[ext_resource type="Script" uid="uid://b1baxqakbgbiy" path="res://Entities/Player/States/Jump.gd" id="8_ssifo"]
+[ext_resource type="Script" uid="uid://bb2k37fb4tdyh" path="res://Entities/Player/States/Walk.gd" id="9_yn2dp"]
+[ext_resource type="Script" uid="uid://cvyv34l1b0aln" path="res://Entities/Player/Boost.gd" id="10_k0tat"]
+[ext_resource type="Script" uid="uid://1ncdc7fuxbbe" path="res://Entities/Player/States/Hover.gd" id="11_rj1gi"]
+[ext_resource type="Script" uid="uid://cn81i07jrwfdo" path="res://Entities/Player/States/WallJump.gd" id="12_iguxa"]
+[ext_resource type="Script" uid="uid://dpn2w37p5ausj" path="res://Entities/Player/Dying.gd" id="13_kbokf"]
+[ext_resource type="Script" uid="uid://ba2uxeojx4n7l" path="res://Entities/Player/States/Shoot.gd" id="14_eja27"]
+[ext_resource type="Script" uid="uid://cwroiv5gbhq8g" path="res://Entities/Player/States/textbox.gd" id="16_0wwxk"]
 
 [sub_resource type="Resource" id="Resource_kkb2k"]
 script = ExtResource("2_mcb0g")
@@ -32,6 +33,48 @@ size = Vector2(17, 3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nwly3"]
 size = Vector2(7, 20)
+
+[sub_resource type="Animation" id="Animation_rdbgx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1xm43"]
+resource_name = "hit"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wgedu"]
+_data = {
+&"RESET": SubResource("Animation_rdbgx"),
+&"hit": SubResource("Animation_1xm43")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gdrw3"]
+shader = ExtResource("4_1tgkf")
+shader_parameter/enable = false
+shader_parameter/tint = Color(0.766505, 0.14522, 0.241071, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p2awl"]
 atlas = ExtResource("2_pmmbf")
@@ -330,18 +373,26 @@ position = Vector2(-1.5, 6)
 shape = SubResource("RectangleShape2D_nwly3")
 debug_color = Color(0.886789, 0.266542, 0.502231, 0.42)
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wgedu")
+}
+autoplay = "RESET"
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_gdrw3")
 sprite_frames = SubResource("SpriteFrames_wfwjy")
 animation = &"cling"
 autoplay = "idle"
 
 [node name="FollowCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 enabled = false
+drag_horizontal_enabled = true
 script = ExtResource("3_7gq3q")
 player = NodePath("..")
 
 [node name="TransitionCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
-position = Vector2(77, -53)
+position = Vector2(74, -54)
 script = ExtResource("4_rgvow")
 player = NodePath("..")
 
@@ -403,6 +454,14 @@ animated_sprite = NodePath("../../AnimatedSprite2D")
 [node name="Textbox" type="Node" parent="StateMachine"]
 script = ExtResource("16_0wwxk")
 
+[node name="StatesLabel" type="Label" parent="."]
+offset_left = -17.0
+offset_top = -37.0
+offset_right = 23.0
+offset_bottom = -14.0
+
 [connection signal="body_shape_entered" from="TileDataDetection" to="TileDataDetection" method="_on_body_shape_entered"]
+[connection signal="body_shape_entered" from="TileDataDetection" to="FollowCamera" method="_on_tile_data_detection_body_shape_entered"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="area_entered" from="HitBox" to="FollowCamera" method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

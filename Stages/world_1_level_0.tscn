@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bgl64vrl8cve4" path="res://Entities/Parallax_Layers/Sky.aseprite" id="1_23ild"]
 [ext_resource type="Texture2D" uid="uid://wk4prxlwro5n" path="res://Entities/Tile_Map/sprite_sheet_redesign.aseprite" id="1_legvf"]
-[ext_resource type="Script" path="res://Stages/Scripts/world_1_level_0.gd" id="1_u6ss7"]
+[ext_resource type="Script" uid="uid://bxgberjmaftas" path="res://Stages/Scripts/world_1_level_0.gd" id="1_u6ss7"]
 [ext_resource type="PackedScene" uid="uid://bgjok2jf65yne" path="res://Entities/Player/player.tscn" id="2_lmfjd"]
 [ext_resource type="Texture2D" uid="uid://bnlf461b7xa6s" path="res://Entities/Parallax_Layers/Moon.aseprite" id="2_ooee2"]
 [ext_resource type="Texture2D" uid="uid://b5hcguiftxivr" path="res://Entities/Parallax_Layers/Far_Clouds.aseprite" id="3_c120q"]
@@ -13,13 +13,13 @@
 [ext_resource type="PackedScene" uid="uid://calfbi8ptoin1" path="res://UI/Health_Bar/HealthBar.tscn" id="8_ync2i"]
 [ext_resource type="PackedScene" uid="uid://bm56oaestp1ou" path="res://Entities/Platforms/PlatformFlat.tscn" id="9_33f44"]
 [ext_resource type="PackedScene" uid="uid://jbfw4otx6yl8" path="res://Entities/Birds/WiseBird/WiseBird.tscn" id="9_kd5ae"]
-[ext_resource type="Script" path="res://Stages/Scripts/Path.gd" id="9_s5tgx"]
+[ext_resource type="Script" uid="uid://b7hkrc1clfqfv" path="res://Stages/Scripts/Path.gd" id="9_s5tgx"]
 [ext_resource type="PackedScene" uid="uid://ho723eovs8r4" path="res://UI/Text_Box/TextBox.tscn" id="11_2ff40"]
 [ext_resource type="FontFile" uid="uid://bb4kub2tkaj1n" path="res://Assets/Fonts/TinyUnicode.ttf" id="13_w8f14"]
-[ext_resource type="Script" path="res://Stages/Scripts/label.gd" id="14_ckiod"]
+[ext_resource type="Script" uid="uid://ca53a2ad4v7xa" path="res://Stages/Scripts/label.gd" id="14_ckiod"]
 [ext_resource type="Texture2D" uid="uid://d1m1ejcbvpxs5" path="res://Stages/Assets/Castles/castles_sprite_background.aseprite" id="15_l3q7m"]
 [ext_resource type="Texture2D" uid="uid://w4mmqln4ff7h" path="res://Stages/Assets/Castles/castles_sprite_foreground.aseprite" id="16_r7gwa"]
-[ext_resource type="Script" path="res://Stages/Scripts/detection_areas.gd" id="20_28hld"]
+[ext_resource type="Script" uid="uid://b6k32de778bty" path="res://Stages/Scripts/detection_areas.gd" id="20_28hld"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eropl"]
 texture = ExtResource("1_legvf")
