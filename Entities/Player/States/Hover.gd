@@ -39,7 +39,7 @@ func on_physics_process(delta : float):
 	# TRANSITION STATES
 	
 	# TRANSITION TO FALL STATE
-	if character_body.extra_jump:
+	if GameInput.jump_input() and character_body.extra_jump:
 		transition.emit("jump")
 	
 	if !GameInput.hover_input() or !can_hover:

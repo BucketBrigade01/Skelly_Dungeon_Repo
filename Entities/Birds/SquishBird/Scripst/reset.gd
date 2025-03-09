@@ -5,9 +5,20 @@ class_name SquishBirdReset
 @export var squish_bird : SquishBird
 
 var player : CharacterBody2D
+var dip_timer : float = 0.05
+
 
 func on_physics_process(_delta : float) -> void:
-	squish_bird.velocity.y = -30 
+	
+	if squish_bird.player_on:
+		print("dip")
+		print("player on head ", squish_bird.player_on)
+		squish_bird.velocity.y = 100
+		get_dip_timer()
+		
+	else:
+		squish_bird.velocity.y = -30 
+		
 	squish_bird.move_and_slide()
 	if squish_bird.get_slide_collision_count() > 0:
 		if squish_bird.is_on_ceiling_only() and squish_bird.get_slide_collision(0).get_collider().get_class() == "StaticBody2D":
@@ -17,3 +28,8 @@ func enter():
 
 func exit():
 	pass
+
+func get_dip_timer() -> void:
+	await get_tree().create_timer(dip_timer).timeout
+	print("timer up")
+	squish_bird.player_on = false

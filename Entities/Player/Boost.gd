@@ -29,7 +29,7 @@ func on_physics_process(delta : float):
 	
 	if timer.time_left == 0:
 		Utils.player_crouch_val += 1
-		timer = get_tree().create_timer(0.05)
+		timer = get_tree().create_timer(0.02)
 
 	
 	if Utils.player_crouch_val >= 20 and character_body.is_on_floor() and GameInput.jump_input():
@@ -56,7 +56,7 @@ func on_physics_process(delta : float):
 		transition.emit("dying")
 func enter():
 	# Emited so Player knows crouch state
-	timer = get_tree().create_timer(0.5)
+	timer = get_tree().create_timer(0.2)
 	Utils.player_crouched = true
 	animated_sprite.play("charge")
 	character_body.current_state = "boost"

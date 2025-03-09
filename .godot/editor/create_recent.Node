@@ -1,5 +1,7 @@
 CollisionShape2D
 Area2D
+RayCast2D
+Node2D
 Node
 Label
 AnimatedSprite2D
@@ -7,8 +9,6 @@ StaticBody2D
 AnimationPlayer
 Marker2D
 CharacterBody2D
-Node2D
 Sprite2D
 CanvasLayer
-RayCast2D
 CollisionPolygon2D

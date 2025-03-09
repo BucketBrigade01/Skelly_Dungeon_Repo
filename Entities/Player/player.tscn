@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://bgjok2jf65yne"]
+[gd_scene load_steps=57 format=3 uid="uid://bgjok2jf65yne"]
 
 [ext_resource type="Script" uid="uid://j20hdkl2nb8u" path="res://Entities/Player/Scripts/player.gd" id="1_rqppq"]
 [ext_resource type="Script" uid="uid://nhr35hmba3ur" path="res://Common/Resources/Player_Stats.gd" id="2_mcb0g"]
@@ -28,11 +28,8 @@ coins = 0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f1nm4"]
 size = Vector2(10, 19)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iut7e"]
-size = Vector2(17, 3)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nwly3"]
-size = Vector2(7, 20)
+size = Vector2(7, 21)
 
 [sub_resource type="Animation" id="Animation_rdbgx"]
 length = 0.001
@@ -343,10 +340,6 @@ collision_mask = 137
 script = ExtResource("1_rqppq")
 stats = SubResource("Resource_kkb2k")
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2(0, 7)
-target_position = Vector2(17, 0)
-
 [node name="ProjectileSpawner" type="Marker2D" parent="."]
 position = Vector2(4, 7)
 
@@ -354,22 +347,24 @@ position = Vector2(4, 7)
 position = Vector2(-1, 6.5)
 shape = SubResource("RectangleShape2D_f1nm4")
 
-[node name="TileDataDetection" type="Area2D" parent="." groups=["Player"]]
-collision_layer = 0
-collision_mask = 9
+[node name="TileDataDetection" type="Node2D" parent="." node_paths=PackedStringArray("player") groups=["Player"]]
 script = ExtResource("3_qdut2")
+player = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileDataDetection"]
-position = Vector2(-0.5, 6.5)
-shape = SubResource("RectangleShape2D_iut7e")
-debug_color = Color(0.476413, 0.582776, 0.23994, 0.42)
+[node name="LeftTileRay" type="RayCast2D" parent="TileDataDetection"]
+position = Vector2(0, 7)
+target_position = Vector2(-9, 0)
+
+[node name="RightTileRay" type="RayCast2D" parent="TileDataDetection"]
+position = Vector2(0, 7)
+target_position = Vector2(11, 0)
 
 [node name="HitBox" type="Area2D" parent="." groups=["Player"]]
 collision_layer = 2
-collision_mask = 13
+collision_mask = 77
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(-1.5, 6)
+position = Vector2(-1.5, 6.5)
 shape = SubResource("RectangleShape2D_nwly3")
 debug_color = Color(0.886789, 0.266542, 0.502231, 0.42)
 
@@ -382,7 +377,7 @@ autoplay = "RESET"
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_gdrw3")
 sprite_frames = SubResource("SpriteFrames_wfwjy")
-animation = &"cling"
+animation = &"jump"
 autoplay = "idle"
 
 [node name="FollowCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
@@ -460,8 +455,8 @@ offset_top = -37.0
 offset_right = 23.0
 offset_bottom = -14.0
 
-[connection signal="body_shape_entered" from="TileDataDetection" to="TileDataDetection" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="TileDataDetection" to="FollowCamera" method="_on_tile_data_detection_body_shape_entered"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_entered" from="HitBox" to="FollowCamera" method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="body_entered" from="HitBox" to="TileDataDetection" method="_on_hit_box_body_entered"]
+[connection signal="body_shape_entered" from="HitBox" to="TileDataDetection" method="_on_hit_box_body_shape_entered"]

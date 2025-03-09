@@ -22,6 +22,7 @@ func on_physics_process(delta : float):
 		if GameInput.jump_input():
 			buffer_jump = true
 			get_buffer_timer()
+
 		get_coyote_timer()
 		character_body.velocity.y += GRAVITY * delta
 	

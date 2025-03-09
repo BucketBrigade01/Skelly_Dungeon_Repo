@@ -10,6 +10,7 @@ extends State
 @export var JUMP_TIME_DESCENT : float = 0.28
 @export var MIN_JUMP_HEIGHT : float = 16
 @export var MIN_JUMP_TIME : float = 0.18
+@export var EXTRA_JUMP_TIME_PEAK : float = 0.45
 @export var jump_buffer_timer : float = 0.1
 
 @export_category("Horizontal Properties")
@@ -20,6 +21,7 @@ var JUMP_VELOCITY : float = ((2.0 * JUMP_HEIGHT) / JUMP_TIME_PEAK) * -1
 var JUMP_GRAVITY : float = ((-2.0 * JUMP_HEIGHT) / (JUMP_TIME_PEAK * JUMP_TIME_PEAK)) * -1
 var FALL_GRAVITY : float = ((-2.0 * JUMP_HEIGHT) / (JUMP_TIME_DESCENT * JUMP_TIME_DESCENT)) * -1
 var EARLY_RELEASE_GRAVITY = (MIN_JUMP_HEIGHT - JUMP_VELOCITY * MIN_JUMP_TIME) / (MIN_JUMP_TIME * MIN_JUMP_TIME)
+var EXTRA_JUMP_VELOCITY : float = ((2.0 * JUMP_HEIGHT) / EXTRA_JUMP_TIME_PEAK) * -1
 
 var walljump_timer_node : Timer
 var walljump_timer : float = 0.5
@@ -30,10 +32,14 @@ var buffer_jump : bool
 func on_physics_process(delta : float):
 	# REDULAR JUMP / COYOTE JUMP + GRAVITY
 	character_body.velocity.y += get_gravity() * delta
-	
-	if character_body.is_on_floor() or coyote_jump or character_body.extra_jump == true:
+
+	if (character_body.is_on_floor() or coyote_jump) and (!character_body.extra_jump and character_body.previous_state != "hover"):
+		print("regular jump")
 		character_body.velocity.y = JUMP_VELOCITY
 		coyote_jump = false
+	elif character_body.extra_jump and (character_body.previous_state == "hover" or GameInput.jump_input()):
+		print("extra jump")
+		character_body.velocity.y = EXTRA_JUMP_VELOCITY * 1.5
 		character_body.extra_jump = false
 	else:
 		if GameInput.jump_input():	
@@ -74,7 +80,6 @@ func on_physics_process(delta : float):
 	
 	# TRANSITION TO WALLJUMP STATE
 	if GameInput.grab_input() and !character_body.previous_state == "idle" and tile_data.tile_type == "walljump" and (character_body.velocity.y > 0.0 or !can_grab_again):
-		print(tile_data.tile_type)
 		transition.emit("walljump")
 	
 	# TRANSITION TO DYING STATE 
@@ -97,7 +102,6 @@ func enter():
 		walljump_timer_node.one_shot = true
 		walljump_timer_node.connect("timeout", get_walljump_buffer)
 		add_child(walljump_timer_node)
-		
 	
 func exit():
 	if character_body.previous_state == "walljump":

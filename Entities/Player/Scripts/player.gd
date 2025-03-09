@@ -36,14 +36,8 @@ func _process(_delta):
 	stats.health = Utils.player_health
 	
 	var direction = GameInput.movment_input()
-	
-	if direction == 1:
-		ray_cast.rotation_degrees = 0
-	elif direction == -1:
-		ray_cast.rotation_degrees = 180
-	else:
-		pass
-	ray_casting()
+	if is_on_floor():
+		extra_jump = false
 	
 	# For Lazer
 	if Utils.player_health < current_plauyer_health:
@@ -57,12 +51,7 @@ func _process(_delta):
 	var last_label = state_label.text
 	state_label.text = current_state
 	
-	if state_label.text != last_label:
-		print(state_label.text)
 	
-func ray_casting():
-	on_wall = ray_cast.is_colliding()
-
 # For when areas enter Player hitbox
 func _on_hit_box_area_entered(area):
 	if area.is_in_group("SwitchCamera"):
@@ -84,3 +73,5 @@ func _on_hit_box_area_entered(area):
 		is_dying = true
 	if area.is_in_group("ExtraJump"):
 		extra_jump = true
+
+		

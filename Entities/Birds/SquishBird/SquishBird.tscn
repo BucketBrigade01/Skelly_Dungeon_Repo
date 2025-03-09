@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cr2ymwlpu00dh"]
+[gd_scene load_steps=35 format=3 uid="uid://cr2ymwlpu00dh"]
 
 [ext_resource type="Script" uid="uid://dexpo2gpehg7k" path="res://Entities/Birds/SquishBird/Scripst/squish_bird.gd" id="1_8233s"]
 [ext_resource type="Texture2D" uid="uid://gggln8bxls8t" path="res://Entities/Birds/SquishBird/Assets/squishbird_spritesheet.aseprite" id="2_kydso"]
@@ -193,12 +193,15 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vsut2"]
 size = Vector2(33, 34)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xvwb4"]
+size = Vector2(33, 16)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_byva3"]
 size = Vector2(28, 7)
 
 [node name="SquishBird" type="CharacterBody2D" groups=["SquishBird"]]
 collision_layer = 128
-collision_mask = 17
+collision_mask = 49
 script = ExtResource("1_8233s")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -209,6 +212,15 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3.5, -1)
 shape = SubResource("RectangleShape2D_vsut2")
+
+[node name="DetectionBox" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionBox"]
+position = Vector2(-3.5, -19)
+shape = SubResource("RectangleShape2D_xvwb4")
+debug_color = Color(0.656809, 0.464946, 0.604628, 0.42)
 
 [node name="HurtBox" type="Area2D" parent="." groups=["SquishBird"]]
 collision_layer = 4
@@ -252,3 +264,5 @@ squish_bird = NodePath("../..")
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/charge" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/squish" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/tilt" method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="DetectionBox" to="." method="_on_detection_box_body_entered"]
+[connection signal="body_exited" from="DetectionBox" to="." method="_on_detection_box_body_exited"]

@@ -21,7 +21,6 @@ func _on_body_entered(body):
 		$CPUParticles2D.emitting = false
 		$WorldEnvironment.environment.glow_enabled = false
 		animated_sprite.play("wall_hit")
-
 		
 func _on_animated_sprite_2d_animation_finished():
 	queue_free()
@@ -33,6 +32,8 @@ func _on_area_entered(area):
 		$CPUParticles2D.emitting = false
 		$WorldEnvironment.environment.glow_enabled = false
 		animated_sprite.play("wall_hit")
+		$CollisionShape2D.set_deferred("disabled", true)
+
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:

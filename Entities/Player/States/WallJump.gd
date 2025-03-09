@@ -37,7 +37,7 @@ func on_physics_process(_delta : float):
 	
 	# TRANSITION STATES
 	# TRANSITION TO IDLE STATE
-	if !GameInput.grab_input() or character_body.on_wall == false:
+	if !GameInput.grab_input() or tile_data.tile_type != "walljump":
 		transition.emit("fall")
 		
 	
