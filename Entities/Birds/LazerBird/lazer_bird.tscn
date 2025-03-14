@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://dci0t6k8mxkjm"]
+[gd_scene load_steps=70 format=3 uid="uid://dci0t6k8mxkjm"]
 
 [ext_resource type="Script" uid="uid://cjxojvhbegf3p" path="res://Entities/Birds/LazerBird/Scripts/lazer_bird.gd" id="1_u0e1u"]
 [ext_resource type="Texture2D" uid="uid://c4gs5j2jmgn8o" path="res://Entities/Birds/LazerBird/Assets/laserbird-Sheet.png" id="1_xoqgb"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" uid="uid://b68xvix3qps3" path="res://Entities/Birds/LazerBird/Scripts/Flying.gd" id="8_pvc8w"]
 [ext_resource type="PackedScene" uid="uid://dcqfsr421wedc" path="res://Entities/Damagables/Projectiles/lazer.tscn" id="8_xng0p"]
 [ext_resource type="Script" uid="uid://c6ml0cbv7bs1r" path="res://Entities/Birds/LazerBird/Scripts/Dead.gd" id="10_lbiv8"]
+[ext_resource type="AudioStream" uid="uid://bdxaiblyv56y" path="res://Assets/Sound_FX/bird_hurt.wav" id="15_5pjww"]
+[ext_resource type="AudioStream" uid="uid://bir6ytm1yp7wt" path="res://Assets/Sound_FX/bird_dead.wav" id="16_yw3vf"]
 
 [sub_resource type="Resource" id="Resource_0f1in"]
 resource_local_to_scene = true
@@ -482,6 +484,13 @@ upward_speed = 20
 
 [node name="Dead" type="Node" parent="StateMachine"]
 script = ExtResource("10_lbiv8")
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_5pjww")
+volume_db = -12.912
+
+[node name="DeadSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_yw3vf")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Hatch" method="_on_animated_sprite_2d_animation_finished"]

@@ -25,7 +25,8 @@ func on_physics_process(_delta : float) -> void:
 			transition.emit("tilt")
 func enter():
 	animated_sprite.play("reset")
-
+	$"../../FlapSound".play()
+	
 func exit():
 	pass
 
@@ -33,3 +34,11 @@ func get_dip_timer() -> void:
 	await get_tree().create_timer(dip_timer).timeout
 	print("timer up")
 	squish_bird.player_on = false
+
+
+func _on_flap_sound_finished() -> void:
+	get_flap_timer()
+	
+func get_flap_timer() -> void:
+	await get_tree().create_timer(0.75).timeout
+	$"../../FlapSound".play()

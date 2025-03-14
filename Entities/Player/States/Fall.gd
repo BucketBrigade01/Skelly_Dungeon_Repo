@@ -3,15 +3,17 @@ extends State
 var coyote_jump : bool
 var buffer_jump : bool
 var can_hover : bool
+var can_wall_jump := false
 
+@export var tile_data : TileDataDetection
 @export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
 
 @export_category("Fall Properties")
-@export var AIR_SPEED : int = 300
+@export var AIR_SPEED : int = 350
 @export var MAX_HORIZONTAL_AIR_SPEED : int = 80
 @export var coyote_timer : float = 0.1
-@export var jump_buffer_timer : float = 0.1
+@export var jump_buffer_timer : float = 0.2
 
 const GRAVITY = 700
 	
@@ -71,6 +73,13 @@ func on_physics_process(delta : float):
 	if character_body.is_dying:
 		transition.emit("dying")
 	
+	if can_wall_jump and GameInput.grab_input() and tile_data.tile_type == "walljump":
+		can_hover = true
+		if character_body.previous_state == "boost" and character_body.velocity > Vector2.ZERO:
+			transition.emit("walljump")
+		elif character_body.previous_state == "hover":
+			transition.emit("walljump")
+	
 	# TRANSITION TO SHOOT STATE
 	if GameInput.shoot_input():
 		transition.emit("Shoot")
@@ -82,6 +91,13 @@ func enter():
 	if character_body.previous_state == "hover":
 		can_hover = false
 		coyote_jump = false
+		can_wall_jump = true
+		animated_sprite.play("fall")
+	elif character_body.previous_state == "boost":
+		can_hover = true
+		coyote_jump = false
+		can_wall_jump = true
+		animated_sprite.play("fall")
 	else:
 		animated_sprite.play("fall")
 	

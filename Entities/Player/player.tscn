@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://bgjok2jf65yne"]
+[gd_scene load_steps=63 format=3 uid="uid://bgjok2jf65yne"]
 
 [ext_resource type="Script" uid="uid://j20hdkl2nb8u" path="res://Entities/Player/Scripts/player.gd" id="1_rqppq"]
 [ext_resource type="Script" uid="uid://nhr35hmba3ur" path="res://Common/Resources/Player_Stats.gd" id="2_mcb0g"]
@@ -18,6 +18,12 @@
 [ext_resource type="Script" uid="uid://dpn2w37p5ausj" path="res://Entities/Player/Dying.gd" id="13_kbokf"]
 [ext_resource type="Script" uid="uid://ba2uxeojx4n7l" path="res://Entities/Player/States/Shoot.gd" id="14_eja27"]
 [ext_resource type="Script" uid="uid://cwroiv5gbhq8g" path="res://Entities/Player/States/textbox.gd" id="16_0wwxk"]
+[ext_resource type="AudioStream" uid="uid://hm0rqxct6l4s" path="res://Assets/Sound_FX/player_shoot.wav" id="19_0poeq"]
+[ext_resource type="AudioStream" uid="uid://c0geosoy1cpr6" path="res://Assets/Sound_FX/hitHurt.wav" id="20_ppdlg"]
+[ext_resource type="AudioStream" uid="uid://28igsi1wcmms" path="res://Assets/Sound_FX/jump.wav" id="21_v7p16"]
+[ext_resource type="AudioStream" uid="uid://dplqwag3q23jn" path="res://Assets/Sound_FX/land.wav" id="22_a8wow"]
+[ext_resource type="AudioStream" uid="uid://c4qgb02ruemj1" path="res://Assets/Sound_FX/boost.wav" id="22_dv6dp"]
+[ext_resource type="AudioStream" uid="uid://tenhldmlat58" path="res://Assets/Sound_FX/click.wav" id="23_avsg8"]
 
 [sub_resource type="Resource" id="Resource_kkb2k"]
 script = ExtResource("2_mcb0g")
@@ -361,7 +367,7 @@ target_position = Vector2(11, 0)
 
 [node name="HitBox" type="Area2D" parent="." groups=["Player"]]
 collision_layer = 2
-collision_mask = 77
+collision_mask = 109
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(-1.5, 6.5)
@@ -382,7 +388,9 @@ autoplay = "idle"
 
 [node name="FollowCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 enabled = false
+position_smoothing_enabled = true
 drag_horizontal_enabled = true
+drag_top_margin = 0.5
 script = ExtResource("3_7gq3q")
 player = NodePath("..")
 
@@ -400,16 +408,18 @@ script = ExtResource("6_5rrt8")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Fall" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+[node name="Fall" type="Node" parent="StateMachine" node_paths=PackedStringArray("tile_data", "character_body", "animated_sprite")]
 script = ExtResource("7_etom1")
+tile_data = NodePath("../../TileDataDetection")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "tile_data")]
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "tile_data", "jump_sound")]
 script = ExtResource("8_ssifo")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 tile_data = NodePath("../../TileDataDetection")
+jump_sound = NodePath("../../JumpSound")
 JUMP_HORIZONTAL_SPEED = 20.0
 MAX_HORIZONTAL_JUMP_SPEED = 80.0
 
@@ -418,10 +428,11 @@ script = ExtResource("9_yn2dp")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Boost" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+[node name="Boost" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "boost_sound")]
 script = ExtResource("10_k0tat")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
+boost_sound = NodePath("../../BoostSound")
 
 [node name="Hover" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "tile_data")]
 script = ExtResource("11_rj1gi")
@@ -435,25 +446,51 @@ character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 tile_data = NodePath("../../TileDataDetection")
 
-[node name="Dying" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite")]
+[node name="Dying" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "hurt_sound")]
 script = ExtResource("13_kbokf")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
+hurt_sound = NodePath("../../HurtSound")
 
-[node name="Shoot" type="Node" parent="StateMachine" node_paths=PackedStringArray("projectile_spawner", "character_body", "animated_sprite")]
+[node name="Shoot" type="Node" parent="StateMachine" node_paths=PackedStringArray("projectile_spawner", "character_body", "animated_sprite", "shoot_sound")]
 script = ExtResource("14_eja27")
 projectile_spawner = NodePath("../../ProjectileSpawner")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
+shoot_sound = NodePath("../../ShootSound")
 
 [node name="Textbox" type="Node" parent="StateMachine"]
 script = ExtResource("16_0wwxk")
 
 [node name="StatesLabel" type="Label" parent="."]
+visible = false
 offset_left = -17.0
 offset_top = -37.0
 offset_right = 23.0
 offset_bottom = -14.0
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_0poeq")
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_ppdlg")
+volume_db = -16.197
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("21_v7p16")
+
+[node name="BoostSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("22_dv6dp")
+volume_db = -10.23
+
+[node name="LandSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("22_a8wow")
+volume_db = 0.853
+pitch_scale = 1.05
+
+[node name="WallSlideSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("23_avsg8")
+volume_db = -0.512
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_entered" from="HitBox" to="FollowCamera" method="_on_hit_box_area_entered"]

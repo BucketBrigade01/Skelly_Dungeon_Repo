@@ -1010,8 +1010,9 @@ tile_set = SubResource("TileSet_d5jn3")
 tile_map_data = PackedByteArray("AAAnAAsAAAAAAAAAAQAhAAsAAAAAAAAAAgAiAAsAAAAAAAAAAwAjAAsAAAAAAAAAAwAkAAsAAAAAAAAAAwAlAAsAAAAAAAAAAwAmAAsAAAAAAAAAAwA=")
 tile_set = SubResource("TileSet_8befx")
 
-[node name="Player" parent="." instance=ExtResource("2_lmfjd")]
+[node name="Player" parent="." node_paths=PackedStringArray("spawn_start") instance=ExtResource("2_lmfjd")]
 position = Vector2(38, 154)
+spawn_start = NodePath("../Start")
 
 [node name="EnergyBar" parent="." instance=ExtResource("7_torre")]
 
@@ -1095,6 +1096,9 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionAreas/ChangeLevel"]
 position = Vector2(519, 89)
 shape = SubResource("RectangleShape2D_sv6qs")
+
+[node name="Start" type="Marker2D" parent="."]
+position = Vector2(42, 165)
 
 [connection signal="body_entered" from="Path2D/BirdActive" to="Path2D" method="_on_bird_active_body_entered"]
 [connection signal="body_entered" from="DetectionAreas/ChangeLevel" to="DetectionAreas" method="_on_change_level_body_entered"]

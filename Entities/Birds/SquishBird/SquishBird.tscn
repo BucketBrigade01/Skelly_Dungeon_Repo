@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://cr2ymwlpu00dh"]
+[gd_scene load_steps=37 format=3 uid="uid://cr2ymwlpu00dh"]
 
 [ext_resource type="Script" uid="uid://dexpo2gpehg7k" path="res://Entities/Birds/SquishBird/Scripst/squish_bird.gd" id="1_8233s"]
 [ext_resource type="Texture2D" uid="uid://gggln8bxls8t" path="res://Entities/Birds/SquishBird/Assets/squishbird_spritesheet.aseprite" id="2_kydso"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://dm5scp4jumb7p" path="res://Entities/Birds/SquishBird/Scripst/squish.gd" id="7_u1hx1"]
 [ext_resource type="Script" uid="uid://cdmpxts8htmbf" path="res://Entities/Birds/SquishBird/Scripst/reset.gd" id="8_ovoxa"]
 [ext_resource type="Script" uid="uid://cps2534h8trhd" path="res://Entities/Birds/SquishBird/Scripst/tilt.gd" id="9_jyh37"]
+[ext_resource type="AudioStream" uid="uid://dpkgt5t6dhkct" path="res://Assets/Sound_FX/squish.wav" id="10_axyyg"]
+[ext_resource type="AudioStream" uid="uid://ckv0v1p72q53g" path="res://Assets/Sound_FX/flapping.wav" id="11_w3jrn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uloy0"]
 atlas = ExtResource("2_kydso")
@@ -261,8 +263,18 @@ script = ExtResource("9_jyh37")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 squish_bird = NodePath("../..")
 
+[node name="SquishSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_axyyg")
+volume_db = -11.082
+max_distance = 150.0
+
+[node name="FlapSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_w3jrn")
+max_distance = 150.0
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/charge" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/squish" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/tilt" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="DetectionBox" to="." method="_on_detection_box_body_entered"]
 [connection signal="body_exited" from="DetectionBox" to="." method="_on_detection_box_body_exited"]
+[connection signal="finished" from="FlapSound" to="StateMachine/reset" method="_on_flap_sound_finished"]

@@ -27,6 +27,7 @@ func on_tween_finished():
 
 func enter():
 	lazer.lazer_fired = true
+	$"../../LazerSound".play()
 	tween = get_tree().create_tween().set_parallel(true)
 	tween.tween_property(line, "width", 5, 0.1).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
 	tween.tween_property(line, "modulate", Color.DEEP_SKY_BLUE, 0.1).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)

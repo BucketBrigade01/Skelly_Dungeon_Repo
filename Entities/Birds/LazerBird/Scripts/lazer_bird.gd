@@ -20,8 +20,10 @@ func _on_hurt_box_area_entered(area):
 		stats.take_damage(1)
 		$AnimationPlayer.play("hit")
 		knock_back_direction = true
+		$HurtSound.play()
 		if stats.get_health() == 0:
 			dead = true
+			$DeadSound.play()
 			$AnimatedSprite2D.play("death")
 
 func _on_animated_sprite_2d_animation_finished():

@@ -59,7 +59,7 @@ func enter():
 	can_hover = true
 	animated_sprite.play("hover")
 	get_hover_timer()
-	character_body.current_state = "hoover"
+	character_body.current_state = "hover"
 	
 func exit():
 	character_body.previous_state = "hover"

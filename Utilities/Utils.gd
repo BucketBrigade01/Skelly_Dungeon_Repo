@@ -5,6 +5,10 @@ var player_crouch_val : int = 0
 var player_crouched : bool
 var textbox_reading : bool = false
 var coin_count : int = 0
+var player_spawnpoint : int = 0
+
+# Bullet Upgrades
+var breakable_upgrade := false
 
 func _process(_delta: float) -> void:
 	player_crouch_val = clamp(player_crouch_val, 0, 20)

@@ -1,0 +1,98 @@
+[gd_scene load_steps=14 format=3 uid="uid://c1m3rmp3xtrjb"]
+
+[ext_resource type="Script" uid="uid://ddp05881f8iix" path="res://Entities/Upgradables/Breakable/Scripts/bullet_upgrade_breakable.gd" id="1_g0ndj"]
+[ext_resource type="Texture2D" uid="uid://d1mqkkm0k5oqu" path="res://Entities/Upgradables/Breakable/Assets/skelly_sprites.aseprite" id="2_7aotp"]
+[ext_resource type="AudioStream" uid="uid://byd41u0mx5ndf" path="res://Assets/Sound_FX/egg_break.wav" id="3_7aotp"]
+[ext_resource type="AudioStream" uid="uid://denwaiskp84n" path="res://Assets/Sound_FX/egg_powerup.wav" id="4_6kdiv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6kdiv"]
+atlas = ExtResource("2_7aotp")
+region = Rect2(128, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61gvi"]
+atlas = ExtResource("2_7aotp")
+region = Rect2(144, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xp3g"]
+atlas = ExtResource("2_7aotp")
+region = Rect2(160, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fmcjv"]
+atlas = ExtResource("2_7aotp")
+region = Rect2(176, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdfur"]
+atlas = ExtResource("2_7aotp")
+region = Rect2(192, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pukpi"]
+atlas = ExtResource("2_7aotp")
+region = Rect2(208, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iab1t"]
+atlas = ExtResource("2_7aotp")
+region = Rect2(128, 128, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_78utw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6kdiv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61gvi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4xp3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fmcjv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdfur")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pukpi")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"break",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iab1t")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_56dek"]
+radius = 7.07107
+
+[node name="BulletUpgradeBreakable" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_g0ndj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_78utw")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_56dek")
+
+[node name="BreakSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_7aotp")
+volume_db = -9.377
+
+[node name="UpgradeSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_6kdiv")
+volume_db = -9.377
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

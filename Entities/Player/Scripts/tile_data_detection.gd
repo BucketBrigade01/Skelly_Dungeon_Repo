@@ -47,15 +47,16 @@ func process_tile_map(body : Node2D, body_rid : RID):
 	var current_tile_cell_data = current_tilemap.get_cell_tile_data(1, current_tilemap_cords)
 
 	var tile_layers : Array = []
-	for index in 3:
-		if current_tile_cell_data.get_custom_data_by_layer_id(index) != 0:
-			tile_layers.push_front(current_tile_cell_data.get_custom_data_by_layer_id(index))
-		else:
-			tile_layers.push_back(current_tile_cell_data.get_custom_data_by_layer_id(index))
+	if current_tile_cell_data != null:
+		for index in 3:
+			if current_tile_cell_data.get_custom_data_by_layer_id(index) != 0:
+				tile_layers.push_front(current_tile_cell_data.get_custom_data_by_layer_id(index))
+			else:
+				tile_layers.push_back(current_tile_cell_data.get_custom_data_by_layer_id(index))
 			
-	tile_data = tile_layers[0]
-	match_data()
-	check_damagables()
+		tile_data = tile_layers[0]
+		match_data()
+		check_damagables()
 	
 func check_damagables() -> void:
 	if tile_type == "spikes":

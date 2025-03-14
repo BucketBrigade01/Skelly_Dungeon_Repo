@@ -3,6 +3,7 @@ extends State
 @export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
 @export var tile_data : TileDataDetection
+@export var jump_sound : AudioStreamPlayer2D
 
 @export_category("Jump Properties")
 @export var JUMP_HEIGHT : float = 32
@@ -34,11 +35,9 @@ func on_physics_process(delta : float):
 	character_body.velocity.y += get_gravity() * delta
 
 	if (character_body.is_on_floor() or coyote_jump) and (!character_body.extra_jump and character_body.previous_state != "hover"):
-		print("regular jump")
 		character_body.velocity.y = JUMP_VELOCITY
 		coyote_jump = false
 	elif character_body.extra_jump and (character_body.previous_state == "hover" or GameInput.jump_input()):
-		print("extra jump")
 		character_body.velocity.y = EXTRA_JUMP_VELOCITY * 1.5
 		character_body.extra_jump = false
 	else:
@@ -76,6 +75,7 @@ func on_physics_process(delta : float):
 	
 	# TRANSITION TO IDLE STATE
 	if character_body.is_on_floor():
+		$"../../LandSound".play()
 		transition.emit("idle")
 	
 	# TRANSITION TO WALLJUMP STATE
@@ -95,6 +95,7 @@ func enter():
 	buffer_jump = false
 	animated_sprite.play("jump")
 	character_body.current_state = "jump"
+	jump_sound.play()
 	if character_body.previous_state == "walljump" and !character_body.is_on_floor():
 		can_grab_again = true
 		walljump_timer_node = Timer.new()

@@ -23,6 +23,8 @@ func shoot() -> void:
 	var proj_inst = projectile.instantiate()
 	add_child(proj_inst)
 	proj_inst.position = $Marker2D.position
+	$AnimatedSprite2D.play("shoot")
+	$ShootSound.play()
 
 func start_timer() -> void:
 	shoot_timer_node = Timer.new()

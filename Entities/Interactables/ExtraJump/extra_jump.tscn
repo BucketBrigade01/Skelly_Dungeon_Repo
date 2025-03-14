@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://bbarnk2x2pno8"]
+[gd_scene load_steps=18 format=3 uid="uid://bbarnk2x2pno8"]
 
 [ext_resource type="Script" uid="uid://dxee17mff52t6" path="res://Entities/Interactables/ExtraJump/Scripts/extra_jump.gd" id="1_ff4a6"]
 [ext_resource type="Texture2D" uid="uid://w2fsjopqyu88" path="res://Entities/Interactables/ExtraJump/Assets/extra_jump.aseprite" id="1_ulf5s"]
+[ext_resource type="AudioStream" uid="uid://cdsav5roe28v6" path="res://Assets/Sound_FX/extra_jump.wav" id="3_joqs3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o8u2y"]
 atlas = ExtResource("1_ulf5s")
@@ -72,22 +73,64 @@ animations = [{
 "speed": 9.0
 }]
 
+[sub_resource type="Animation" id="Animation_lg8hp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_joqs3"]
+resource_name = "regrow"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kdcuy"]
+_data = {
+&"RESET": SubResource("Animation_lg8hp"),
+&"regrow": SubResource("Animation_joqs3")
+}
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_4rygv"]
 radius = 6.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pw0mv"]
 radius = 7.07107
 
-[node name="ExtraJump" type="StaticBody2D" groups=["ExtraJump"]]
+[node name="ExtraJump" type="StaticBody2D" node_paths=PackedStringArray("regrow") groups=["ExtraJump"]]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_ff4a6")
+regrow = NodePath("AnimatedSprite2D/AnimationPlayer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_cgwxs")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.14144
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_kdcuy")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_4rygv")
@@ -100,5 +143,10 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_pw0mv")
 debug_color = Color(0.638374, 0.441452, 0.748432, 0.42)
 
+[node name="BreakSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_joqs3")
+volume_db = -3.41
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="animation_finished" from="AnimatedSprite2D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://dm1sd8x621stl"]
+
+[ext_resource type="Script" uid="uid://ckofyxyw40l7r" path="res://Entities/Platforms/Moving_Platform/Scripts/moving_platform.gd" id="1_ifkpb"]
+[ext_resource type="Texture2D" uid="uid://wk4prxlwro5n" path="res://Entities/Tile_Map/sprite_sheet_redesign.aseprite" id="1_tb7to"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifkpb"]
+size = Vector2(32.5, 16)
+
+[node name="MovingPlatform" type="AnimatableBody2D"]
+collision_mask = 0
+script = ExtResource("1_ifkpb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_tb7to")
+region_enabled = true
+region_rect = Rect2(128, 128, 32, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.25, 0)
+shape = SubResource("RectangleShape2D_ifkpb")
+
+[node name="WallCheck" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="WallCheck"]
+target_position = Vector2(-17, 0)
+
+[node name="RayCast2D2" type="RayCast2D" parent="WallCheck"]
+target_position = Vector2(17, 0)

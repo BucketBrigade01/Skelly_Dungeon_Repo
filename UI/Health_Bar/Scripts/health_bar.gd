@@ -8,6 +8,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if Utils.player_health == 3:
+		health_bar.value = 100
 	if Utils.player_health == 2:
 		health_bar.value = 70
 	if Utils.player_health == 1:

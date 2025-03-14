@@ -4,7 +4,7 @@ extends State
 @export var animated_sprite : AnimatedSprite2D
 
 @export_category("Idle Properties")
-@export var FRICTION : int = 10
+@export var FRICTION : int = 40
 	
 func on_physics_process(_delta : float):
 	# Slows player down using FRICTION
@@ -40,6 +40,8 @@ func on_physics_process(_delta : float):
 		transition.emit("Shoot")
 	
 func enter():
+	if character_body.previous_state == "fall":
+		$"../../LandSound".play()
 	animated_sprite.play("idle")
 	character_body.current_state = "idle"
 	

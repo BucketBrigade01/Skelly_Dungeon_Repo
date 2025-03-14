@@ -3,6 +3,7 @@ extends State
 @export var projectile_spawner : Marker2D
 @export var character_body : CharacterBody2D
 @export var animated_sprite : AnimatedSprite2D
+@export var shoot_sound : AudioStreamPlayer2D
 
 var bullet = preload("res://Entities/Damagables/Projectiles/simple_projectile.tscn")
 	
@@ -20,6 +21,7 @@ func enter():
 	bullet_instance.position = projectile_spawner.global_position
 	animated_sprite.play("hover")
 	character_body.current_state = "shoot"
+	shoot_sound.play()
 	
 func exit():
 	character_body.previous_state = "shoot"

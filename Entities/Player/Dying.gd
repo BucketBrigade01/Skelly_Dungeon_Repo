@@ -3,6 +3,7 @@ extends State
 @export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
 @export var timer : float = 1.0
+@export var hurt_sound : AudioStreamPlayer2D
 
 const GRAVITY = 700
 
@@ -11,8 +12,11 @@ func enter():
 		animated_sprite.play("spike_death")
 	else:
 		animated_sprite.play("lava_death")
-	get_reset_timer()
 	character_body.current_state = "dying"
+	hurt_sound.play()
+	Utils.coin_count = 0
+	get_reset_timer()
+
 	
 func exit():
 	character_body.previous_state = "dying"

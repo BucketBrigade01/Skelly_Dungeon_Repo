@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://bxdbdhntnm70r"]
+[gd_scene load_steps=15 format=3 uid="uid://bxdbdhntnm70r"]
 
 [ext_resource type="Texture2D" uid="uid://cqwfr6sn76c72" path="res://Entities/Collectables/Coin/Assets/coin_sheet.aseprite" id="1_ij314"]
 [ext_resource type="Script" uid="uid://bg2jk5vy44jk3" path="res://Entities/Collectables/Coin/Scripts/coin.gd" id="1_q4att"]
+[ext_resource type="AudioStream" uid="uid://cumthg7fy65sy" path="res://Assets/Sound_FX/pickupCoin.wav" id="3_0d5po"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8bgl3"]
 size = Vector2(6, 8)
@@ -99,6 +100,9 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionBox"]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_84fd8")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_0d5po")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="CollectionBox" to="." method="_on_collection_box_body_entered"]

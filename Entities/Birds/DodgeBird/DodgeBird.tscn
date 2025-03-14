@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cx8lgy4lcbt5o"]
+[gd_scene load_steps=10 format=3 uid="uid://cx8lgy4lcbt5o"]
 
 [ext_resource type="Script" uid="uid://blgkgqpcf3syh" path="res://Entities/Birds/DodgeBird/Scripts/dodge_bird.gd" id="1_5qio6"]
 [ext_resource type="Texture2D" uid="uid://dl4l727j0ilkl" path="res://Entities/Birds/DodgeBird/Assets/skelly_sprites.aseprite" id="2_wn311"]
+[ext_resource type="AudioStream" uid="uid://b7kcamyth26f2" path="res://Assets/Sound_FX/doudge_bird_bullet.wav" id="3_gf4yy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_trf1g"]
 atlas = ExtResource("2_wn311")
@@ -39,7 +40,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_y7cdn")
 }],
-"loop": true,
+"loop": false,
 "name": &"shoot",
 "speed": 5.0
 }]
@@ -55,7 +56,7 @@ script = ExtResource("1_5qio6")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_7gero")
-animation = &"idle"
+animation = &"shoot"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0)
@@ -63,3 +64,8 @@ shape = SubResource("RectangleShape2D_m3hua")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(-1, 8)
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_gf4yy")
+volume_db = -6.82
+max_distance = 150.0

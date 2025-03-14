@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://cpg4bwrir8r57"]
+
+[ext_resource type="Texture2D" uid="uid://wk4prxlwro5n" path="res://Entities/Tile_Map/sprite_sheet_redesign.aseprite" id="1_2leur"]
+[ext_resource type="Script" uid="uid://byxrvpadpep4v" path="res://Entities/Interactables/SpawnBlock/Scripts/static_body_2d.gd" id="1_va42t"]
+[ext_resource type="AudioStream" uid="uid://dbiigmaliakx7" path="res://Assets/Sound_FX/spawn_point.wav" id="3_r1cpt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_va42t"]
+size = Vector2(18, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4bji"]
+size = Vector2(16, 16)
+
+[node name="SpawnBlock" type="StaticBody2D"]
+collision_mask = 2
+script = ExtResource("1_va42t")
+
+[node name="DetectionZone" type="Area2D" parent="." groups=["spawnblock"]]
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+shape = SubResource("RectangleShape2D_va42t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_j4bji")
+
+[node name="NotActive" type="Sprite2D" parent="."]
+texture = ExtResource("1_2leur")
+region_enabled = true
+region_rect = Rect2(128, 96, 16, 16)
+
+[node name="Active" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("1_2leur")
+region_enabled = true
+region_rect = Rect2(144, 96, 16, 16)
+
+[node name="SpawnSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_r1cpt")
+volume_db = -14.492
+pitch_scale = 1.39
+
+[connection signal="area_entered" from="DetectionZone" to="." method="_on_detection_zone_area_entered"]
+[connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]

@@ -2,15 +2,5 @@ res://Stages/world_1_level_1.tscn
 res://Entities/Player/Shaders/Hit_Animation.tres
 res://Entities/Birds/LazerBird/Shader/Hit_Animation.tres
 res://Entities/Player/player.tscn
-res://Entities/Collectables/Coin/Coin.tscn
-res://Entities/Birds/SquishBird/SquishBird.tscn
-res://Entities/Birds/LazerBird/lazer_bird.tscn
-res://Entities/Damagables/Projectiles/simple_projectile.tscn
-res://Entities/Birds/LazerBird/Scripts/Flying.gd
-res://Entities/Birds/LazerBird/Scripts/lazer_bird.gd
-res://Entities/Damagables/Projectiles/simple_projectile.gd
-res://Entities/Birds/SquishBird/Scripst/reset.gd
-res://Entities/Player/States/Jump.gd
-res://Entities/Player/States/Fall.gd
-res://Entities/Player/States/Hover.gd
-res://Entities/Player/Scripts/player.gd
+res://Entities/Interactables/ExtraJump/extra_jump.tscn
+res://Stages/world_1_level_0.tscn

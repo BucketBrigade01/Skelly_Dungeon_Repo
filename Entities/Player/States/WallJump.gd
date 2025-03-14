@@ -52,9 +52,11 @@ func enter():
 	timer = get_tree().create_timer(3)
 	animated_sprite.play("cling")
 	character_body.current_state = "walljump"
+	$"../../WallSlideSound".play()
 	
 func exit():
 	tile_data.tile_type = ""
 	character_body.previous_state = "walljump"
 	animated_sprite.stop()
+	$"../../WallSlideSound".stop()
 	

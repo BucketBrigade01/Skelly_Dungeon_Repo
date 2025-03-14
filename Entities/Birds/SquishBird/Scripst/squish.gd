@@ -5,7 +5,8 @@ class_name SquishBirdSquish
 
 func enter():
 	animated_sprite.play("squish")
-
+	$"../../SquishSound".play()
+	
 func exit():
 	animated_sprite.stop()
 

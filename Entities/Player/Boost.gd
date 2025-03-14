@@ -14,6 +14,7 @@ extends State
 
 @export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
+@export var boost_sound : AudioStreamPlayer2D
 
 var JUMP_VELOCITY : float = ((2.0 * JUMP_HEIGHT) / JUMP_TIME_PEAK) * -1
 var WEAK_JUMP_VELOCITY : float = ((2.0 * WEAK_JUMP_HEIGHT) / JUMP_TIME_PEAK) * -1
@@ -34,14 +35,17 @@ func on_physics_process(delta : float):
 	
 	if Utils.player_crouch_val >= 20 and character_body.is_on_floor() and GameInput.jump_input():
 		character_body.velocity.y = JUMP_VELOCITY
+		boost_sound.play()
 		transition.emit("fall")
 		
 	if Utils.player_crouch_val >= 10 and Utils.player_crouch_val < 20 and character_body.is_on_floor() and GameInput.jump_input():
 		character_body.velocity.y = WEAK_JUMP_VELOCITY
+		boost_sound.play()
 		transition.emit("fall")
 	
 	if Utils.player_crouch_val < 10 and character_body.is_on_floor() and GameInput.jump_input():
 		character_body.velocity.y = SUPER_WEAK_JUMP_VELOCITY
+		boost_sound.play()
 		transition.emit("fall")
 		
 	character_body.move_and_slide()
@@ -60,6 +64,7 @@ func enter():
 	Utils.player_crouched = true
 	animated_sprite.play("charge")
 	character_body.current_state = "boost"
+	
 	
 func exit():
 	character_body.previous_state = "boost"
