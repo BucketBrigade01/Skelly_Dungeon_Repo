@@ -17,7 +17,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		$CollisionShape2D.set_deferred("disabled", true)
 		animation_sprite.play("collected")
-		Utils.player_health = 3
+		Utils.set_health(3)
 		$RegenSound.play()
 		$BreakSound.play()
 

@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var scene : Node2D
 
 func _physics_process(_delta: float) -> void:
-	if scene.text_box_finished:
+	if scene.objective_complete:
 		velocity.y = -40 	
 	move_and_slide()
 	

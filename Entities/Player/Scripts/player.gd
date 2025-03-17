@@ -30,7 +30,6 @@ var player_camera_follow : bool = false
 
 # These signal calls get the crouch state of our Player
 func _ready():
-	Utils.player_health = 3
 	current_plauyer_health = Utils.player_health
 	if Utils.player_spawnpoint == 0:
 		self.position = spawn_start.position
@@ -42,7 +41,6 @@ func _ready():
 func _process(_delta):
 	# Emits tp Charge Bar so we know how long player is crouching for
 	player_status.emit(crouched)
-	stats.health = Utils.player_health
 	
 	var direction = GameInput.movment_input()
 	if is_on_floor():
@@ -54,7 +52,7 @@ func _process(_delta):
 		current_plauyer_health = Utils.player_health
 		$HurtSound.play()
 	
-	if stats.get_health() == 0:
+	if Utils.get_health() == 0:
 		is_dying_spikes = true
 		is_dying = true
 	
@@ -80,7 +78,7 @@ func _on_hit_box_area_entered(area):
 	if area.is_in_group("SmallBullet"):
 		$AnimationPlayer.play("hit")
 		stats.health -= 1
-		Utils.player_health -= 1
+		Utils.set_health(-1)
 	if area.is_in_group("ExtraJump"):
 		extra_jump = true
 

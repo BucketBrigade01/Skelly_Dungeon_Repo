@@ -1,10 +1,17 @@
+res://Entities/Platforms/Moving_Platform/Scripts
+res://Entities/Doors/Lock_Key_Door/Scripts
+res://Entities/Collectables/Key/Scripts
+res://Entities/Collectables/Key
+res://Entities/Doors/Lock_Key_Door
+res://UI/button
+res://UI/Text_Box/Choice_Button/Scripts
+res://UI/Text_Box/Choice_Button
 res://Entities/Interactables/SpawnBlock/Scripts
 res://Entities/Interactables/SpawnBlock
 res://Entities/Upgradables/Healables/Small_Health/Scripts
 res://Entities/Upgradables/Healables/Small_Health/Assets
 res://Entities/Upgradables/Healables/Small_Health
 res://Stages/Scripts
-res://Entities/Platforms/Moving_Platform/Scripts
 res://Entities/Platforms/Moving_Platform
 res://Entities/Upgradables/Breakable/Assets
 res://Entities/Upgradables/Breakable/Scripts
@@ -13,10 +20,4 @@ res://Entities/Camera_Transitions
 res://Entities/Camera_Transitions/Scripts
 res://Entities/Player/Shaders
 res://Entities/Interactables/ExtraJump
-res://Entities/Interactables/ExtraJump/Scripts
-res://Entities/Interactables/ExtraJump/Assets
-res://Entities/Doors/Sliding_Door
 C:/Users/jakestyles/AppData/Local/Programs/Microsoft VS Code
-res://Entities/Birds/DodgeBird/Assets
-res://Entities/Damagables/Projectiles/Scripts
-res://Entities/Birds/DodgeBird/Scripts

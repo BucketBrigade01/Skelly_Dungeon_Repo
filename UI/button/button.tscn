@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3dv0hso1u0wx"]
+
+[ext_resource type="FontFile" uid="uid://bb4kub2tkaj1n" path="res://Assets/Fonts/TinyUnicode.ttf" id="1_1try3"]
+[ext_resource type="Script" uid="uid://ca53a2ad4v7xa" path="res://Stages/Scripts/label.gd" id="2_nl3nx"]
+
+[node name="button" type="Label"]
+modulate = Color(1, 1, 1, 0)
+offset_left = 378.0
+offset_top = 101.0
+offset_right = 418.0
+offset_bottom = 124.0
+theme_override_colors/font_color = Color(0.538541, 0.274141, 0.312279, 1)
+theme_override_fonts/font = ExtResource("1_1try3")
+text = "Press O"
+script = ExtResource("2_nl3nx")

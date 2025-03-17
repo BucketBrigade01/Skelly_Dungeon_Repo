@@ -38,4 +38,4 @@ func enter():
 func exit():
 	tween.stop()
 	glow.environment.glow_enabled = false
-	Utils.player_health -= 1
+	Utils.set_health(-1)

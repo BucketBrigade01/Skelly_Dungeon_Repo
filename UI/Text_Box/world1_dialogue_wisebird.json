@@ -1,0 +1,32 @@
+[
+	{
+		"commands_raw": "So skelly, we meet again. There are a couple things I need from you\n---\nFirst, make sure you keep collecting all those beautifuly shining pennies for me.\n---\n$if coin_count < 5 {\n    You need at least 5 pennies to continue to penguine gu\n---\n    You only have ${coin_count} coins so keep looking.\n}\n$else {\n    You got enough pennies for me, EGGCELENT!\n}\n---\n$if breakable_status {\n    You have the strength to continue, EGGCELENT!\n}\n$else {\n    You are too weak, comtinue deep down to find your power.\n}\n---\n$if coin_count >= 5 && breakable_status {\nHere is your key, break all blocks to find the way.\n---\n    $if coin_count >= 8 {\n    wow ${coin_count} coins you must think im pretty\n    ?> Yes -> option2\n    ?> no -> option1\n    }\n    $else {\n    signal(true)\n    }\n}\n$else {\nsignal(false)\n}",
+		"gnode_name": "start",
+		"id": 0.0,
+		"name": "Start",
+		"position": [
+			160.0,
+			160.0
+		]
+	},
+	{
+		"commands_raw": "Fuck you\n---\nsignal(false)",
+		"gnode_name": "option1",
+		"id": 1.0,
+		"name": "option1",
+		"position": [
+			300.0,
+			100.0
+		]
+	},
+	{
+		"commands_raw": "Why thank you\n---\nsignal(true)",
+		"gnode_name": "option2",
+		"id": 2.0,
+		"name": "option2",
+		"position": [
+			300.0,
+			220.0
+		]
+	}
+]

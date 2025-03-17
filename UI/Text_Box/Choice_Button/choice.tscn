@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqi0n4io55j37"]
+
+[ext_resource type="FontFile" uid="uid://bb4kub2tkaj1n" path="res://Assets/Fonts/TinyUnicode.ttf" id="1_scd42"]
+[ext_resource type="Script" uid="uid://bgqssaa7niltx" path="res://UI/Text_Box/Choice_Button/Scripts/choice.gd" id="1_vd7co"]
+
+[node name="Choice" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("1_scd42")
+script = ExtResource("1_vd7co")

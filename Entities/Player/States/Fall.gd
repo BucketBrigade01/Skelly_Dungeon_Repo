@@ -1,10 +1,5 @@
 extends State
 
-var coyote_jump : bool
-var buffer_jump : bool
-var can_hover : bool
-var can_wall_jump := false
-
 @export var tile_data : TileDataDetection
 @export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
@@ -14,6 +9,11 @@ var can_wall_jump := false
 @export var MAX_HORIZONTAL_AIR_SPEED : int = 80
 @export var coyote_timer : float = 0.1
 @export var jump_buffer_timer : float = 0.2
+
+var coyote_jump : bool
+var buffer_jump : bool
+var can_hover : bool
+var can_wall_jump := false
 
 const GRAVITY = 700
 	
@@ -45,15 +45,12 @@ func on_physics_process(delta : float):
 	# Checks to see if Player was on air before move_and_slide and state after
 	var can_buffer_jump : bool = true if !was_on_floor and character_body.is_on_floor() else false
 	
-	
-	# TRANSITION STATES
-	
 	# If we have hit the hover key only once while in the air and are pressing the hover key
 	if GameInput.hover_input() and can_hover and character_body.velocity.y > 0.0:
 		can_hover = false
 		transition.emit("hover")
 	
-	# TRANSITION TO BUFFER JUMP STATE
+	# TRANSITION STATES
 	
 	# TRANSITION TO JUMP STATE 
 	if buffer_jump and can_buffer_jump:
@@ -73,6 +70,7 @@ func on_physics_process(delta : float):
 	if character_body.is_dying:
 		transition.emit("dying")
 	
+	# TRANSITION TO WALLJUMP STATE
 	if can_wall_jump and GameInput.grab_input() and tile_data.tile_type == "walljump":
 		can_hover = true
 		if character_body.previous_state == "boost" and character_body.velocity > Vector2.ZERO:

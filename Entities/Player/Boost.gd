@@ -28,28 +28,32 @@ func on_physics_process(delta : float):
 	character_body.velocity.x = move_toward(character_body.velocity.x, 0, FRICTION)
 	character_body.velocity.y += get_gravity() * delta
 	
+	# Increase player crouch value
 	if timer.time_left == 0:
 		Utils.player_crouch_val += 1
 		timer = get_tree().create_timer(0.02)
 
-	
+	# This is the max jump
 	if Utils.player_crouch_val >= 20 and character_body.is_on_floor() and GameInput.jump_input():
 		character_body.velocity.y = JUMP_VELOCITY
 		boost_sound.play()
 		transition.emit("fall")
-		
+	
+	# This is the weak jump
 	if Utils.player_crouch_val >= 10 and Utils.player_crouch_val < 20 and character_body.is_on_floor() and GameInput.jump_input():
 		character_body.velocity.y = WEAK_JUMP_VELOCITY
 		boost_sound.play()
 		transition.emit("fall")
 	
+	# This is the weakest jump
 	if Utils.player_crouch_val < 10 and character_body.is_on_floor() and GameInput.jump_input():
 		character_body.velocity.y = SUPER_WEAK_JUMP_VELOCITY
 		boost_sound.play()
 		transition.emit("fall")
 		
 	character_body.move_and_slide()
-	# TRANSITION STATES
+	
+	# TRANSITION STATES 
 	
 	# TRANSITION TO IDLE STATE
 	if !GameInput.boost_input():
@@ -58,6 +62,7 @@ func on_physics_process(delta : float):
 	# TRANSITION TO DYING STATE 
 	if character_body.is_dying:
 		transition.emit("dying")
+		
 func enter():
 	# Emited so Player knows crouch state
 	timer = get_tree().create_timer(0.2)

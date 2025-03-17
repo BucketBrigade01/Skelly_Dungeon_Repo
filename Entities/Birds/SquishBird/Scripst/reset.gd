@@ -11,8 +11,6 @@ var dip_timer : float = 0.05
 func on_physics_process(_delta : float) -> void:
 	
 	if squish_bird.player_on:
-		print("dip")
-		print("player on head ", squish_bird.player_on)
 		squish_bird.velocity.y = 100
 		get_dip_timer()
 		
@@ -32,7 +30,6 @@ func exit():
 
 func get_dip_timer() -> void:
 	await get_tree().create_timer(dip_timer).timeout
-	print("timer up")
 	squish_bird.player_on = false
 
 

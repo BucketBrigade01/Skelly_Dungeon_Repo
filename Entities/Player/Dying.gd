@@ -12,9 +12,11 @@ func enter():
 		animated_sprite.play("spike_death")
 	else:
 		animated_sprite.play("lava_death")
+	
+	# This is the reset loop
 	character_body.current_state = "dying"
 	hurt_sound.play()
-	Utils.coin_count = 0
+	Utils.reset()
 	get_reset_timer()
 
 	

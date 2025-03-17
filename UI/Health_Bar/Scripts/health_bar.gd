@@ -4,15 +4,15 @@ extends CanvasLayer
 
 func _ready() -> void:
 	health_bar.value = 100
+	Utils.connect("update_world_stats", update_stats)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	if Utils.player_health == 3:
+func update_stats(health, coin, breakable) -> void:
+	if health == 3:
 		health_bar.value = 100
-	if Utils.player_health == 2:
+	if health == 2:
 		health_bar.value = 70
-	if Utils.player_health == 1:
+	if health == 1:
 		health_bar.value = 35
-	if Utils.player_health == 0:
+	if health == 0:
 		health_bar.value = 0

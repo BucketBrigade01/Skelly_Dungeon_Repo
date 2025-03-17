@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://xbj8uoae5yq3"]
+[gd_scene load_steps=31 format=4 uid="uid://xbj8uoae5yq3"]
 
 [ext_resource type="Texture2D" uid="uid://bgl64vrl8cve4" path="res://Entities/Parallax_Layers/Sky.aseprite" id="1_23ild"]
 [ext_resource type="Texture2D" uid="uid://wk4prxlwro5n" path="res://Entities/Tile_Map/sprite_sheet_redesign.aseprite" id="1_legvf"]
@@ -15,11 +15,12 @@
 [ext_resource type="PackedScene" uid="uid://jbfw4otx6yl8" path="res://Entities/Birds/WiseBird/WiseBird.tscn" id="9_kd5ae"]
 [ext_resource type="Script" uid="uid://b7hkrc1clfqfv" path="res://Stages/Scripts/Path.gd" id="9_s5tgx"]
 [ext_resource type="PackedScene" uid="uid://ho723eovs8r4" path="res://UI/Text_Box/TextBox.tscn" id="11_2ff40"]
-[ext_resource type="FontFile" uid="uid://bb4kub2tkaj1n" path="res://Assets/Fonts/TinyUnicode.ttf" id="13_w8f14"]
-[ext_resource type="Script" uid="uid://ca53a2ad4v7xa" path="res://Stages/Scripts/label.gd" id="14_ckiod"]
+[ext_resource type="PackedScene" uid="uid://c3dv0hso1u0wx" path="res://UI/button/button.tscn" id="14_yta85"]
 [ext_resource type="Texture2D" uid="uid://d1m1ejcbvpxs5" path="res://Stages/Assets/Castles/castles_sprite_background.aseprite" id="15_l3q7m"]
 [ext_resource type="Texture2D" uid="uid://w4mmqln4ff7h" path="res://Stages/Assets/Castles/castles_sprite_foreground.aseprite" id="16_r7gwa"]
+[ext_resource type="JSON" path="res://UI/Text_Box/start.json" id="17_2q34r"]
 [ext_resource type="Script" uid="uid://b6k32de778bty" path="res://Stages/Scripts/detection_areas.gd" id="20_28hld"]
+[ext_resource type="Script" uid="uid://crbbfjgwbrwq8" path="res://addons/ez_dialogue/ez_dialogue_node.gd" id="21_yta85"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eropl"]
 texture = ExtResource("1_legvf")
@@ -957,6 +958,7 @@ size = Vector2(20, 180)
 
 [node name="World1_Level0" type="Node2D"]
 script = ExtResource("1_u6ss7")
+jason = ExtResource("17_2q34r")
 
 [node name="Paralax_Map" type="Node2D" parent="."]
 
@@ -1018,20 +1020,11 @@ spawn_start = NodePath("../Start")
 
 [node name="HealthBar" parent="." instance=ExtResource("8_ync2i")]
 
-[node name="TextBox" parent="." node_paths=PackedStringArray("world") instance=ExtResource("11_2ff40")]
+[node name="TextBox" parent="." node_paths=PackedStringArray("world", "ez_dialogue") instance=ExtResource("11_2ff40")]
 world = NodePath("..")
+ez_dialogue = NodePath("../EzDialogue")
 
-[node name="Label" type="Label" parent="." node_paths=PackedStringArray("world")]
-modulate = Color(1, 1, 1, 0)
-offset_left = 378.0
-offset_top = 101.0
-offset_right = 418.0
-offset_bottom = 124.0
-theme_override_colors/font_color = Color(0.538541, 0.274141, 0.312279, 1)
-theme_override_fonts/font = ExtResource("13_w8f14")
-text = "Press O"
-script = ExtResource("14_ckiod")
-world = NodePath("..")
+[node name="Label" parent="." instance=ExtResource("14_yta85")]
 
 [node name="Path2D" type="Path2D" parent="." node_paths=PackedStringArray("world")]
 curve = SubResource("Curve2D_2pgrj")
@@ -1100,5 +1093,12 @@ shape = SubResource("RectangleShape2D_sv6qs")
 [node name="Start" type="Marker2D" parent="."]
 position = Vector2(42, 165)
 
+[node name="EzDialogue" type="Node" parent="."]
+script = ExtResource("21_yta85")
+metadata/_custom_type_script = "uid://crbbfjgwbrwq8"
+
 [connection signal="body_entered" from="Path2D/BirdActive" to="Path2D" method="_on_bird_active_body_entered"]
 [connection signal="body_entered" from="DetectionAreas/ChangeLevel" to="DetectionAreas" method="_on_change_level_body_entered"]
+[connection signal="custom_signal_received" from="EzDialogue" to="." method="_on_ez_dialogue_custom_signal_received"]
+[connection signal="dialogue_generated" from="EzDialogue" to="." method="_on_ez_dialogue_dialogue_generated"]
+[connection signal="end_of_dialogue_reached" from="EzDialogue" to="." method="_on_ez_dialogue_end_of_dialogue_reached"]

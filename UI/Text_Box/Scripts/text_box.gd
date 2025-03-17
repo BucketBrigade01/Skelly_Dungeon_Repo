@@ -1,100 +1,124 @@
 extends CanvasLayer
 
-@export var text_box : MarginContainer
-@export var start : Label
-@export var text_body : Label
-@export var end : Label
 @export var world : Node2D
-@export var last_textbox : bool = false
-@export var text1 := "Hello Skelly, we will get to know eachother soon enough"
-@export var text2 := "Get me the 6 Golden Eggs and I will return you back home"
-@export var text3 := "Now go, SCRAM!"
+@export var ez_dialogue : EzDialogue
+
+# Textbox Variables
+@onready var dialogue_text := $TextBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/text
+@onready var start_symbol := $TextBoxContainer/MarginContainer/HBoxContainer/Start
+@onready var end_symbol := $TextBoxContainer/MarginContainer/HBoxContainer/End
+@onready var tween : Tween
+
+# Dialogue Containers
+@onready var dialogue_container := $TextBoxContainer/MarginContainer/HBoxContainer/VBoxContainer
+@onready var choice_container := $TextBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer
+@onready var textbox_container := $TextBoxContainer
+
+# Choice Variables
+@onready var choice_option_scene = preload("res://UI/Text_Box/Choice_Button/choice.tscn")
 
 enum States {
 	READY,
-	READING,
+	READING, 
 	FINISHED
-} 
+}
 
-var current_state = States.READY 
-var tween : Tween
-var text_queuu : Array = []
+var choice_options : Array[ChoiceOption] = []
+var current_choice_index : int = 0
+var waiting_for_next_action : bool = false
+var textbox_running : bool = false
+var current_state := States.READY
+
+const READ_RATE := 0.05
 
 func _ready() -> void:
-	hide_textbox()
-	queue_twxt(text1)
-	queue_twxt(text2)
-	queue_twxt(text3)
-	if !Utils.breakable_upgrade and world.level_name == "level 1":
-		queue_twxt("Seems you don't have the power needed to move forward")
-		queue_twxt("Travel deep down to find your true power.")
-	else:
-		queue_twxt("You have the power nessesary to move forward.")
-				
-	if Utils.coin_count < 9:
-		queue_twxt("Seems you don't have enough coins, you only have " + str(Utils.coin_count))
-		queue_twxt("Return with 9 to coninue.")
-	else:
-		queue_twxt("You have " + str(Utils.coin_count) + "coins, that will be enough.")
-		
-func _process(_delta: float) -> void:
-	if world.activate_textbox == true:
-		text_box.visible = true
-		Utils.textbox_reading = true
-		
+	textbox_container.visible = false
+	end_symbol.visible = false
 	
-	if text_box.visible:
-		match current_state:
-			States.READY:
-				end.text = ""
-				if !text_queuu.is_empty():
-					displau_text()
-				else:
-					hide_textbox()
-					Utils.textbox_reading = false
-					world.text_box_finished = true
-			States.READING:
-				if GameInput.interact_input():
-					tween.stop()
-					text_body.visible_ratio = 1
-					end.text = "v"
-					change_state(States.FINISHED)
-			States.FINISHED:
-				if GameInput.interact_input():
-					change_state(States.READY)
-	
-func hide_textbox() -> void:
-	start.text = ""
-	text_body.text = ""
-	end.text = ""
-	text_box.hide()
+func _input(event: InputEvent) -> void:
+	if textbox_container.visible:
+		if !choice_options.is_empty():
+			if event.is_action_pressed("right") and current_choice_index < choice_options.size() - 1:
+				next_choice(choice_options[current_choice_index], choice_options[current_choice_index + 1])
+			if event.is_action_pressed("left") and !current_choice_index < 1:
+				previous_choice(choice_options[current_choice_index], choice_options[current_choice_index - 1])
+		else:
+			if event.is_action_pressed("interact") and current_state == States.READING:
+				dialogue_text.visible_ratio = 1.0
+				tween.kill()
+				change_state(States.FINISHED)
+			elif event.is_action_pressed("interact") and current_state == States.FINISHED: 
+				player_next_action()
 
-func queue_twxt(next_text : String) -> void:
-	text_queuu.push_back(next_text)
-
-func show_textbox() -> void:
-	text_box.show()
-	start.text = "*"
 	
-func displau_text() -> void:
-	text_body.text = text_queuu.pop_front()
-	text_body.visible_ratio = 0
+func add_text(text : String) -> void:
+	dialogue_text.text = text
 	change_state(States.READING)
-	show_textbox()
 	tween = get_tree().create_tween()
-	tween.tween_property(text_body, "visible_ratio", 1.0, 3).set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(dialogue_text, "visible_characters", len(text), len(text) * READ_RATE).from(0).finished
 	tween.connect("finished", on_tween_finished)
 	
+func remove_text() -> void:
+	dialogue_text.text = ""
+	for choice in choice_options:
+		choice_container.remove_child(choice)
+	choice_options = []
+
+func add_choice(choice_text : String) -> void:
+	var choice_instance = choice_option_scene.instantiate() as ChoiceOption
+	choice_instance.choice_index = choice_options.size()
+	choice_options.push_back(choice_instance)
+	choice_instance.choice_selected.connect(_on_choice_selected)
+	choice_instance.text = choice_text
+	choice_instance.visible = false
+	
+	if choice_options.size() == 1:
+		choice_instance.text = choice_instance.text + "<"
+		
+	choice_container.add_child(choice_instance)
+	
+func next_choice(previous_choice : ChoiceOption, current_choice : ChoiceOption) -> void:
+	previous_choice.text = previous_choice.text.left(previous_choice.text.length() - 1)
+	current_choice.text = current_choice.text + "<"
+	current_choice.is_selected = true
+	previous_choice.is_selected = false
+	current_choice_index += 1
+
+func previous_choice(previous_choice : ChoiceOption, current_choice : ChoiceOption) -> void:
+	previous_choice.text = previous_choice.text.left(previous_choice.text.length() - 1)
+	current_choice.text = current_choice.text + "<"
+	current_choice.is_selected = true
+	previous_choice.is_selected = false
+	current_choice_index -= 1
+
+func show_textbox() -> void:
+	textbox_running = true
+	textbox_container.show()
+
+func hide_textbox() -> void:
+	textbox_running = false
+	textbox_container.hide()
+
+func player_next_action() -> void:
+	ez_dialogue.next(0)
+
+func _on_choice_selected(choice_index : int) -> void:
+	ez_dialogue.next(choice_index)
+
 func on_tween_finished() -> void:
-	end.text = "v"
 	change_state(States.FINISHED)
 
-func change_state(next_state) -> void:
-	current_state = next_state
+func show_choices() -> void:
+	for choice in choice_options:
+		choice.visible = true
+	
+func change_state(new_state) -> void:
+	current_state = new_state
 	match current_state:
 		States.READY:
 			pass
 		States.READING:
-			pass
+			end_symbol.visible = false
 		States.FINISHED:
-			pass
+			end_symbol.visible = true
+			show_choices()

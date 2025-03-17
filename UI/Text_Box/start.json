@@ -1,0 +1,12 @@
+[
+	{
+		"commands_raw": "This is a start text \n---\nthis is the next line\n---\nthis is the final line\n---\nsignal(true)",
+		"gnode_name": "start",
+		"id": 0.0,
+		"name": "start",
+		"position": [
+			-100.0,
+			120.0
+		]
+	}
+]

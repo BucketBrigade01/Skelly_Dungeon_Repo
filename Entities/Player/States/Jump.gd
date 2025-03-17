@@ -45,15 +45,14 @@ func on_physics_process(delta : float):
 			if !buffer_jump:
 				buffer_jump = true
 				get_buffer_timer()
+				
 	# AIR MOVMENT
-	
 	var direction : float = GameInput.movment_input()
 	if direction:
 		character_body.velocity.x += JUMP_HORIZONTAL_SPEED * direction
 		character_body.velocity.x = clamp(character_body.velocity.x, -MAX_HORIZONTAL_JUMP_SPEED, MAX_HORIZONTAL_JUMP_SPEED)
 	
 	# FLIP SPRITE
-	
 	if direction != 0:
 		animated_sprite.flip_h = false if direction > 0 else true
 	
@@ -62,10 +61,10 @@ func on_physics_process(delta : float):
 	character_body.move_and_slide()
 	
 	# BUFFER JUMP
-	
 	if !was_on_floor and character_body.is_on_floor():
 		if buffer_jump:
 			character_body.velocity.y = JUMP_VELOCITY
+			jump_sound.play()
 	
 	# TRANSITION STATES
 	
@@ -96,6 +95,8 @@ func enter():
 	animated_sprite.play("jump")
 	character_body.current_state = "jump"
 	jump_sound.play()
+	
+	# Conditions when entering from walljump
 	if character_body.previous_state == "walljump" and !character_body.is_on_floor():
 		can_grab_again = true
 		walljump_timer_node = Timer.new()
