@@ -8,6 +8,9 @@ var difference : Vector2
 var animation_complete : bool 
 
 func on_process(_delta : float):
+	if !bird.on_screen:
+		return
+	
 	difference = bird.target.global_position - bird.position
 	if difference.length() < 100:
 		transition.emit("flying")

@@ -1,0 +1,98 @@
+[gd_scene load_steps=14 format=3 uid="uid://b0iuyjo630wkk"]
+
+[ext_resource type="Texture2D" uid="uid://dangxqafbnlx1" path="res://Entities/Damagables/Ice_Spikes/Assets/ice_spike_sheet.aseprite" id="1_blwfy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8b1r"]
+atlas = ExtResource("1_blwfy")
+region = Rect2(0, 0, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tir5y"]
+atlas = ExtResource("1_blwfy")
+region = Rect2(0, 0, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yswcq"]
+atlas = ExtResource("1_blwfy")
+region = Rect2(16, 0, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6x574"]
+atlas = ExtResource("1_blwfy")
+region = Rect2(32, 0, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bsmlo"]
+atlas = ExtResource("1_blwfy")
+region = Rect2(48, 0, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edjse"]
+atlas = ExtResource("1_blwfy")
+region = Rect2(64, 0, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tv6i5"]
+atlas = ExtResource("1_blwfy")
+region = Rect2(80, 0, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkbd4"]
+atlas = ExtResource("1_blwfy")
+region = Rect2(96, 0, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xefco"]
+atlas = ExtResource("1_blwfy")
+region = Rect2(112, 0, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6t2f"]
+atlas = ExtResource("1_blwfy")
+region = Rect2(128, 0, 16, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lohgv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t8b1r")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tir5y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yswcq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6x574")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bsmlo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_edjse")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tv6i5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkbd4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xefco")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6t2f")
+}],
+"loop": false,
+"name": &"shine",
+"speed": 9.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u4cv1"]
+size = Vector2(8, 48)
+
+[node name="IceSpike" type="Area2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lohgv")
+animation = &"shine"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_u4cv1")

@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://ca82l8ycmkn23"]
+
+[ext_resource type="Script" uid="uid://cm1ru6g3xn3in" path="res://Entities/Damagables/Projectiles/Ice_Bullet/Scripts/ice_bullet.gd" id="1_sk5hm"]
+[ext_resource type="Texture2D" uid="uid://bmn383dtm0uh7" path="res://Entities/Damagables/Projectiles/Ice_Bullet/Assets/ice_bullet_sheet.aseprite" id="2_5ig0o"]
+[ext_resource type="AudioStream" uid="uid://bir6ytm1yp7wt" path="res://Assets/Sound_FX/bird_dead.wav" id="3_5ig0o"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6h1bw"]
+radius = 6.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxal7"]
+atlas = ExtResource("2_5ig0o")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ti01d"]
+atlas = ExtResource("2_5ig0o")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ifvkh"]
+atlas = ExtResource("2_5ig0o")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nv3xy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rxal7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ti01d")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"break",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ifvkh")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="Curve" id="Curve_ffjxc"]
+_data = [Vector2(0.0280899, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="IceBullet" type="Area2D"]
+z_index = -1
+collision_layer = 32
+script = ExtResource("1_sk5hm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6h1bw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_nv3xy")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+rotation = 1.5708
+amount = 3
+lifetime = 0.7
+speed_scale = 3.0
+gravity = Vector2(0, -90)
+scale_amount_min = 2.5
+scale_amount_max = 2.5
+scale_amount_curve = SubResource("Curve_ffjxc")
+color = Color(0.545098, 1, 1, 1)
+
+[node name="BreakSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_5ig0o")
+volume_db = -23.869
+pitch_scale = 0.81
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

@@ -33,7 +33,6 @@ var buffer_jump : bool
 func on_physics_process(delta : float):
 	# REDULAR JUMP / COYOTE JUMP + GRAVITY
 	character_body.velocity.y += get_gravity() * delta
-
 	if (character_body.is_on_floor() or coyote_jump) and (!character_body.extra_jump and character_body.previous_state != "hover"):
 		character_body.velocity.y = JUMP_VELOCITY
 		coyote_jump = false
@@ -84,10 +83,6 @@ func on_physics_process(delta : float):
 	# TRANSITION TO DYING STATE 
 	if character_body.is_dying:
 		transition.emit("dying")
-	
-	# TRANSITION TO SHOOT STATE
-	if GameInput.shoot_input():
-		transition.emit("Shoot")
 
 func enter():
 	coyote_jump = true

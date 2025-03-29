@@ -35,10 +35,7 @@ func on_physics_process(_delta : float):
 	if character_body.is_dying:
 		transition.emit("dying")
 	
-	# TRANSITION TO SHOOT STATE
-	if GameInput.shoot_input():
-		transition.emit("Shoot")
-	
+
 func enter():
 	if character_body.previous_state == "fall":
 		$"../../LandSound".play()

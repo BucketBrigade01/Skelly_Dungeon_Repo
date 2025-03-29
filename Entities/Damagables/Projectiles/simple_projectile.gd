@@ -126,10 +126,15 @@ func _on_area_entered(area):
 	if area.is_in_group("LazerBird"):
 		in_air = false
 		$CPUParticles2D.emitting = false
-		$WorldEnvironment.environment.glow_enabled = false
+		#$WorldEnvironment.environment.glow_enabled = false
 		animated_sprite.play(curremt_animation_wall)
 		$CollisionShape2D.set_deferred("disabled", true)
-
+	if area.is_in_group("Penguin"):
+		in_air = false
+		$CPUParticles2D.emitting = false
+		#$WorldEnvironment.environment.glow_enabled = false
+		animated_sprite.play(curremt_animation_wall)
+		$CollisionShape2D.set_deferred("disabled", true)
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
@@ -141,6 +146,6 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 		process_tile_map(body, body_rid)
 		in_air = false
 		$CPUParticles2D.emitting = false
-		$WorldEnvironment.environment.glow_enabled = false
+		#$WorldEnvironment.environment.glow_enabled = false
 		animated_sprite.play(curremt_animation_wall)
 		$BulletBreakSound.play()

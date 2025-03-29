@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://prv50taq0qiw"]
+[gd_scene load_steps=5 format=3 uid="uid://prv50taq0qiw"]
 
 [ext_resource type="Texture2D" uid="uid://bv30rfqhd5p5g" path="res://Stages/Assets/Title_page.aseprite" id="1_lheth"]
 [ext_resource type="Script" uid="uid://b1us6yo14088b" path="res://Stages/Scripts/title.gd" id="1_u834a"]
+[ext_resource type="PackedScene" uid="uid://r0t4xu8vcmn1" path="res://Common/Crt_Shader/crt_shader.tscn" id="2_64drr"]
 [ext_resource type="FontFile" uid="uid://bb4kub2tkaj1n" path="res://Assets/Fonts/TinyUnicode.ttf" id="2_e2fjm"]
 
 [node name="Title" type="Node2D" node_paths=PackedStringArray("start", "end", "start_arrow", "end_arrow")]
@@ -10,6 +11,8 @@ start = NodePath("Start")
 end = NodePath("Quit")
 start_arrow = NodePath("StartArrow")
 end_arrow = NodePath("EndArrow")
+
+[node name="CRTShader" parent="." instance=ExtResource("2_64drr")]
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(128, 112)

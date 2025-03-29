@@ -17,12 +17,14 @@ func _process(_delta: float) -> void:
 
 # Fade out tween	
 func on_tween_finished_fadein():
-	var tween = get_tree().create_tween()
-	tween.tween_property(self, "modulate:a", 1.0, 1)
-	tween.connect("finished", on_tween_finished_fadeout)
+	if get_tree() != null:
+		var tween = get_tree().create_tween()
+		tween.tween_property(self, "modulate:a", 1.0, 1)
+		tween.connect("finished", on_tween_finished_fadeout)
 
 # Fade in tween
 func on_tween_finished_fadeout():
-	var tween = get_tree().create_tween()
-	tween.tween_property(self, "modulate:a", 0.0, 1)
-	tween.connect("finished", on_tween_finished_fadein)
+	if get_tree() != null:
+		var tween = get_tree().create_tween()
+		tween.tween_property(self, "modulate:a", 0.0, 1)
+		tween.connect("finished", on_tween_finished_fadein)

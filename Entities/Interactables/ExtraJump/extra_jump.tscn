@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bbarnk2x2pno8"]
+[gd_scene load_steps=17 format=3 uid="uid://bbarnk2x2pno8"]
 
 [ext_resource type="Script" uid="uid://dxee17mff52t6" path="res://Entities/Interactables/ExtraJump/Scripts/extra_jump.gd" id="1_ff4a6"]
 [ext_resource type="Texture2D" uid="uid://w2fsjopqyu88" path="res://Entities/Interactables/ExtraJump/Assets/extra_jump.aseprite" id="1_ulf5s"]
@@ -112,12 +112,9 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_4rygv"]
 radius = 6.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pw0mv"]
-radius = 7.07107
-
-[node name="ExtraJump" type="StaticBody2D" node_paths=PackedStringArray("regrow") groups=["ExtraJump"]]
-collision_layer = 0
-collision_mask = 0
+[node name="ExtraJump" type="Area2D" node_paths=PackedStringArray("regrow") groups=["ExtraJump"]]
+collision_layer = 8
+collision_mask = 2
 script = ExtResource("1_ff4a6")
 regrow = NodePath("AnimatedSprite2D/AnimationPlayer")
 
@@ -135,18 +132,9 @@ libraries = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_4rygv")
 
-[node name="HitBox" type="Area2D" parent="." groups=["ExtraJump"]]
-collision_layer = 8
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-shape = SubResource("CircleShape2D_pw0mv")
-debug_color = Color(0.638374, 0.441452, 0.748432, 0.42)
-
 [node name="BreakSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_joqs3")
 volume_db = -3.41
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="animation_finished" from="AnimatedSprite2D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

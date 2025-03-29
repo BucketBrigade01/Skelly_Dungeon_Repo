@@ -11,6 +11,9 @@ var tween : Tween
 
 func on_process(_delta : float):
 	# Tracking Skelly	
+	if !lazer.on_screen:
+		return
+	
 	difference = lazer.bird.target.global_position - lazer.bird.position
 	lazer.target_position = difference
 	line.points[0] = snap_to_pixel(lazer.position)
@@ -37,5 +40,5 @@ func enter():
 	
 func exit():
 	tween.stop()
-	glow.environment.glow_enabled = false
+	#glow.environment.glow_enabled = false
 	Utils.set_health(-1)

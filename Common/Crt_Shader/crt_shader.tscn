@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://r0t4xu8vcmn1"]
+
+[ext_resource type="Shader" uid="uid://3tju81swa1o7" path="res://Common/Crt_Shader/Shaders/crt.gdshader" id="1_la362"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u32x0"]
+shader = ExtResource("1_la362")
+shader_parameter/ca_strength = 20.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_capp0"]
+size = Vector2(256, 224)
+center_offset = Vector3(128, 112, 0)
+
+[node name="CRTShader" type="CanvasLayer"]
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+material = SubResource("ShaderMaterial_u32x0")
+mesh = SubResource("QuadMesh_capp0")

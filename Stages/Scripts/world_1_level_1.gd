@@ -7,6 +7,7 @@ signal objective_complete_signal()
 @onready var text_box := $UI/TextBox
 @onready var path := $Path2D
 @onready var button := $UI/button
+@onready var player := $Player
 @onready var state = {
 	"coin_count" : Utils.coin_count,
 	"breakable_status" : Utils.breakable_upgrade
@@ -23,7 +24,8 @@ func _ready() -> void:
 	Utils.connect("update_world_stats", update_stats)
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact") and button.visible and !is_textbox_running() and path.path_complete:
+	if event.is_action_pressed("interact") and button.visible and !is_textbox_running() and path.path_complete and player.player_can_read:
+		player.player_is_reading = true
 		activate_textbox()
 
 func is_textbox_running() -> bool:
@@ -60,7 +62,15 @@ func _on_ez_dialogue_custom_signal_received(value: Variant) -> void:
 	if value == "true":
 		objective_complete = true
 		objective_complete_signal.emit()
+	if value == "false":
+		player.player_is_reading = false
 
 func update_stats(health, coin, breakable) -> void:
 	state['coin_count'] = coin
 	state["breakable_status"] = breakable
+
+
+func _on_switch_levels_body_entered(body: Node2D) -> void:
+	if body is Player:
+		Utils.player_spawnpoint = 0
+		get_tree().call_deferred("change_scene_to_file", "res://Stages/world_1_level_3.tscn")

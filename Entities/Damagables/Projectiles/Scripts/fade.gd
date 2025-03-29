@@ -10,6 +10,10 @@ var pixel_size : float = 1.0
 var tween : Tween
 
 func on_process(_delta : float):
+	
+	if !lazer.on_screen:
+		return
+	
 	# Send to chargin if Skelly comes back in range
 	if difference.length() < 60 and not lazer.lazer_fired:
 		transition.emit("Charging")
@@ -31,7 +35,7 @@ func snap_to_pixel(point: Vector2) -> Vector2:
 	)
 
 func on_tween_finished():
-	glow.environment.glow_enabled = false
+	#glow.environment.glow_enabled = false
 	transition.emit("idle")
 
 func enter():

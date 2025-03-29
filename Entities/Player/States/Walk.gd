@@ -40,10 +40,6 @@ func on_physics_process(_delta : float):
 	if character_body.is_dying:
 		transition.emit("dying")
 	
-	# TRANSITION TO SHOOT STATE
-	if GameInput.shoot_input():
-		transition.emit("Shoot")
-	
 func enter():
 	animated_sprite.play("walk")
 	character_body.current_state = "walk"

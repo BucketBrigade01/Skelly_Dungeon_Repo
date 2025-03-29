@@ -67,7 +67,6 @@ curve = SubResource("Curve2D_ifkpb")
 script = ExtResource("1_ifkpb")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2(67.4197, 0)
 rotates = false
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]

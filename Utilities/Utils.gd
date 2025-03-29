@@ -2,7 +2,7 @@ extends Node
 
 # This signal gets emitted everytime a var gets set 
 signal update_world_stats(health, coin, breakable)
-
+signal update_key(key)
 # Player Variables
 var player_health : int = 3:
 	get = get_health, set = set_health
@@ -43,6 +43,7 @@ func set_key(value : bool) -> void:
 		has_key = true
 	else: 
 		has_key = false
+	update_key.emit(has_key)
 
 func get_breakable() -> bool:
 	return breakable_upgrade

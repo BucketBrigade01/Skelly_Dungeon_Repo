@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bar56ft3wci3x"]
+[gd_scene load_steps=29 format=3 uid="uid://bar56ft3wci3x"]
 
 [ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="1_7sijh"]
 [ext_resource type="Script" uid="uid://bc3u5ujfeu2hi" path="res://Entities/Damagables/Projectiles/simple_projectile.gd" id="1_a5jjj"]
@@ -176,20 +176,13 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="Environment" id="Environment_jq7lf"]
-background_mode = 3
-glow_enabled = true
-glow_intensity = 1.71
-glow_strength = 0.91
-glow_blend_mode = 0
-glow_hdr_threshold = 0.58
-
 [node name="SimpleProjectile" type="Area2D" groups=["Bullet"]]
 collision_layer = 32
 collision_mask = 5
 script = ExtResource("1_a5jjj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
 shape = SubResource("CircleShape2D_s74uc")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
@@ -204,11 +197,8 @@ color = Color(0.572549, 0.329412, 0.74902, 1)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kit4e")
-animation = &"wall_hit"
+animation = &"in_air"
 autoplay = "in_air"
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_jq7lf")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(2.5, -1.43051e-07)

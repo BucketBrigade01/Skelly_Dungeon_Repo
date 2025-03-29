@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccjykmbs6pdjc"]
+
+[ext_resource type="Script" uid="uid://ciuqfnej8n0mp" path="res://UI/Debugger/Scripts/debugger.gd" id="1_uggl0"]
+[ext_resource type="FontFile" uid="uid://bb4kub2tkaj1n" path="res://Assets/Fonts/TinyUnicode.ttf" id="2_evlnp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uggl0"]
+bg_color = Color(0, 0, 0, 1)
+expand_margin_bottom = 14.0
+
+[node name="Debugger" type="CanvasLayer"]
+script = ExtResource("1_uggl0")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -40.0
+offset_right = 128.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uggl0")
+
+[node name="VBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="CurrentState" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.236099, 0.688129, 0, 1)
+theme_override_fonts/font = ExtResource("2_evlnp")
+theme_override_font_sizes/font_size = 16
+text = "sdads"
+vertical_alignment = 1
+
+[node name="PreviousState" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.235294, 0.686275, 0, 1)
+theme_override_fonts/font = ExtResource("2_evlnp")
+text = "sdads"

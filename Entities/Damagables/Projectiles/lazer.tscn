@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dcqfsr421wedc"]
+[gd_scene load_steps=8 format=3 uid="uid://dcqfsr421wedc"]
 
 [ext_resource type="Script" uid="uid://bf6qnk2d4shdg" path="res://Entities/Damagables/Projectiles/Scripts/lazer.gd" id="1_v5tfu"]
 [ext_resource type="Script" uid="uid://b304ko867e0n" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="2_bcvju"]
@@ -7,14 +7,6 @@
 [ext_resource type="Script" uid="uid://cv237kelpfeja" path="res://Entities/Damagables/Projectiles/Scripts/fire.gd" id="4_53edv"]
 [ext_resource type="Script" uid="uid://c11jym57d8gyc" path="res://Entities/Damagables/Projectiles/Scripts/fade.gd" id="5_ymljo"]
 [ext_resource type="AudioStream" uid="uid://jbeyhk3agih3" path="res://Assets/Sound_FX/laserShoot.wav" id="7_a0052"]
-
-[sub_resource type="Environment" id="Environment_imnsh"]
-background_mode = 3
-glow_enabled = true
-glow_intensity = 1.71
-glow_strength = 1.02
-glow_blend_mode = 0
-glow_hdr_threshold = 0.58
 
 [node name="Lazer" type="RayCast2D"]
 enabled = false
@@ -36,28 +28,27 @@ script = ExtResource("3_877il")
 lazer = NodePath("../..")
 line = NodePath("../../Line2D")
 
-[node name="Charging" type="Node" parent="StateMachine" node_paths=PackedStringArray("lazer", "line", "glow")]
+[node name="Charging" type="Node" parent="StateMachine" node_paths=PackedStringArray("lazer", "line")]
 script = ExtResource("3_s76lv")
 lazer = NodePath("../..")
 line = NodePath("../../Line2D")
-glow = NodePath("../../WorldEnvironment")
 charge_duration = 1.5
 
-[node name="Fire" type="Node" parent="StateMachine" node_paths=PackedStringArray("lazer", "line", "glow")]
+[node name="Fire" type="Node" parent="StateMachine" node_paths=PackedStringArray("lazer", "line")]
 script = ExtResource("4_53edv")
 lazer = NodePath("../..")
 line = NodePath("../../Line2D")
-glow = NodePath("../../WorldEnvironment")
 
-[node name="Fade" type="Node" parent="StateMachine" node_paths=PackedStringArray("lazer", "line", "glow")]
+[node name="Fade" type="Node" parent="StateMachine" node_paths=PackedStringArray("lazer", "line")]
 script = ExtResource("5_ymljo")
 lazer = NodePath("../..")
 line = NodePath("../../Line2D")
-glow = NodePath("../../WorldEnvironment")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_imnsh")
 
 [node name="LazerSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_a0052")
 volume_db = -10.23
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

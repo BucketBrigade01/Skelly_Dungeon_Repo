@@ -9,3 +9,4 @@ func _process(_delta: float) -> void:
 
 func _on_change_level_body_entered(_body: Node2D) -> void:
 	get_tree().call_deferred("change_scene_to_file", "res://Stages/world_1_level_1.tscn")
+	

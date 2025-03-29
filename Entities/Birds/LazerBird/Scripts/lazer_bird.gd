@@ -8,6 +8,7 @@ class_name LazerBird
 var dead : bool = false
 var speed : float = 30.0
 var knock_back_direction : bool = false
+var on_screen : bool = false
 
 func _physics_process(_delta: float) -> void:
 	
@@ -30,3 +31,10 @@ func _on_animated_sprite_2d_animation_finished():
 	if $AnimatedSprite2D.animation == "death":
 		$StateMachine.queue_free()
 		queue_free()
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	on_screen = true
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	on_screen = false

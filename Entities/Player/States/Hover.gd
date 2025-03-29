@@ -5,6 +5,7 @@ var can_hover : bool
 @export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
 @export var tile_data : TileDataDetection
+@export var particle : GPUParticles2D
 
 @export_category("Hover Properties")
 @export var HOVER_SPEED : int = 20
@@ -13,6 +14,7 @@ var can_hover : bool
 @export var FRICTION : int = 5
 @export var hover_timer : float = 0.5
 
+var timer : SceneTreeTimer
 	
 func on_physics_process(delta : float):
 	# Slows down upward velocity
@@ -33,6 +35,8 @@ func on_physics_process(delta : float):
 	
 	if direction != 0:
 		animated_sprite.flip_h = false if direction > 0 else true
+	
+	particle.scale.x = -1 if direction < 0 else 1
 		
 	character_body.move_and_slide()
 	
@@ -56,16 +60,19 @@ func on_physics_process(delta : float):
 		transition.emit("idle")
 		
 func enter():
+	particle.emitting = true
 	can_hover = true
 	animated_sprite.play("hover")
 	get_hover_timer()
 	character_body.current_state = "hover"
 	
 func exit():
+	particle.emitting = false
 	character_body.previous_state = "hover"
 	animated_sprite.stop()
-
+	timer.set_time_left(0.0)
 # Sets hover to false after 0.5 second timer
 func get_hover_timer():
-	await get_tree().create_timer(hover_timer).timeout
+	timer = get_tree().create_timer(hover_timer)
+	await timer.timeout
 	can_hover = false

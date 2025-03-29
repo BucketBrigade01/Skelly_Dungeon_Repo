@@ -19,6 +19,9 @@ var sine_time : float = 0.0
 
 func on_physics_process(delta : float):
 	
+	if !bird.on_screen:
+		return
+	
 	sine_time += delta
 	
 	if bird.knock_back_direction:

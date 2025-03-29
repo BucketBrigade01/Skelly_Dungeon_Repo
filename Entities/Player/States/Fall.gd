@@ -27,7 +27,6 @@ func on_physics_process(delta : float):
 
 		get_coyote_timer()
 		character_body.velocity.y += GRAVITY * delta
-	
 	# Basic movment in air
 	var direction = GameInput.movment_input()
 	
@@ -77,10 +76,6 @@ func on_physics_process(delta : float):
 			transition.emit("walljump")
 		elif character_body.previous_state == "hover":
 			transition.emit("walljump")
-	
-	# TRANSITION TO SHOOT STATE
-	if GameInput.shoot_input():
-		transition.emit("Shoot")
 	
 func enter():
 	coyote_jump = true
