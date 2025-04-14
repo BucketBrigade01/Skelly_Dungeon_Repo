@@ -1,8 +1,11 @@
-[gd_scene load_steps=50 format=3 uid="uid://ceylsejb8hyki"]
+[gd_scene load_steps=64 format=3 uid="uid://ceylsejb8hyki"]
 
 [ext_resource type="Script" uid="uid://dm00ydvmdikar" path="res://Entities/Bosses/Penguin/Scripts/penguin.gd" id="1_ecv5b"]
+[ext_resource type="FontFile" uid="uid://bb4kub2tkaj1n" path="res://Assets/Fonts/TinyUnicode.ttf" id="2_bbj6f"]
 [ext_resource type="Script" uid="uid://b304ko867e0n" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="3_j78uu"]
 [ext_resource type="Texture2D" uid="uid://b6snn55y0d4td" path="res://Entities/Bosses/Penguin/Assets/penguin_boss-Sheet2.aseprite" id="3_o8myb"]
+[ext_resource type="Shader" uid="uid://chjc4wcw4160e" path="res://Entities/Birds/LazerBird/Shader/Hit_Animation.tres" id="3_p02km"]
+[ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="4_4fxfq"]
 [ext_resource type="Script" uid="uid://byucvlwese8ao" path="res://Entities/Bosses/Penguin/States/idle.gd" id="4_o8myb"]
 [ext_resource type="Script" uid="uid://bodwrdogbvx3e" path="res://Entities/Bosses/Penguin/States/walk.gd" id="5_xfnxu"]
 [ext_resource type="Script" uid="uid://dmli1tqrucsce" path="res://Entities/Bosses/Penguin/States/jump.gd" id="6_bbj6f"]
@@ -12,6 +15,92 @@
 [ext_resource type="Script" uid="uid://r6ouedxl2lb0" path="res://Entities/Bosses/Penguin/States/ice_fall.gd" id="11_o8myb"]
 [ext_resource type="Script" uid="uid://7m7o6365k6ut" path="res://Entities/Bosses/Penguin/States/punch.gd" id="11_xfnxu"]
 [ext_resource type="Script" uid="uid://d1wno3djjnw7j" path="res://Entities/Bosses/Penguin/States/ice_spike.gd" id="12_xfnxu"]
+[ext_resource type="Script" uid="uid://csfyvcdeayg2j" path="res://Entities/Bosses/Penguin/States/die.gd" id="16_4fxfq"]
+[ext_resource type="AudioStream" uid="uid://332qhvnblns3" path="res://Assets/Sound_FX/ice_fall.wav" id="17_a7p4u"]
+[ext_resource type="AudioStream" uid="uid://chjsl8eqmxpu4" path="res://Assets/Sound_FX/penguin_death.wav" id="18_al1yg"]
+
+[sub_resource type="Animation" id="Animation_a7p4u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_p02km")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_xga7a"]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.260476),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_al1yg"]
+_data = {
+&"RESET": SubResource("Animation_a7p4u"),
+&"hit": SubResource("Animation_xga7a")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3pu0x"]
+resource_local_to_scene = true
+shader = ExtResource("3_p02km")
+shader_parameter/enable = true
+shader_parameter/tint = Color(0.905231, 0.235531, 0.353471, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfqsc"]
+atlas = ExtResource("4_4fxfq")
+region = Rect2(0, 72, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhnqv"]
+atlas = ExtResource("4_4fxfq")
+region = Rect2(16, 72, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlbjk"]
+atlas = ExtResource("4_4fxfq")
+region = Rect2(32, 72, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rmbl"]
+atlas = ExtResource("4_4fxfq")
+region = Rect2(48, 72, 16, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j78uu"]
 atlas = ExtResource("3_o8myb")
@@ -139,6 +228,23 @@ region = Rect2(1152, 0, 96, 96)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5m4vy"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mfqsc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhnqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlbjk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5rmbl")
+}],
+"loop": false,
+"name": &"die",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j78uu")
@@ -279,18 +385,38 @@ size = Vector2(28, 65)
 size = Vector2(10, 44)
 
 [node name="Penguin" type="CharacterBody2D" groups=["Penguin"]]
-collision_layer = 4
+collision_layer = 5
 script = ExtResource("1_ecv5b")
 
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -4.0
+offset_top = -41.0
+offset_right = 36.0
+offset_bottom = -15.0
+theme_override_colors/font_outline_color = Color(0.543614, 0.567059, 0.519856, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_bbj6f")
+theme_override_font_sizes/font_size = 32
+text = "?"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_al1yg")
+}
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_3pu0x")
 sprite_frames = SubResource("SpriteFrames_5m4vy")
-animation = &"ice_fall"
+animation = &"die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0.5, 10)
 shape = SubResource("RectangleShape2D_7jprr")
 
 [node name="DetectionZone" type="Area2D" parent="." groups=["Penguin"]]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
 position = Vector2(0, 9)
@@ -298,6 +424,7 @@ shape = SubResource("RectangleShape2D_0bdhd")
 debug_color = Color(0.762183, 0.421828, 0.434062, 0.42)
 
 [node name="BellyZone" type="Area2D" parent="." groups=["Penguin"]]
+visible = false
 collision_layer = 4
 collision_mask = 32
 
@@ -307,6 +434,7 @@ shape = SubResource("RectangleShape2D_mkyxs")
 debug_color = Color(0.630606, 0.509383, 0.405867, 0.42)
 
 [node name="DamageZone" type="Area2D" parent="." groups=["PenguinDamage"]]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageZone"]
 position = Vector2(-34, 0.5)
@@ -314,6 +442,7 @@ shape = SubResource("RectangleShape2D_5rmbl")
 debug_color = Color(0.828557, 0.309984, 0.628456, 0.42)
 
 [node name="HitZone" type="Area2D" parent="." groups=["Penguin"]]
+visible = false
 collision_layer = 4
 collision_mask = 32
 
@@ -351,11 +480,10 @@ script = ExtResource("9_mkyxs")
 penguin = NodePath("../..")
 animation = NodePath("../../AnimatedSprite2D")
 
-[node name="Punch" type="Node" parent="StateMachine" node_paths=PackedStringArray("penguin", "animation", "hit_collider")]
+[node name="Punch" type="Node" parent="StateMachine" node_paths=PackedStringArray("penguin", "animation")]
 script = ExtResource("11_xfnxu")
 penguin = NodePath("../..")
 animation = NodePath("../../AnimatedSprite2D")
-hit_collider = NodePath("../../DamageZone/CollisionShape2D")
 
 [node name="IceFall" type="Node" parent="StateMachine" node_paths=PackedStringArray("penguin", "animation")]
 script = ExtResource("11_o8myb")
@@ -369,10 +497,24 @@ animation = NodePath("../../AnimatedSprite2D")
 target_left = NodePath("../../IceSpikeMarkerLeft")
 targer_right = NodePath("../../IceSpikeMarkerRight")
 
+[node name="die" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation")]
+script = ExtResource("16_4fxfq")
+animation = NodePath("../../AnimatedSprite2D")
+
 [node name="IceSpikeMarkerRight" type="Marker2D" parent="."]
 position = Vector2(23, 32)
 
 [node name="IceSpikeMarkerLeft" type="Marker2D" parent="."]
 position = Vector2(-23, 32)
 
+[node name="IceFallSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_a7p4u")
+volume_db = -11.082
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_al1yg")
+volume_db = -9.377
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Punch" method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="HitZone" to="." method="_on_hit_zone_area_entered"]

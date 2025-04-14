@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://chxtd6ncsefu0"]
+
+[ext_resource type="Script" uid="uid://cubhfjfsqte15" path="res://UI/Boss_HealthBar/Scripts/boss_health_bar.gd" id="1_cdxdl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w6xgt"]
+bg_color = Color(0.345098, 0.0862745, 0.14902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cdxdl"]
+bg_color = Color(0.713726, 0.239216, 0.345098, 1)
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_cdxdl")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -74.0
+offset_top = -18.0
+offset_right = 76.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = -2
+theme_override_constants/margin_right = 2
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+color = Color(0.121569, 0.12549, 0, 1)
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(148, 3)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_w6xgt")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cdxdl")
+value = 50.0
+show_percentage = false

@@ -28,7 +28,7 @@ func on_physics_process(_delta : float):
 		transition.emit("jump")
 		
 	# TRANSITION TO BOOST STATE
-	if GameInput.boost_input():
+	if GameInput.boost_input() and Utils.player_power_ups['boost'] == true:
 		transition.emit("boost")
 	
 	# TRANSITION TO DYING STATE 

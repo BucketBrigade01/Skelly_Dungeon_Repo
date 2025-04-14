@@ -18,6 +18,9 @@ func on_physics_process(delta : float):
 	if penguin.is_on_floor():
 		transition.emit("idle")
 	
+	if penguin.dying == true:
+		transition.emit("die")
+	
 func enter():
 	penguin.current_state = "fall"
 	animation.play("fall")

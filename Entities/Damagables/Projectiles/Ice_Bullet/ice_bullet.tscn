@@ -48,7 +48,7 @@ animations = [{
 _data = [Vector2(0.0280899, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[node name="IceBullet" type="Area2D"]
+[node name="IceBullet" type="Area2D" groups=["IceBullet"]]
 z_index = -1
 collision_layer = 32
 script = ExtResource("1_sk5hm")

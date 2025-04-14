@@ -4,6 +4,8 @@ class_name TileDataDetection extends Node2D
 
 @onready var left_ray := $LeftTileRay
 @onready var right_ray := $RightTileRay
+@onready var right_ray_upper := $RightRayLower
+@onready var left_ray_upper := $LeftRayLower
 
 var current_tilemap : TileMap
 var tile_data : int
@@ -27,13 +29,13 @@ func match_data():
 		_:
 			tile_type = "none"
 
-func _physics_process(delta: float) -> void:
-	if right_ray.is_colliding():
+func _physics_process(_delta: float) -> void:
+	if right_ray.is_colliding() or right_ray_upper.is_colliding():
 		var target = right_ray.get_collider()
 		var target_rid = right_ray.get_collider_rid()
 		if target is TileMap:
 			process_tile_map(target, target_rid)
-	elif left_ray.is_colliding():
+	elif left_ray.is_colliding() or left_ray_upper.is_colliding():
 		var target = left_ray.get_collider()
 		var target_rid = left_ray.get_collider_rid()
 		if target is TileMap:
@@ -43,6 +45,10 @@ func _physics_process(delta: float) -> void:
 			
 func process_tile_map(body : Node2D, body_rid : RID):
 	current_tilemap = body
+	
+	if current_tilemap.get_coords_for_body_rid(body_rid) == null:
+		return
+		
 	var current_tilemap_cords = current_tilemap.get_coords_for_body_rid(body_rid)
 	var current_tile_cell_data = current_tilemap.get_cell_tile_data(1, current_tilemap_cords)
 
@@ -63,6 +69,6 @@ func check_damagables() -> void:
 		player.is_dying_spikes = true
 		player.is_dying = true
 
-func _on_hit_box_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+func _on_hit_box_body_shape_entered(body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
 	if body is TileMap:
 		process_tile_map(body, body_rid)

@@ -11,7 +11,6 @@ signal player_status
 # Used to communicate with the Energy Bar of the players status
 @onready var transition_camera := $TransitionCamera
 @onready var follow_camera := $FollowCamera
-@onready var ray_cast : RayCast2D = $RayCast2D
 @onready var animated_sprite := $AnimatedSprite2D
 @onready var new_camera : CombinedCamera = get_parent().get_node("Camera")
 
@@ -68,12 +67,12 @@ func _ready():
 func _process(_delta):
 	# Emits tp Charge Bar so we know how long player is crouching for
 	player_status.emit(crouched)
-	projectile_spawner.position.x = -2 if animated_sprite.flip_h else 2
+	projectile_spawner.position.x = -3 if animated_sprite.flip_h else 3
 	
 	if is_on_floor():
 		extra_jump = false
 	
-	if Input.is_action_just_pressed("shoot"):
+	if Input.is_action_just_pressed("shoot") and Utils.player_power_ups['default_shoot'] == true:
 		change_state(ShootState.SHOOTING)
 	else:
 		change_state(ShootState.NOTSHOOTING)
@@ -117,7 +116,7 @@ func _on_hit_box_area_entered(area):
 		var key_instance = key.instantiate()
 		key_instance.position = area.position
 		get_parent().add_child(key_instance)
-	if area.is_in_group("SmallBullet"):
+	if area.is_in_group("SmallBullet") or area.is_in_group("IceBullet"):
 		$AnimationPlayer.play("hit")
 		stats.health -= 1
 		Utils.set_health(-1)
@@ -129,7 +128,19 @@ func _on_hit_box_area_entered(area):
 		Utils.set_health(-1)
 	if area.is_in_group("Readable"):
 		player_can_read = true
-
+	if area.is_in_group("UpDownBird"):
+		$AnimationPlayer.play("hit")
+		stats.health -= 1
+		Utils.set_health(-1)
+	if area.is_in_group("AutoBullet"):
+		$AnimationPlayer.play("hit")
+		stats.health -= 1
+		Utils.set_health(-1)
+	if area.is_in_group("Explode"):
+		$AnimationPlayer.play("hit")
+		stats.health -= 1
+		Utils.set_health(-1)
+	
 func _on_hit_box_area_exited(area: Area2D) -> void:
 	if area.is_in_group("Readable"):
 		player_can_read = false

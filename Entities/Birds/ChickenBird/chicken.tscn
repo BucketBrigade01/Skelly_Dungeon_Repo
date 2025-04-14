@@ -1,0 +1,274 @@
+[gd_scene load_steps=30 format=3 uid="uid://d2qaks430711j"]
+
+[ext_resource type="Texture2D" uid="uid://c5525fkrit5se" path="res://Entities/Birds/ChickenBird/Assets/chicken_sheet.aseprite" id="1_hx1yl"]
+[ext_resource type="Script" uid="uid://bfmqvf6unvpt4" path="res://Entities/Birds/ChickenBird/Scripts/chicken.gd" id="1_s0j5c"]
+[ext_resource type="Shader" uid="uid://chjc4wcw4160e" path="res://Entities/Birds/LazerBird/Shader/Hit_Animation.tres" id="2_j7pie"]
+[ext_resource type="Texture2D" uid="uid://dvlq35bfwieha" path="res://Entities/Birds/ChickenBird/Assets/explostion_sheet.aseprite" id="3_ckk4k"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s0j5c"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j7pie"]
+radius = 31.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ckk4k"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qr15t"]
+radius = 78.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yy1fc"]
+radius = 26.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qr15t"]
+shader = ExtResource("2_j7pie")
+shader_parameter/enable = false
+shader_parameter/tint = Color(0.884748, 0.223702, 0.308632, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j7pie"]
+atlas = ExtResource("1_hx1yl")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qr15t"]
+atlas = ExtResource("1_hx1yl")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yy1fc"]
+atlas = ExtResource("3_ckk4k")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t2pph"]
+atlas = ExtResource("3_ckk4k")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqiyt"]
+atlas = ExtResource("3_ckk4k")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysjgl"]
+atlas = ExtResource("3_ckk4k")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mn4fo"]
+atlas = ExtResource("3_ckk4k")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcsn8"]
+atlas = ExtResource("3_ckk4k")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mivv"]
+atlas = ExtResource("3_ckk4k")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ja625"]
+atlas = ExtResource("1_hx1yl")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fswjn"]
+atlas = ExtResource("1_hx1yl")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xc8n"]
+atlas = ExtResource("1_hx1yl")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh4yo"]
+atlas = ExtResource("1_hx1yl")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m8d1x"]
+atlas = ExtResource("1_hx1yl")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dlmwq"]
+atlas = ExtResource("1_hx1yl")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m2set"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j7pie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qr15t")
+}],
+"loop": false,
+"name": &"charge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yy1fc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t2pph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqiyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysjgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mn4fo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dcsn8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0mivv")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ja625")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fswjn")
+}],
+"loop": false,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4xc8n")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sh4yo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m8d1x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dlmwq")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 7.0
+}]
+
+[sub_resource type="Animation" id="Animation_t2pph"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_yy1fc"]
+resource_name = "tick_down"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.193864, 0.395806, 0.589669, 0.803728, 0.981436, 1.19549),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kqiyt"]
+_data = {
+&"RESET": SubResource("Animation_t2pph"),
+&"tick_down": SubResource("Animation_yy1fc")
+}
+
+[node name="Chicken" type="CharacterBody2D" groups=["Chicken"]]
+z_index = -1
+collision_layer = 4
+script = ExtResource("1_s0j5c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_s0j5c")
+
+[node name="ExplostionBox" type="Area2D" parent="." groups=["Explode"]]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplostionBox"]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_j7pie")
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_ckk4k")
+debug_color = Color(0.548444, 0.531501, 0.527428, 0.42)
+
+[node name="AgroBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AgroBox"]
+shape = SubResource("CircleShape2D_qr15t")
+
+[node name="FuseBox" type="Area2D" parent="." groups=["Explode"]]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FuseBox"]
+shape = SubResource("CircleShape2D_yy1fc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_qr15t")
+sprite_frames = SubResource("SpriteFrames_m2set")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="RayCast2D3" type="RayCast2D" parent="."]
+position = Vector2(-23, 0)
+target_position = Vector2(0, 16)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-16, 0)
+target_position = Vector2(0, 16)
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+position = Vector2(-29, 0)
+target_position = Vector2(0, 16)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -18.0
+offset_top = -54.0
+offset_right = 22.0
+offset_bottom = -31.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_kqiyt")
+}
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="area_entered" from="ExplostionBox" to="." method="_on_explostion_box_area_entered"]
+[connection signal="area_exited" from="ExplostionBox" to="." method="_on_explostion_box_area_exited"]
+[connection signal="area_entered" from="AgroBox" to="." method="_on_agro_box_area_entered"]
+[connection signal="area_exited" from="AgroBox" to="." method="_on_agro_box_area_exited"]
+[connection signal="area_entered" from="FuseBox" to="." method="_on_fuse_box_area_entered"]
+[connection signal="area_exited" from="FuseBox" to="." method="_on_fuse_box_area_exited"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

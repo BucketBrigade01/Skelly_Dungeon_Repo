@@ -61,6 +61,6 @@ func _on_ez_dialogue_custom_signal_received(value: Variant) -> void:
 		objective_complete = true
 		objective_complete_signal.emit()
 
-func update_stats(health, coin, breakable) -> void:
+func update_stats(_health, coin, breakable) -> void:
 	state['coin_count'] = coin
 	state["breakable_status"] = breakable

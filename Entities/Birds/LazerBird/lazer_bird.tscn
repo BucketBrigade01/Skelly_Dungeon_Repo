@@ -425,6 +425,9 @@ animation_player = NodePath("AnimationPlayer")
 [node name="Lazer" parent="." node_paths=PackedStringArray("bird") instance=ExtResource("8_xng0p")]
 bird = NodePath("..")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_6halc")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_1wlu8")
 sprite_frames = SubResource("SpriteFrames_srbww")
@@ -463,10 +466,11 @@ script = ExtResource("5_dnmeh")
 bird = NodePath("../..")
 animation_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Hatch" type="Node" parent="StateMachine" node_paths=PackedStringArray("bird", "animation_sprite")]
+[node name="Hatch" type="Node" parent="StateMachine" node_paths=PackedStringArray("bird", "animation_sprite", "bird_sprite")]
 script = ExtResource("7_cgsci")
 bird = NodePath("../..")
 animation_sprite = NodePath("../../AnimatedSprite2D")
+bird_sprite = NodePath("../../Sprite2D")
 
 [node name="IdleHatched" type="Node" parent="StateMachine" node_paths=PackedStringArray("bird", "animation_sprite")]
 script = ExtResource("8_7lkxc")

@@ -7,7 +7,7 @@ func _ready() -> void:
 	Utils.connect("update_world_stats", update_stats)
 
 
-func update_stats(health, coin, breakable) -> void:
+func update_stats(health, _coin, _breakable) -> void:
 	if health == 3:
 		health_bar.value = 100
 	if health == 2:

@@ -14,6 +14,10 @@ func on_process(_delta : float):
 	if !lazer.on_screen:
 		return
 	
+	if lazer.bird.stats.get_health() == 0:
+		tween.kill()
+		transition.emit("idle")
+	
 	difference = lazer.bird.target.global_position - lazer.bird.position
 	lazer.target_position = difference
 	line.points[0] = snap_to_pixel(lazer.position)

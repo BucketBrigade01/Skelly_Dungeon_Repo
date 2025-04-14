@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://0yyllocw8l2a"]
+[gd_scene load_steps=20 format=3 uid="uid://0yyllocw8l2a"]
 
 [ext_resource type="Script" uid="uid://cpdma8ufh1v85" path="res://Stages/Scripts/world_1_level_3.gd" id="1_82b11"]
 [ext_resource type="JSON" path="res://UI/Text_Box/start.json" id="2_ruwkc"]
@@ -13,7 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://r0t4xu8vcmn1" path="res://Common/Crt_Shader/crt_shader.tscn" id="10_sihvp"]
 [ext_resource type="Script" uid="uid://crbbfjgwbrwq8" path="res://addons/ez_dialogue/ez_dialogue_node.gd" id="11_dpuut"]
 [ext_resource type="PackedScene" uid="uid://ceylsejb8hyki" path="res://Entities/Bosses/Penguin/penguin.tscn" id="12_ruwkc"]
+[ext_resource type="PackedScene" uid="uid://chxtd6ncsefu0" path="res://UI/Boss_HealthBar/BossHealthBar.tscn" id="12_vpoll"]
 [ext_resource type="PackedScene" uid="uid://3q2kujlk8sk6" path="res://Entities/Platforms/Breakable_Platform/breakable_platform.tscn" id="13_g4vlv"]
+[ext_resource type="PackedScene" uid="uid://dqhkwxcfnerxi" path="res://Entities/Collectables/Golden_Egg/GoldenEgg.tscn" id="16_q88xf"]
 
 [sub_resource type="Environment" id="Environment_vpoll"]
 background_mode = 3
@@ -309,6 +311,8 @@ offset_bottom = -308.0
 world = NodePath("../..")
 metadata/_edit_use_anchors_ = true
 
+[node name="BossHealthBar" parent="UI" instance=ExtResource("12_vpoll")]
+
 [node name="EzDialogue" type="Node" parent="."]
 script = ExtResource("11_dpuut")
 metadata/_custom_type_script = "uid://crbbfjgwbrwq8"
@@ -324,3 +328,10 @@ position = Vector2(89, 104)
 
 [node name="BreakablePlatform2" parent="." instance=ExtResource("13_g4vlv")]
 position = Vector2(167, 104)
+
+[node name="GoldenEgg" parent="." node_paths=PackedStringArray("target") instance=ExtResource("16_q88xf")]
+position = Vector2(130, -16)
+target = NodePath("../Marker2D")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(125, 128)

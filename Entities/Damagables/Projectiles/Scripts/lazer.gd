@@ -13,7 +13,10 @@ func _ready() -> void:
 	$Line2D.points = [position, position]
 	$Line2D.modulate.a = 0
 	
-
+func _process(_delta):
+	if bird.dead:
+		set_physics_process(false)
+		set_process(false)
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	on_screen = true

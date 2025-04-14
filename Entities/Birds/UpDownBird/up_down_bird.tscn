@@ -1,0 +1,252 @@
+[gd_scene load_steps=27 format=3 uid="uid://dpjfhs44fy7jw"]
+
+[ext_resource type="Script" uid="uid://byhq4xoutn4e5" path="res://Entities/Birds/UpDownBird/Scripts/up_down_bird.gd" id="1_5131k"]
+[ext_resource type="Texture2D" uid="uid://bovmy2p16nqw0" path="res://Entities/Birds/UpDownBird/Assets/updown_bird_sheet.aseprite" id="1_bv2gi"]
+[ext_resource type="Script" uid="uid://cpqm4ukg4u3gt" path="res://Common/Resources/Enemy_Stats.gd" id="2_7xsaf"]
+[ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="3_ls715"]
+
+[sub_resource type="Resource" id="Resource_m78bi"]
+resource_local_to_scene = true
+script = ExtResource("2_7xsaf")
+attack = 0
+health = 3
+metadata/_custom_type_script = "uid://cpqm4ukg4u3gt"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5131k"]
+radius = 6.0
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_7xsaf"]
+parameter_name = "tint"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeBooleanParameter" id="VisualShaderNodeBooleanParameter_ls715"]
+parameter_name = "enable"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_m78bi"]
+default_input_values = [0, 0.0, 1, 1.0, 2, 1e-05, 3, Vector3(0, 0, 0), 4, Vector3(0, 0, 0), 5, Vector3(0, 0, 0)]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_hi5a4"]
+input_name = "color"
+
+[sub_resource type="VisualShader" id="VisualShader_gyj4r"]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform bool enable = false;
+uniform vec4 tint : source_color = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+
+
+
+void fragment() {
+// BooleanParameter:3
+	bool n_out3p0 = enable;
+
+
+// ColorParameter:2
+	vec4 n_out2p0 = tint;
+
+
+// Input:5
+	vec4 n_out5p0 = COLOR;
+
+
+	vec3 n_out4p0;
+// If:4
+	float n_in4p1 = 1.00000;
+	float n_in4p2 = 0.00001;
+	if(abs((n_out3p0 ? 1.0 : 0.0) - n_in4p1) < n_in4p2)
+	{
+		n_out4p0 = vec3(n_out2p0.xyz);
+	}
+	else if((n_out3p0 ? 1.0 : 0.0) < n_in4p1)
+	{
+		n_out4p0 = vec3(n_out5p0.xyz);
+	}
+	else
+	{
+		n_out4p0 = vec3(n_out5p0.xyz);
+	}
+
+
+// Output:0
+	COLOR.rgb = n_out4p0;
+
+
+}
+"
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(500, 160)
+nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_7xsaf")
+nodes/fragment/2/position = Vector2(-80, 60)
+nodes/fragment/3/node = SubResource("VisualShaderNodeBooleanParameter_ls715")
+nodes/fragment/3/position = Vector2(-100, 280)
+nodes/fragment/4/node = SubResource("VisualShaderNodeIf_m78bi")
+nodes/fragment/4/position = Vector2(260, 80)
+nodes/fragment/5/node = SubResource("VisualShaderNodeInput_hi5a4")
+nodes/fragment/5/position = Vector2(-120, 460)
+nodes/fragment/connections = PackedInt32Array(4, 0, 0, 0, 5, 0, 4, 4, 5, 0, 4, 5, 3, 0, 4, 0, 2, 0, 4, 3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hi5a4"]
+resource_local_to_scene = true
+shader = SubResource("VisualShader_gyj4r")
+shader_parameter/enable = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hi5a4"]
+atlas = ExtResource("3_ls715")
+region = Rect2(0, 72, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyj4r"]
+atlas = ExtResource("3_ls715")
+region = Rect2(16, 72, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qcp63"]
+atlas = ExtResource("3_ls715")
+region = Rect2(32, 72, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlja3"]
+atlas = ExtResource("3_ls715")
+region = Rect2(48, 72, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ucveh"]
+atlas = ExtResource("3_ls715")
+region = Rect2(64, 72, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ytj0b"]
+atlas = ExtResource("1_bv2gi")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xsaf"]
+atlas = ExtResource("1_bv2gi")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ls715"]
+atlas = ExtResource("1_bv2gi")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m78bi"]
+atlas = ExtResource("1_bv2gi")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hi5a4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hi5a4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyj4r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qcp63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlja3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ucveh")
+}],
+"loop": false,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ytj0b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xsaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ls715")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m78bi")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ytj0b"]
+radius = 7.0
+
+[sub_resource type="Animation" id="Animation_rdbgx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1xm43"]
+resource_name = "hit"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wgedu"]
+_data = {
+&"RESET": SubResource("Animation_rdbgx"),
+&"hit": SubResource("Animation_1xm43")
+}
+
+[node name="UpDownBird" type="CharacterBody2D" groups=["UpDownBird"]]
+collision_layer = 4
+script = ExtResource("1_5131k")
+stats = SubResource("Resource_m78bi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_5131k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_hi5a4")
+sprite_frames = SubResource("SpriteFrames_hi5a4")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="BottomRay" type="RayCast2D" parent="."]
+target_position = Vector2(0, 6)
+
+[node name="TopRay" type="RayCast2D" parent="."]
+target_position = Vector2(0, -8)
+
+[node name="HitBOx" type="Area2D" parent="." groups=["UpDownBird"]]
+collision_mask = 33
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBOx"]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_ytj0b")
+debug_color = Color(0.694831, 0.462285, 0.486783, 0.42)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wgedu")
+}
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="HitBOx" to="." method="_on_hit_b_ox_area_entered"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

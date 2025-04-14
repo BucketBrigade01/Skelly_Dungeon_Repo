@@ -1,48 +1,62 @@
-[gd_scene load_steps=10 format=3 uid="uid://cx8lgy4lcbt5o"]
+[gd_scene load_steps=12 format=3 uid="uid://cx8lgy4lcbt5o"]
 
 [ext_resource type="Script" uid="uid://blgkgqpcf3syh" path="res://Entities/Birds/DodgeBird/Scripts/dodge_bird.gd" id="1_5qio6"]
-[ext_resource type="Texture2D" uid="uid://dl4l727j0ilkl" path="res://Entities/Birds/DodgeBird/Assets/skelly_sprites.aseprite" id="2_wn311"]
+[ext_resource type="Texture2D" uid="uid://b2rmy3ux6r4wu" path="res://Entities/Birds/DodgeBird/Assets/dodge_bird_sheet.aseprite" id="2_gf4yy"]
 [ext_resource type="AudioStream" uid="uid://b7kcamyth26f2" path="res://Assets/Sound_FX/doudge_bird_bullet.wav" id="3_gf4yy"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_trf1g"]
-atlas = ExtResource("2_wn311")
-region = Rect2(64, 126, 16, 18)
+[sub_resource type="AtlasTexture" id="AtlasTexture_5qsna"]
+atlas = ExtResource("2_gf4yy")
+region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8h3bl"]
-atlas = ExtResource("2_wn311")
-region = Rect2(64, 126, 16, 18)
+[sub_resource type="AtlasTexture" id="AtlasTexture_1gg8x"]
+atlas = ExtResource("2_gf4yy")
+region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_o7yuk"]
-atlas = ExtResource("2_wn311")
-region = Rect2(80, 126, 16, 18)
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlnus"]
+atlas = ExtResource("2_gf4yy")
+region = Rect2(48, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y7cdn"]
-atlas = ExtResource("2_wn311")
-region = Rect2(96, 126, 16, 18)
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsh75"]
+atlas = ExtResource("2_gf4yy")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8327g"]
+atlas = ExtResource("2_gf4yy")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sst8b"]
+atlas = ExtResource("2_gf4yy")
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7gero"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_trf1g")
+"texture": SubResource("AtlasTexture_5qsna")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1gg8x")
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8h3bl")
+"texture": SubResource("AtlasTexture_jlnus")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_o7yuk")
+"texture": SubResource("AtlasTexture_vsh75")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y7cdn")
+"texture": SubResource("AtlasTexture_8327g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sst8b")
 }],
 "loop": false,
 "name": &"shoot",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m3hua"]
@@ -54,9 +68,10 @@ collision_mask = 0
 script = ExtResource("1_5qio6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_7gero")
 animation = &"shoot"
+frame = 2
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0)
@@ -69,3 +84,5 @@ position = Vector2(-1, 8)
 stream = ExtResource("3_gf4yy")
 volume_db = -6.82
 max_distance = 150.0
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

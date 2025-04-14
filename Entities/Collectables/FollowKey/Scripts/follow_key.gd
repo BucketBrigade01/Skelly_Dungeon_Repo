@@ -7,7 +7,7 @@ class_name FollowKey extends Area2D
 
 @onready var original_position = position.y
 @onready var animation := $AnimatedSprite2D
-@onready var remote_path := $RemoteTransform2D
+#@onready var remote_path := $RemoteTransform2D
 
 var time: float = 0.0
 var target_position: Vector2

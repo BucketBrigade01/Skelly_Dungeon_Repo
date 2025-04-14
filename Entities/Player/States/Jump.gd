@@ -68,7 +68,7 @@ func on_physics_process(delta : float):
 	# TRANSITION STATES
 	
 	# TRANSITION TO HOVER STATE
-	if GameInput.hover_input() and character_body.velocity.y > 0.0:
+	if GameInput.hover_input() and character_body.velocity.y > 0.0 and Utils.player_power_ups['hover'] == true:
 		transition.emit("hover")
 	
 	# TRANSITION TO IDLE STATE
@@ -92,7 +92,7 @@ func enter():
 	jump_sound.play()
 	
 	# Conditions when entering from walljump
-	if character_body.previous_state == "walljump" and !character_body.is_on_floor():
+	if character_body.previous_state == "walljump" and !character_body.is_on_floor() and Utils.player_power_ups['wall_jump'] == true:
 		can_grab_again = true
 		walljump_timer_node = Timer.new()
 		walljump_timer_node.wait_time = walljump_timer

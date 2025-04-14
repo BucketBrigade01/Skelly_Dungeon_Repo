@@ -33,6 +33,9 @@ func on_physics_process(_delta : float):
 			animation.flip_h = true
 		transition.emit("punch")
 	
+	if penguin.dying == true:
+		transition.emit("die")
+	
 func enter():
 	animation.play("idle")
 	can_move = false

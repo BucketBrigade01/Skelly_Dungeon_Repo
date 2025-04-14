@@ -58,14 +58,13 @@ func _on_ez_dialogue_end_of_dialogue_reached() -> void:
 		activate_button()
 
 func _on_ez_dialogue_custom_signal_received(value: Variant) -> void:
-	print_debug(value)
 	if value == "true":
 		objective_complete = true
 		objective_complete_signal.emit()
 	if value == "false":
 		player.player_is_reading = false
 
-func update_stats(health, coin, breakable) -> void:
+func update_stats(_health, coin, breakable) -> void:
 	state['coin_count'] = coin
 	state["breakable_status"] = breakable
 

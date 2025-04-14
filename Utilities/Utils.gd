@@ -3,6 +3,7 @@ extends Node
 # This signal gets emitted everytime a var gets set 
 signal update_world_stats(health, coin, breakable)
 signal update_key(key)
+signal update_boss_health(boss_health)
 # Player Variables
 var player_health : int = 3:
 	get = get_health, set = set_health
@@ -12,6 +13,12 @@ var player_crouched : bool
 var coin_count : int = 0:
 	get = get_coin_count, set = set_coint_count
 var player_spawnpoint : int = 0
+var player_power_ups : Dictionary = {
+	"boost" : true,
+	"default_shoot" : true,
+	"hover" : true,
+	"wall_jump" : true
+}
 
 # Bullet Upgrades
 var breakable_upgrade := false:
@@ -23,6 +30,10 @@ var has_key := false :
 	
 # Textbox Variables
 var textbox_reading : bool = false
+
+# Boss Variables
+var boss_health := 100 :
+	get = get_boss_health, set = set_boss_health
 
 # Resets the variables on restart
 func reset() -> void:
@@ -69,3 +80,11 @@ func set_health(amount) -> void:
 	player_health += amount
 	player_health = clamp(player_health, 0, health_multiplier)
 	update_world_stats.emit(player_health, coin_count, breakable_upgrade)
+
+func get_boss_health() -> int:
+	return boss_health
+	
+func set_boss_health(amount) -> void:
+	boss_health += amount
+	boss_health = clamp(boss_health, 0, 100)
+	update_boss_health.emit(boss_health)

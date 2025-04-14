@@ -45,7 +45,7 @@ func on_physics_process(delta : float):
 	var can_buffer_jump : bool = true if !was_on_floor and character_body.is_on_floor() else false
 	
 	# If we have hit the hover key only once while in the air and are pressing the hover key
-	if GameInput.hover_input() and can_hover and character_body.velocity.y > 0.0:
+	if GameInput.hover_input() and can_hover and character_body.velocity.y > 0.0 and Utils.player_power_ups['hover'] == true:
 		can_hover = false
 		transition.emit("hover")
 	
@@ -70,7 +70,7 @@ func on_physics_process(delta : float):
 		transition.emit("dying")
 	
 	# TRANSITION TO WALLJUMP STATE
-	if can_wall_jump and GameInput.grab_input() and tile_data.tile_type == "walljump":
+	if can_wall_jump and GameInput.grab_input() and tile_data.tile_type == "walljump" and Utils.player_power_ups['wall_jump'] == true:
 		can_hover = true
 		if character_body.previous_state == "boost" and character_body.velocity > Vector2.ZERO:
 			transition.emit("walljump")

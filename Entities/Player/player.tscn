@@ -392,6 +392,12 @@ target_position = Vector2(-9, 0)
 position = Vector2(0, 7)
 target_position = Vector2(11, 0)
 
+[node name="LeftRayLower" type="RayCast2D" parent="TileDataDetection"]
+target_position = Vector2(-9, 0)
+
+[node name="RightRayLower" type="RayCast2D" parent="TileDataDetection"]
+target_position = Vector2(11, 0)
+
 [node name="HitBox" type="Area2D" parent="." groups=["Player"]]
 collision_layer = 2
 collision_mask = 109

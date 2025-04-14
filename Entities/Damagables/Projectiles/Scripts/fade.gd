@@ -19,7 +19,7 @@ func on_process(_delta : float):
 		transition.emit("Charging")
 	
 	if lazer.bird.stats.get_health() == 0:
-		tween.stop()
+		tween.kill()
 		transition.emit("idle")
 	
 	# Tracking Skelly	

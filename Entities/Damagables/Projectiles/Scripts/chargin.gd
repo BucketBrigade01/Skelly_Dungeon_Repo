@@ -15,6 +15,10 @@ func on_process(_delta : float):
 	if !lazer.on_screen:
 		return
 	
+	if lazer.bird.stats.get_health() == 0:
+		tween.kill()
+		transition.emit("idle")
+	
 	# If Skelly gets away or Bird dies
 	if difference.length() > 70 or lazer.bird.stats.get_health() == 0:
 		transition.emit("fade")

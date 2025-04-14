@@ -55,6 +55,7 @@ func add_text(text : String) -> void:
 	dialogue_text.text = text
 	change_state(States.READING)
 	tween = get_tree().create_tween()
+	@warning_ignore("standalone_expression")
 	tween.tween_property(dialogue_text, "visible_characters", len(text), len(text) * READ_RATE).from(0).finished
 	tween.connect("finished", on_tween_finished)
 	
@@ -77,6 +78,7 @@ func add_choice(choice_text : String) -> void:
 		
 	choice_container.add_child(choice_instance)
 	
+@warning_ignore("shadowed_variable")
 func next_choice(previous_choice : ChoiceOption, current_choice : ChoiceOption) -> void:
 	previous_choice.text = previous_choice.text.left(previous_choice.text.length() - 1)
 	current_choice.text = current_choice.text + "<"
@@ -84,6 +86,7 @@ func next_choice(previous_choice : ChoiceOption, current_choice : ChoiceOption) 
 	previous_choice.is_selected = false
 	current_choice_index += 1
 
+@warning_ignore("shadowed_variable")
 func previous_choice(previous_choice : ChoiceOption, current_choice : ChoiceOption) -> void:
 	previous_choice.text = previous_choice.text.left(previous_choice.text.length() - 1)
 	current_choice.text = current_choice.text + "<"

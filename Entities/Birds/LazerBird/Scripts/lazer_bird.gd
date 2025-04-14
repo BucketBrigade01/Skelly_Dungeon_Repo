@@ -10,6 +10,9 @@ var speed : float = 30.0
 var knock_back_direction : bool = false
 var on_screen : bool = false
 
+func _ready() -> void:
+	$Sprite2D.visible = false
+
 func _physics_process(_delta: float) -> void:
 	
 	if dead:
@@ -23,6 +26,8 @@ func _on_hurt_box_area_entered(area):
 		knock_back_direction = true
 		$HurtSound.play()
 		if stats.get_health() == 0:
+			$CollisionShape2D.set_deferred("disabled", true)
+			$HurtBox/CollisionShape2D.set_deferred("disabled", true)
 			dead = true
 			$DeadSound.play()
 			$AnimatedSprite2D.play("death")

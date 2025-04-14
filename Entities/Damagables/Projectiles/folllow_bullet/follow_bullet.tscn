@@ -1,0 +1,89 @@
+[gd_scene load_steps=11 format=3 uid="uid://d2x3kkbbnxfhi"]
+
+[ext_resource type="Script" uid="uid://byecss4bfbbro" path="res://Entities/Damagables/Projectiles/folllow_bullet/Scripts/follow_bullet.gd" id="1_pbknf"]
+[ext_resource type="Texture2D" uid="uid://peme37i71xjx" path="res://Entities/Birds/BlueAutoBird/Assets/blue_bird_auto_sheet.aseprite" id="2_2q5aa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ilxce"]
+radius = 4.0
+
+[sub_resource type="Curve" id="Curve_pbknf"]
+_data = [Vector2(0.0280899, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fbpft"]
+atlas = ExtResource("2_2q5aa")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6qgc"]
+atlas = ExtResource("2_2q5aa")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cv1ey"]
+atlas = ExtResource("2_2q5aa")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gudl"]
+atlas = ExtResource("2_2q5aa")
+region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qder"]
+atlas = ExtResource("2_2q5aa")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gsqex"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fbpft")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6qgc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cv1ey")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gudl")
+}],
+"loop": false,
+"name": &"collide",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2qder")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[node name="FollowBullet" type="Area2D" node_paths=PackedStringArray("particle") groups=["AutoBullet"]]
+collision_layer = 32
+collision_mask = 3
+script = ExtResource("1_pbknf")
+particle = NodePath("CPUParticles2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_ilxce")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+rotation = 1.5708
+amount = 1
+lifetime = 0.7
+speed_scale = 3.0
+gravity = Vector2(45, 45)
+scale_amount_min = 2.5
+scale_amount_max = 2.5
+scale_amount_curve = SubResource("Curve_pbknf")
+color = Color(0.941176, 0.709804, 0.254902, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gsqex")
+animation = &"shoot"
+autoplay = "shoot"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

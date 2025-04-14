@@ -12,7 +12,7 @@ func _ready() -> void:
 	shoot()
 	start_timer()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 
 	if can_shoot:
 		shoot()
@@ -37,3 +37,6 @@ func start_timer() -> void:
 func reset_shoot_state() -> void:
 	can_shoot = true
 	
+func _on_animated_sprite_2d_animation_finished():
+	if $AnimatedSprite2D.animation == "shoot":
+		$AnimatedSprite2D.play("idle")

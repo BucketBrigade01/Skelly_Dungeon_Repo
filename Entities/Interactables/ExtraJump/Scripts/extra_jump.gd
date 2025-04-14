@@ -9,7 +9,7 @@ func get_regrow_timer() -> void:
 	$AnimatedSprite2D/AnimationPlayer.play("regrow")
 	
 
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	$AnimatedSprite2D.play("idle")
 
 

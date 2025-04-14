@@ -21,13 +21,14 @@ var room_manager_complete : bool
 func _ready() -> void:
 	change_state(CameraStates.SNAP)
 	set_snap_screen_position()
-	await get_tree().process_frame
+	await get_tree().physics_frame
 	get_smoothing_timer()
 	var switch_node := get_tree().get_nodes_in_group("SwitchCamera")
-	for node in switch_node:
-		node.room_count.connect(set_rooms)
+	if switch_node != null:
+		for node in switch_node:
+			node.room_count.connect(set_rooms)
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	
 	match current_state:
 		CameraStates.SNAP:
@@ -64,12 +65,17 @@ func set_rooms(right, left, up, down, is_h) -> void:
 	SCREEN_MAX_X_UP = up
 	SCREEN_MAX_X_LEFT = left - 1
 	SCREEN_MAX_X_RIGHT = right
+	SCREEN_MAX_X_DOWN = down 
 	player_room = (player.global_position / SCREEN_SIZE).floor()
 	if current_state == CameraStates.FOLLOW:
 		
+		@warning_ignore("narrowing_conversion")
 		limit_top = (player_room.y * SCREEN_SIZE.y - (SCREEN_SIZE.y * SCREEN_MAX_X_UP)) 
-		limit_bottom = player_room.y * SCREEN_SIZE.y + SCREEN_SIZE.y 
+		@warning_ignore("narrowing_conversion")
+		limit_bottom = player_room.y * SCREEN_SIZE.y + (SCREEN_SIZE.y * SCREEN_MAX_X_DOWN)
+		@warning_ignore("narrowing_conversion")
 		limit_left = player_room.x * SCREEN_SIZE.x - (SCREEN_SIZE.x * SCREEN_MAX_X_LEFT)
+		@warning_ignore("narrowing_conversion")
 		limit_right = (player_room.x * SCREEN_SIZE.x) + (SCREEN_SIZE.x * SCREEN_MAX_X_RIGHT)
 		if is_h:
 			current_room_state = RoomState.HORIZONTAL
@@ -87,8 +93,10 @@ func change_state(new_state : CameraStates) -> void:
 	match current_state:
 		CameraStates.SNAP:
 			get_smoothing_timer()
-			position_smoothing_enabled = false
+			position_smoothing_enabled = true
+			limit_smoothed = true
 			drag_horizontal_enabled = false
+			drag_vertical_enabled = false
 			if current_state == CameraStates.SNAP:
 				limit_top = -1000000
 				limit_bottom = 1000000
@@ -97,6 +105,7 @@ func change_state(new_state : CameraStates) -> void:
 		CameraStates.FOLLOW:
 			room_manager_complete = false
 			drag_horizontal_enabled = true
+			drag_vertical_enabled = true
 			
 func get_smoothing_timer() -> void:
 	smoothing_timer = get_tree().create_timer(0.1)

@@ -53,7 +53,7 @@ glow_blend_mode = 0
 glow_hdr_threshold = 0.32
 glow_hdr_scale = 1.68
 
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_2apq0"]
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_lyjec"]
 resource_name = "Spikes"
 scenes/1/scene = ExtResource("1_bbvc6")
 scenes/2/scene = ExtResource("2_0r4h5")
@@ -68,7 +68,7 @@ scenes/10/scene = ExtResource("17_wkppl")
 scenes/11/scene = ExtResource("3_xl342")
 scenes/12/scene = ExtResource("7_2ppx6")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dtin7"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kxxfo"]
 texture = ExtResource("1_1325b")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -299,8 +299,8 @@ custom_data_layer_6/name = "brk_btm_lft"
 custom_data_layer_6/type = 2
 custom_data_layer_7/name = ""
 custom_data_layer_7/type = 0
-sources/1 = SubResource("TileSetAtlasSource_dtin7")
-sources/0 = SubResource("TileSetScenesCollectionSource_2apq0")
+sources/1 = SubResource("TileSetAtlasSource_kxxfo")
+sources/0 = SubResource("TileSetScenesCollectionSource_lyjec")
 
 [sub_resource type="Resource" id="Resource_7ymxm"]
 resource_local_to_scene = true
@@ -348,16 +348,16 @@ size = Vector2(7, 65)
 size = Vector2(4.5, 70)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qaxo0"]
-size = Vector2(49, 36)
+size = Vector2(18.5, 113)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7ymxm"]
 size = Vector2(10, 43)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lffpg"]
-size = Vector2(11, 30)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lyjec"]
 size = Vector2(10, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nooih"]
+size = Vector2(20, 117)
 
 [sub_resource type="Curve2D" id="Curve2D_fek72"]
 _data = {
@@ -418,7 +418,7 @@ layer_3/tile_data = PackedInt32Array(589835, 983041, 3, 589838, 917505, 3, 58982
 [node name="Player" parent="." node_paths=PackedStringArray("tile_map", "spawn_start", "spawn_mid", "spawn_final") instance=ExtResource("2_mtww0")]
 position = Vector2(417, 309)
 tile_map = NodePath("../TileMapLevel1")
-spawn_start = NodePath("../SpawnPoints/Mid")
+spawn_start = NodePath("../SpawnPoints/Start")
 spawn_mid = NodePath("../SpawnPoints/Mid")
 spawn_final = NodePath("../SpawnPoints/Final")
 
@@ -564,18 +564,18 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_xl342")
 
 [node name="SwitchSnapCamera3" parent="SwitchFollowCamera2" instance=ExtResource("21_44xum")]
-position = Vector2(482, 318)
+position = Vector2(484, 318)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchFollowCamera2/SwitchSnapCamera3"]
 shape = SubResource("RectangleShape2D_mkmx8")
 
 [node name="SwitchSnapCamera2" parent="SwitchFollowCamera2" instance=ExtResource("21_44xum")]
-position = Vector2(-215, -24)
+position = Vector2(-173, -77)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchFollowCamera2/SwitchSnapCamera2"]
-position = Vector2(14, -32)
+position = Vector2(-1.25, -12.5)
 shape = SubResource("RectangleShape2D_qaxo0")
 
 [node name="SwitchSnapCamera4" parent="SwitchFollowCamera2" instance=ExtResource("21_44xum")]
@@ -586,20 +586,21 @@ metadata/_edit_group_ = true
 position = Vector2(-1, -1)
 shape = SubResource("RectangleShape2D_7ymxm")
 
-[node name="SwitchSnapCamera5" parent="SwitchFollowCamera2" instance=ExtResource("21_44xum")]
-position = Vector2(-234, -96)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchFollowCamera2/SwitchSnapCamera5"]
-position = Vector2(16, 0)
-shape = SubResource("RectangleShape2D_lffpg")
-
 [node name="SwitchSnapCamera6" parent="SwitchFollowCamera2" instance=ExtResource("21_44xum")]
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchFollowCamera2/SwitchSnapCamera6"]
 position = Vector2(531, 312)
 shape = SubResource("RectangleShape2D_lyjec")
+
+[node name="SwitchCamera" parent="SwitchFollowCamera2" instance=ExtResource("21_2onm2")]
+position = Vector2(-117, -138)
+num_rooms_right = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchFollowCamera2/SwitchCamera"]
+position = Vector2(0, 48.5)
+shape = SubResource("RectangleShape2D_nooih")
 
 [node name="MovingPlatforms" type="Node" parent="."]
 
@@ -616,7 +617,7 @@ speed_scale = 0.75
 [node name="SpawnPoints" type="Node" parent="."]
 
 [node name="Start" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(67, 176)
+position = Vector2(52, 169)
 
 [node name="Mid" type="Marker2D" parent="SpawnPoints"]
 position = Vector2(-192, 352)
@@ -697,20 +698,20 @@ shape = SubResource("RectangleShape2D_2ppx6")
 position = Vector2(656, -288)
 
 [connection signal="area_entered" from="TileMapLevel1/ExtraJump" to="TileMapLevel1/ExtraJump" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@42518" to="TileMapLevel1/@Area2D@42518" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@42519" to="TileMapLevel1/@Area2D@42519" method="_on_area_entered"]
+[connection signal="area_entered" from="TileMapLevel1/@Area2D@174143" to="TileMapLevel1/@Area2D@174143" method="_on_area_entered"]
+[connection signal="area_entered" from="TileMapLevel1/@Area2D@174144" to="TileMapLevel1/@Area2D@174144" method="_on_area_entered"]
 [connection signal="area_entered" from="TileMapLevel1/Coin" to="TileMapLevel1/Coin" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@42520" to="TileMapLevel1/@Area2D@42520" method="_on_area_entered"]
+[connection signal="area_entered" from="TileMapLevel1/@Area2D@174145" to="TileMapLevel1/@Area2D@174145" method="_on_area_entered"]
 [connection signal="body_entered" from="TileMapLevel1/BulletUpgradeBreakable" to="TileMapLevel1/BulletUpgradeBreakable" method="_on_body_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@42534" to="TileMapLevel1/@Area2D@42534" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@42537" to="TileMapLevel1/@Area2D@42537" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@42540" to="TileMapLevel1/@Area2D@42540" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@42541" to="TileMapLevel1/@Area2D@42541" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@42542" to="TileMapLevel1/@Area2D@42542" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@42543" to="TileMapLevel1/@Area2D@42543" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@42545" to="TileMapLevel1/@Area2D@42545" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@42548" to="TileMapLevel1/@Area2D@42548" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@42554" to="TileMapLevel1/@Area2D@42554" method="_on_area_entered"]
+[connection signal="area_entered" from="TileMapLevel1/@Area2D@174159" to="TileMapLevel1/@Area2D@174159" method="_on_area_entered"]
+[connection signal="area_entered" from="TileMapLevel1/@Area2D@174162" to="TileMapLevel1/@Area2D@174162" method="_on_area_entered"]
+[connection signal="area_entered" from="TileMapLevel1/@Area2D@174165" to="TileMapLevel1/@Area2D@174165" method="_on_area_entered"]
+[connection signal="area_entered" from="TileMapLevel1/@Area2D@174166" to="TileMapLevel1/@Area2D@174166" method="_on_area_entered"]
+[connection signal="area_entered" from="TileMapLevel1/@Area2D@174167" to="TileMapLevel1/@Area2D@174167" method="_on_area_entered"]
+[connection signal="area_entered" from="TileMapLevel1/@Area2D@174168" to="TileMapLevel1/@Area2D@174168" method="_on_area_entered"]
+[connection signal="area_entered" from="TileMapLevel1/@Area2D@174170" to="TileMapLevel1/@Area2D@174170" method="_on_area_entered"]
+[connection signal="area_entered" from="TileMapLevel1/@Area2D@174173" to="TileMapLevel1/@Area2D@174173" method="_on_area_entered"]
+[connection signal="area_entered" from="TileMapLevel1/@Area2D@174179" to="TileMapLevel1/@Area2D@174179" method="_on_area_entered"]
 [connection signal="player_status" from="Player" to="UI/ChargeBar" method="_on_player_player_status"]
 [connection signal="energy_animation" from="UI/ChargeBar" to="Player" method="_on_charge_bar_energy_animation"]
 [connection signal="body_entered" from="Path2D/BirdActive" to="Path2D" method="_on_bird_active_body_entered"]

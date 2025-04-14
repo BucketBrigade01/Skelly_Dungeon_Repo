@@ -14,6 +14,6 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("debug") and visible:
 		visible = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	current_state.text = "CURRENT STATE: " + player.current_state
 	previous_state.text = "PREVIOUS STATE: " + player.previous_state
