@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://ccrql6m8p4s8j"]
+
+[ext_resource type="Texture2D" uid="uid://bslrfw2fkblnj" path="res://Stages/Assets/overworld_sheet.aseprite" id="1_iy82f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5j6a0"]
+atlas = ExtResource("1_iy82f")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ye2tx"]
+atlas = ExtResource("1_iy82f")
+region = Rect2(64, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wtkgs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5j6a0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ye2tx")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqpg4"]
+size = Vector2(8, 8)
+
+[node name="SmallPlayer" type="Area2D" groups=["SmallPlayer"]]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_wtkgs")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.208025
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 4)
+shape = SubResource("RectangleShape2D_tqpg4")

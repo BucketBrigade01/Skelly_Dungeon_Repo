@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://bmfac5pprwem0"]
+[gd_scene load_steps=75 format=3 uid="uid://bmfac5pprwem0"]
 
 [ext_resource type="Texture2D" uid="uid://wk4prxlwro5n" path="res://Entities/Tile_Map/sprite_sheet_redesign.aseprite" id="1_1325b"]
 [ext_resource type="PackedScene" uid="uid://dtg27d7bi1ehf" path="res://Entities/Damagables/Spikes/spikes_cieling_double.tscn" id="1_bbvc6"]
@@ -35,12 +35,14 @@
 [ext_resource type="PackedScene" uid="uid://dixck6qjscf0v" path="res://Entities/Upgradables/Healables/Small_Health/health_small.tscn" id="24_pomaw"]
 [ext_resource type="Script" uid="uid://b7hkrc1clfqfv" path="res://Stages/Scripts/Path.gd" id="25_q2oo0"]
 [ext_resource type="PackedScene" uid="uid://jbfw4otx6yl8" path="res://Entities/Birds/WiseBird/WiseBird.tscn" id="26_w2onn"]
+[ext_resource type="PackedScene" uid="uid://cxalxxpkxx0vw" path="res://UI/Menue/menue_interface.tscn" id="27_kxxfo"]
 [ext_resource type="PackedScene" uid="uid://cpg4bwrir8r57" path="res://Entities/Interactables/SpawnBlock/spawn_block.tscn" id="28_7ymxm"]
 [ext_resource type="JSON" path="res://UI/Text_Box/world1_dialogue_wisebird.json" id="31_kuwlw"]
 [ext_resource type="AudioStream" uid="uid://bwx7h4fmek2lj" path="res://Assets/Music/world1_song.mp3" id="31_lffpg"]
 [ext_resource type="Script" uid="uid://crbbfjgwbrwq8" path="res://addons/ez_dialogue/ez_dialogue_node.gd" id="32_4cau4"]
 [ext_resource type="PackedScene" uid="uid://dsn475aa8pex" path="res://Entities/Doors/Lock_Key_Door/door.tscn" id="36_fek72"]
 [ext_resource type="PackedScene" uid="uid://cy1g3x0it3631" path="res://Entities/Collectables/Key/key.tscn" id="37_fek72"]
+[ext_resource type="PackedScene" uid="uid://chsfyswphw5jt" path="res://Entities/Interactables/SpawnFountain/spawn_fountain.tscn" id="37_nooih"]
 
 [sub_resource type="Environment" id="Environment_opvl4"]
 background_mode = 3
@@ -326,6 +328,48 @@ script = ExtResource("10_wxexe")
 attack = 1
 health = 3
 
+[sub_resource type="Resource" id="Resource_kxxfo"]
+resource_local_to_scene = true
+script = ExtResource("10_wxexe")
+attack = 0
+health = 3
+metadata/_custom_type_script = "uid://cpqm4ukg4u3gt"
+
+[sub_resource type="Resource" id="Resource_nooih"]
+resource_local_to_scene = true
+script = ExtResource("10_wxexe")
+attack = 0
+health = 3
+metadata/_custom_type_script = "uid://cpqm4ukg4u3gt"
+
+[sub_resource type="Resource" id="Resource_4h4h4"]
+resource_local_to_scene = true
+script = ExtResource("10_wxexe")
+attack = 0
+health = 3
+metadata/_custom_type_script = "uid://cpqm4ukg4u3gt"
+
+[sub_resource type="Resource" id="Resource_ps51y"]
+resource_local_to_scene = true
+script = ExtResource("10_wxexe")
+attack = 0
+health = 3
+metadata/_custom_type_script = "uid://cpqm4ukg4u3gt"
+
+[sub_resource type="Resource" id="Resource_a0bw4"]
+resource_local_to_scene = true
+script = ExtResource("10_wxexe")
+attack = 0
+health = 3
+metadata/_custom_type_script = "uid://cpqm4ukg4u3gt"
+
+[sub_resource type="Resource" id="Resource_k84at"]
+resource_local_to_scene = true
+script = ExtResource("10_wxexe")
+attack = 0
+health = 3
+metadata/_custom_type_script = "uid://cpqm4ukg4u3gt"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d11yu"]
 size = Vector2(51, 20)
 
@@ -442,6 +486,7 @@ ez_dialogue = NodePath("../../EzDialogue")
 [node name="CRTShader" parent="UI" instance=ExtResource("18_opvl4")]
 
 [node name="button" parent="UI" node_paths=PackedStringArray("world") instance=ExtResource("20_gwvxs")]
+visible = false
 offset_left = 376.0
 offset_top = -331.0
 offset_right = 416.0
@@ -449,48 +494,54 @@ offset_bottom = -308.0
 world = NodePath("../..")
 metadata/_edit_use_anchors_ = true
 
+[node name="MenueInterface" parent="UI" instance=ExtResource("27_kxxfo")]
+
+[node name="MenueInterface2" parent="UI" instance=ExtResource("27_kxxfo")]
+
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="LazerBird4" parent="Enemies" node_paths=PackedStringArray("target") instance=ExtResource("8_cqgif")]
+[node name="LazerBird4" parent="Enemies" instance=ExtResource("8_cqgif")]
 position = Vector2(-101, -413)
-target = NodePath("../../Player")
 stats = SubResource("Resource_7ymxm")
 
-[node name="LazerBird2" parent="Enemies" node_paths=PackedStringArray("target") instance=ExtResource("8_cqgif")]
+[node name="LazerBird2" parent="Enemies" instance=ExtResource("8_cqgif")]
 position = Vector2(395, 35)
-target = NodePath("../../Player")
 stats = SubResource("Resource_gb8jh")
 
-[node name="LazerBird" parent="Enemies" node_paths=PackedStringArray("target") instance=ExtResource("8_cqgif")]
+[node name="LazerBird" parent="Enemies" instance=ExtResource("8_cqgif")]
 position = Vector2(330, 115)
-target = NodePath("../../Player")
 stats = SubResource("Resource_3s60s")
 
 [node name="SquishBird" parent="Enemies" instance=ExtResource("14_s323a")]
 position = Vector2(396, -188)
 
-[node name="LazerBird3" parent="Enemies" node_paths=PackedStringArray("target") instance=ExtResource("8_cqgif")]
+[node name="LazerBird3" parent="Enemies" instance=ExtResource("8_cqgif")]
 position = Vector2(159, -205)
-target = NodePath("../../Player")
 stats = SubResource("Resource_pwiyo")
 
 [node name="DodgeBird" parent="Enemies" instance=ExtResource("18_f6bri")]
 position = Vector2(-41, -200)
+stats = SubResource("Resource_kxxfo")
 
 [node name="DodgeBird2" parent="Enemies" instance=ExtResource("18_f6bri")]
 position = Vector2(41, -200)
+stats = SubResource("Resource_nooih")
 
 [node name="DodgeBird3" parent="Enemies" instance=ExtResource("18_f6bri")]
 position = Vector2(654, -167)
+stats = SubResource("Resource_4h4h4")
 
 [node name="DodgeBird4" parent="Enemies" instance=ExtResource("18_f6bri")]
 position = Vector2(623, -167)
+stats = SubResource("Resource_ps51y")
 
 [node name="DodgeBird5" parent="Enemies" instance=ExtResource("18_f6bri")]
 position = Vector2(232, 265)
+stats = SubResource("Resource_a0bw4")
 
 [node name="DodgeBird6" parent="Enemies" instance=ExtResource("18_f6bri")]
 position = Vector2(88, 266)
+stats = SubResource("Resource_k84at")
 
 [node name="DetectionZone" type="StaticBody2D" parent="."]
 position = Vector2(392, -218)
@@ -516,8 +567,9 @@ position = Vector2(-208, -368)
 
 [node name="SwitchFollowCamera" type="Node" parent="."]
 
-[node name="SwitchCamera2" parent="SwitchFollowCamera" instance=ExtResource("21_2onm2")]
+[node name="SwitchCamera2" parent="SwitchFollowCamera" node_paths=PackedStringArray("camera") instance=ExtResource("21_2onm2")]
 position = Vector2(-141, 313)
+camera = NodePath("../../Camera")
 num_rooms_right = 3
 num_rooms_up = 0
 metadata/_edit_group_ = true
@@ -525,8 +577,9 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchFollowCamera/SwitchCamera2"]
 shape = SubResource("RectangleShape2D_ervx3")
 
-[node name="SwitchCamera3" parent="SwitchFollowCamera" instance=ExtResource("21_2onm2")]
+[node name="SwitchCamera3" parent="SwitchFollowCamera" node_paths=PackedStringArray("camera") instance=ExtResource("21_2onm2")]
 position = Vector2(417, 343)
+camera = NodePath("../../Camera")
 num_rooms_left = 3
 num_rooms_up = 0
 metadata/_edit_group_ = true
@@ -534,8 +587,9 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchFollowCamera/SwitchCamera3"]
 shape = SubResource("RectangleShape2D_q2oo0")
 
-[node name="SwitchCamera4" parent="SwitchFollowCamera" instance=ExtResource("21_2onm2")]
+[node name="SwitchCamera4" parent="SwitchFollowCamera" node_paths=PackedStringArray("camera") instance=ExtResource("21_2onm2")]
 position = Vector2(541, 318)
+camera = NodePath("../../Camera")
 num_rooms_up = 3
 is_horizontal = false
 metadata/_edit_group_ = true
@@ -544,8 +598,9 @@ metadata/_edit_group_ = true
 position = Vector2(98, -25.25)
 shape = SubResource("RectangleShape2D_pomaw")
 
-[node name="SwitchCamera" parent="SwitchFollowCamera" instance=ExtResource("21_2onm2")]
+[node name="SwitchCamera" parent="SwitchFollowCamera" node_paths=PackedStringArray("camera") instance=ExtResource("21_2onm2")]
 position = Vector2(126, -199)
+camera = NodePath("../../Camera")
 num_rooms_left = 2
 num_rooms_up = 0
 metadata/_edit_group_ = true
@@ -556,45 +611,51 @@ shape = SubResource("RectangleShape2D_kxxfo")
 
 [node name="SwitchFollowCamera2" type="Node" parent="."]
 
-[node name="SwitchSnapCamera" parent="SwitchFollowCamera2" instance=ExtResource("21_44xum")]
+[node name="SwitchSnapCamera" parent="SwitchFollowCamera2" node_paths=PackedStringArray("camera") instance=ExtResource("21_44xum")]
 position = Vector2(244, -192)
+camera = NodePath("../../Camera")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchFollowCamera2/SwitchSnapCamera"]
 shape = SubResource("RectangleShape2D_xl342")
 
-[node name="SwitchSnapCamera3" parent="SwitchFollowCamera2" instance=ExtResource("21_44xum")]
+[node name="SwitchSnapCamera3" parent="SwitchFollowCamera2" node_paths=PackedStringArray("camera") instance=ExtResource("21_44xum")]
 position = Vector2(484, 318)
+camera = NodePath("../../Camera")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchFollowCamera2/SwitchSnapCamera3"]
 shape = SubResource("RectangleShape2D_mkmx8")
 
-[node name="SwitchSnapCamera2" parent="SwitchFollowCamera2" instance=ExtResource("21_44xum")]
+[node name="SwitchSnapCamera2" parent="SwitchFollowCamera2" node_paths=PackedStringArray("camera") instance=ExtResource("21_44xum")]
 position = Vector2(-173, -77)
+camera = NodePath("../../Camera")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchFollowCamera2/SwitchSnapCamera2"]
 position = Vector2(-1.25, -12.5)
 shape = SubResource("RectangleShape2D_qaxo0")
 
-[node name="SwitchSnapCamera4" parent="SwitchFollowCamera2" instance=ExtResource("21_44xum")]
+[node name="SwitchSnapCamera4" parent="SwitchFollowCamera2" node_paths=PackedStringArray("camera") instance=ExtResource("21_44xum")]
 position = Vector2(534, -307)
+camera = NodePath("../../Camera")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchFollowCamera2/SwitchSnapCamera4"]
 position = Vector2(-1, -1)
 shape = SubResource("RectangleShape2D_7ymxm")
 
-[node name="SwitchSnapCamera6" parent="SwitchFollowCamera2" instance=ExtResource("21_44xum")]
+[node name="SwitchSnapCamera6" parent="SwitchFollowCamera2" node_paths=PackedStringArray("camera") instance=ExtResource("21_44xum")]
+camera = NodePath("../../Camera")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchFollowCamera2/SwitchSnapCamera6"]
 position = Vector2(531, 312)
 shape = SubResource("RectangleShape2D_lyjec")
 
-[node name="SwitchCamera" parent="SwitchFollowCamera2" instance=ExtResource("21_2onm2")]
+[node name="SwitchCamera" parent="SwitchFollowCamera2" node_paths=PackedStringArray("camera") instance=ExtResource("21_2onm2")]
 position = Vector2(-117, -138)
+camera = NodePath("../../Camera")
 num_rooms_right = 2
 metadata/_edit_group_ = true
 
@@ -632,6 +693,9 @@ spawn_point = 2
 [node name="SpawnBlock2" parent="SpawnPoints" instance=ExtResource("28_7ymxm")]
 position = Vector2(-7, -360)
 spawn_point = 4
+
+[node name="SpawnFountain" parent="SpawnPoints" instance=ExtResource("37_nooih")]
+position = Vector2(-193, 344)
 
 [node name="Path2D" type="Path2D" parent="." node_paths=PackedStringArray("world")]
 position = Vector2(-1, -499)
@@ -697,21 +761,6 @@ shape = SubResource("RectangleShape2D_2ppx6")
 [node name="HealthSmall" parent="." instance=ExtResource("24_pomaw")]
 position = Vector2(656, -288)
 
-[connection signal="area_entered" from="TileMapLevel1/ExtraJump" to="TileMapLevel1/ExtraJump" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@174143" to="TileMapLevel1/@Area2D@174143" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@174144" to="TileMapLevel1/@Area2D@174144" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/Coin" to="TileMapLevel1/Coin" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@174145" to="TileMapLevel1/@Area2D@174145" method="_on_area_entered"]
-[connection signal="body_entered" from="TileMapLevel1/BulletUpgradeBreakable" to="TileMapLevel1/BulletUpgradeBreakable" method="_on_body_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@174159" to="TileMapLevel1/@Area2D@174159" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@174162" to="TileMapLevel1/@Area2D@174162" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@174165" to="TileMapLevel1/@Area2D@174165" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@174166" to="TileMapLevel1/@Area2D@174166" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@174167" to="TileMapLevel1/@Area2D@174167" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@174168" to="TileMapLevel1/@Area2D@174168" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@174170" to="TileMapLevel1/@Area2D@174170" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@174173" to="TileMapLevel1/@Area2D@174173" method="_on_area_entered"]
-[connection signal="area_entered" from="TileMapLevel1/@Area2D@174179" to="TileMapLevel1/@Area2D@174179" method="_on_area_entered"]
 [connection signal="player_status" from="Player" to="UI/ChargeBar" method="_on_player_player_status"]
 [connection signal="energy_animation" from="UI/ChargeBar" to="Player" method="_on_charge_bar_energy_animation"]
 [connection signal="body_entered" from="Path2D/BirdActive" to="Path2D" method="_on_bird_active_body_entered"]

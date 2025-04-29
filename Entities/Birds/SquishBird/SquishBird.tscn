@@ -1,7 +1,8 @@
-[gd_scene load_steps=37 format=3 uid="uid://cr2ymwlpu00dh"]
+[gd_scene load_steps=39 format=3 uid="uid://cr2ymwlpu00dh"]
 
 [ext_resource type="Script" uid="uid://dexpo2gpehg7k" path="res://Entities/Birds/SquishBird/Scripst/squish_bird.gd" id="1_8233s"]
 [ext_resource type="Texture2D" uid="uid://gggln8bxls8t" path="res://Entities/Birds/SquishBird/Assets/squishbird_spritesheet.aseprite" id="2_kydso"]
+[ext_resource type="Script" uid="uid://cpqm4ukg4u3gt" path="res://Common/Resources/Enemy_Stats.gd" id="2_w3jrn"]
 [ext_resource type="Script" uid="uid://b304ko867e0n" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="3_d4nf6"]
 [ext_resource type="Script" uid="uid://bgo427bayf4l" path="res://Entities/Birds/SquishBird/Scripst/idle.gd" id="4_mu4hj"]
 [ext_resource type="Script" uid="uid://b38wlwd5n24m" path="res://Entities/Birds/SquishBird/Scripst/charge.gd" id="5_dlwp8"]
@@ -11,6 +12,12 @@
 [ext_resource type="Script" uid="uid://cps2534h8trhd" path="res://Entities/Birds/SquishBird/Scripst/tilt.gd" id="9_jyh37"]
 [ext_resource type="AudioStream" uid="uid://dpkgt5t6dhkct" path="res://Assets/Sound_FX/squish.wav" id="10_axyyg"]
 [ext_resource type="AudioStream" uid="uid://ckv0v1p72q53g" path="res://Assets/Sound_FX/flapping.wav" id="11_w3jrn"]
+
+[sub_resource type="Resource" id="Resource_rauib"]
+script = ExtResource("2_w3jrn")
+attack = 0
+health = 1000
+metadata/_custom_type_script = "uid://cpqm4ukg4u3gt"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uloy0"]
 atlas = ExtResource("2_kydso")
@@ -201,10 +208,14 @@ size = Vector2(33, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_byva3"]
 size = Vector2(28, 7)
 
-[node name="SquishBird" type="CharacterBody2D" groups=["SquishBird"]]
+[node name="SquishBird" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite", "body_collider", "state_machine") groups=["Enemy", "SquishBird"]]
 collision_layer = 128
 collision_mask = 49
 script = ExtResource("1_8233s")
+stats = SubResource("Resource_rauib")
+animated_sprite = NodePath("AnimatedSprite2D")
+body_collider = NodePath("CollisionShape2D")
+state_machine = NodePath("StateMachine")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tmsub")

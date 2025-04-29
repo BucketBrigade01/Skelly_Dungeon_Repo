@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://dci0t6k8mxkjm"]
+[gd_scene load_steps=69 format=3 uid="uid://dci0t6k8mxkjm"]
 
 [ext_resource type="Script" uid="uid://cjxojvhbegf3p" path="res://Entities/Birds/LazerBird/Scripts/lazer_bird.gd" id="1_u0e1u"]
 [ext_resource type="Texture2D" uid="uid://c4gs5j2jmgn8o" path="res://Entities/Birds/LazerBird/Assets/laserbird-Sheet.png" id="1_xoqgb"]
@@ -13,9 +13,8 @@
 [ext_resource type="Script" uid="uid://duupmls71glr4" path="res://Entities/Birds/LazerBird/Scripts/IdleHatched.gd" id="8_7lkxc"]
 [ext_resource type="Script" uid="uid://b68xvix3qps3" path="res://Entities/Birds/LazerBird/Scripts/Flying.gd" id="8_pvc8w"]
 [ext_resource type="PackedScene" uid="uid://dcqfsr421wedc" path="res://Entities/Damagables/Projectiles/lazer.tscn" id="8_xng0p"]
+[ext_resource type="PackedScene" uid="uid://b21yboeyp6gc4" path="res://Common/Components/Hurt_Box/hurt_box.tscn" id="9_wvenn"]
 [ext_resource type="Script" uid="uid://c6ml0cbv7bs1r" path="res://Entities/Birds/LazerBird/Scripts/Dead.gd" id="10_lbiv8"]
-[ext_resource type="AudioStream" uid="uid://bdxaiblyv56y" path="res://Assets/Sound_FX/bird_hurt.wav" id="15_5pjww"]
-[ext_resource type="AudioStream" uid="uid://bir6ytm1yp7wt" path="res://Assets/Sound_FX/bird_dead.wav" id="16_yw3vf"]
 
 [sub_resource type="Resource" id="Resource_0f1in"]
 resource_local_to_scene = true
@@ -225,7 +224,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_4at7s")
 }],
 "loop": false,
-"name": &"death",
+"name": &"dead",
 "speed": 5.0
 }, {
 "frames": [{
@@ -415,12 +414,16 @@ _data = {
 &"hit": SubResource("Animation_1xm43")
 }
 
-[node name="LazerBird" type="CharacterBody2D" node_paths=PackedStringArray("animation_player") groups=["LazerBird"]]
+[node name="LazerBird" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "animated_sprite", "body_collider", "hurt_box_collider", "state_machine") groups=["Enemy", "LazerBird"]]
 collision_layer = 4
 collision_mask = 33
 script = ExtResource("1_u0e1u")
 stats = SubResource("Resource_0f1in")
 animation_player = NodePath("AnimationPlayer")
+animated_sprite = NodePath("AnimatedSprite2D")
+body_collider = NodePath("CollisionShape2D")
+hurt_box_collider = NodePath("HurtBox")
+state_machine = NodePath("StateMachine")
 
 [node name="Lazer" parent="." node_paths=PackedStringArray("bird") instance=ExtResource("8_xng0p")]
 bird = NodePath("..")
@@ -431,16 +434,16 @@ texture = ExtResource("3_6halc")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_1wlu8")
 sprite_frames = SubResource("SpriteFrames_srbww")
-animation = &"idle"
+animation = &"dead"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_eibqy")
 
-[node name="HurtBox" type="Area2D" parent="." groups=["LazerBird"]]
+[node name="HurtBox" parent="." instance=ExtResource("9_wvenn")]
 collision_layer = 4
-collision_mask = 34
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(0, 1)
@@ -489,17 +492,9 @@ upward_speed = 20
 [node name="Dead" type="Node" parent="StateMachine"]
 script = ExtResource("10_lbiv8")
 
-[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("15_5pjww")
-volume_db = -12.912
-
-[node name="DeadSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("16_yw3vf")
-
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Hatch" method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

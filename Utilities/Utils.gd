@@ -15,7 +15,7 @@ var coin_count : int = 0:
 var player_spawnpoint : int = 0
 var player_power_ups : Dictionary = {
 	"boost" : true,
-	"default_shoot" : true,
+	"basic_shoot" : true,
 	"hover" : true,
 	"wall_jump" : true
 }

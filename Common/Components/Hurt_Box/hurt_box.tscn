@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b21yboeyp6gc4"]
+
+[ext_resource type="Script" uid="uid://c3fntlakcd64a" path="res://Common/Components/Hurt_Box/Scripts/hurt_box.gd" id="1_fw3l5"]
+[ext_resource type="AudioStream" uid="uid://bdxaiblyv56y" path="res://Assets/Sound_FX/bird_hurt.wav" id="2_6vdib"]
+
+[node name="HurtBox" type="Area2D" groups=["HurtBox"]]
+script = ExtResource("1_fw3l5")
+
+[node name="BirdHurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_6vdib")
+volume_db = -13.594
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

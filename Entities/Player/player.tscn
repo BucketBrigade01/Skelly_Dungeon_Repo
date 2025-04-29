@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://bgjok2jf65yne"]
+[gd_scene load_steps=83 format=3 uid="uid://bgjok2jf65yne"]
 
 [ext_resource type="Script" uid="uid://j20hdkl2nb8u" path="res://Entities/Player/Scripts/player.gd" id="1_rqppq"]
 [ext_resource type="Script" uid="uid://nhr35hmba3ur" path="res://Common/Resources/Player_Stats.gd" id="2_mcb0g"]
@@ -8,8 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://blkdkmlroi1sd" path="res://Entities/Player/Assets/skelly_hover_sheet.aseprite" id="4_01ng6"]
 [ext_resource type="Shader" uid="uid://saae3voudxib" path="res://Entities/Player/Shaders/Hit_Animation.tres" id="4_1tgkf"]
 [ext_resource type="Script" uid="uid://dik0r3uoeqnh5" path="res://Common/Components/Cameras/TransitionCamera.gd" id="4_rgvow"]
+[ext_resource type="PackedScene" uid="uid://dnhuikoyvitl" path="res://Entities/Particles/Small_Hover_Particles/small_hover_particle.tscn" id="4_u86q5"]
 [ext_resource type="Script" uid="uid://b304ko867e0n" path="res://Common/FiniteStateMachine/Finite_State_machine.gd" id="5_pq454"]
 [ext_resource type="Script" uid="uid://clq1wxwsr6uam" path="res://Entities/Player/States/Idle.gd" id="6_5rrt8"]
+[ext_resource type="Texture2D" uid="uid://dg1nqcu5xdvlj" path="res://Entities/Particles/Small_boost_particles/small_boost_particle_sheet.aseprite" id="6_80ryp"]
 [ext_resource type="Script" uid="uid://gfsqqcikv636" path="res://Entities/Player/States/Fall.gd" id="7_etom1"]
 [ext_resource type="Script" uid="uid://b1baxqakbgbiy" path="res://Entities/Player/States/Jump.gd" id="8_ssifo"]
 [ext_resource type="Script" uid="uid://bb2k37fb4tdyh" path="res://Entities/Player/States/Walk.gd" id="9_yn2dp"]
@@ -21,6 +23,8 @@
 [ext_resource type="Script" uid="uid://cwroiv5gbhq8g" path="res://Entities/Player/States/textbox.gd" id="16_0wwxk"]
 [ext_resource type="AudioStream" uid="uid://hm0rqxct6l4s" path="res://Assets/Sound_FX/player_shoot.wav" id="19_0poeq"]
 [ext_resource type="AudioStream" uid="uid://c0geosoy1cpr6" path="res://Assets/Sound_FX/hitHurt.wav" id="20_ppdlg"]
+[ext_resource type="Script" uid="uid://bio0dtv1va32j" path="res://Entities/Player/States/hit.gd" id="20_ui1ln"]
+[ext_resource type="Script" uid="uid://coekn8petvhq1" path="res://Entities/Player/States/climb.gd" id="21_og23y"]
 [ext_resource type="AudioStream" uid="uid://28igsi1wcmms" path="res://Assets/Sound_FX/jump.wav" id="21_v7p16"]
 [ext_resource type="AudioStream" uid="uid://dplqwag3q23jn" path="res://Assets/Sound_FX/land.wav" id="22_a8wow"]
 [ext_resource type="AudioStream" uid="uid://c4qgb02ruemj1" path="res://Assets/Sound_FX/boost.wav" id="22_dv6dp"]
@@ -36,7 +40,7 @@ coins = 0
 size = Vector2(8, 19)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nwly3"]
-size = Vector2(7, 21)
+size = Vector2(8, 21)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ui1ln"]
 particles_animation = true
@@ -45,14 +49,15 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="Curve" id="Curve_og23y"]
-_data = [Vector2(0, 0.516854), 0.0, 0.0, 0, 0, Vector2(0.894118, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.550562), 0.0, 0.0, 0, 0, Vector2(0.752941, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_u86q5"]
 curve = SubResource("Curve_og23y")
 
 [sub_resource type="Gradient" id="Gradient_01ng6"]
-colors = PackedColorArray(0.348639, 0.439717, 0.63549, 1, 0.402131, 0.113557, 0.239209, 1)
+offsets = PackedFloat32Array(0, 0.590278)
+colors = PackedColorArray(0.470588, 0.392157, 0.776471, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_ui1ln"]
 gradient = SubResource("Gradient_01ng6")
@@ -64,24 +69,71 @@ alpha_curve = SubResource("CurveTexture_u86q5")
 anim_speed_min = 1.0
 anim_speed_max = 1.0
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v27kq"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_kx1i7"]
+_data = [Vector2(0.482353, 0.977528), 0.0, 0.0, 0, 0, Vector2(0.870588, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_w51ui"]
+curve = SubResource("Curve_kx1i7")
+
+[sub_resource type="Curve" id="Curve_slvv8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.629214), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_l3oqu"]
+curve = SubResource("Curve_slvv8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_53w1c"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, 40, 0)
+scale_curve = SubResource("CurveTexture_l3oqu")
+alpha_curve = SubResource("CurveTexture_w51ui")
+anim_offset_min = 1.0
+anim_offset_max = 1.0
+
+[sub_resource type="Animation" id="Animation_og23y"]
+resource_name = "Alpha"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [true, false, true]
+}
+
 [sub_resource type="Animation" id="Animation_rdbgx"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
+tracks/0/path = NodePath("AnimatedSprite2D:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_1xm43"]
 resource_name = "hit"
-length = 0.4
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -89,14 +141,15 @@ tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [false, true, false, true, false]
+"values": [false, true, false, true, false, true, false, true, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wgedu"]
 _data = {
+&"Alpha": SubResource("Animation_og23y"),
 &"RESET": SubResource("Animation_rdbgx"),
 &"hit": SubResource("Animation_1xm43")
 }
@@ -104,7 +157,7 @@ _data = {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gdrw3"]
 shader = ExtResource("4_1tgkf")
 shader_parameter/enable = false
-shader_parameter/tint = Color(0.766505, 0.14522, 0.241071, 1)
+shader_parameter/tint = Color(1, 1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p2awl"]
 atlas = ExtResource("2_pmmbf")
@@ -117,6 +170,14 @@ region = Rect2(48, 0, 16, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_nehyo"]
 atlas = ExtResource("2_pmmbf")
 region = Rect2(64, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u86q5"]
+atlas = ExtResource("2_pmmbf")
+region = Rect2(224, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80ryp"]
+atlas = ExtResource("2_pmmbf")
+region = Rect2(240, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8m448"]
 atlas = ExtResource("2_pmmbf")
@@ -241,6 +302,17 @@ animations = [{
 "loop": true,
 "name": &"charge",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u86q5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_80ryp")
+}],
+"loop": true,
+"name": &"climb",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -400,19 +472,32 @@ target_position = Vector2(11, 0)
 
 [node name="HitBox" type="Area2D" parent="." groups=["Player"]]
 collision_layer = 2
-collision_mask = 109
+collision_mask = 365
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(-1.5, 6.5)
+position = Vector2(-1, 6.5)
 shape = SubResource("RectangleShape2D_nwly3")
 debug_color = Color(0.886789, 0.266542, 0.502231, 0.42)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="SmallHoverParticle" parent="." instance=ExtResource("4_u86q5")]
+
+[node name="HoverParitcle" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_ui1ln")
 emitting = false
+amount = 18
 texture = ExtResource("4_01ng6")
 lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_80ryp")
+
+[node name="SmallBoostParticle" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_v27kq")
+position = Vector2(-1, 15)
+emitting = false
+amount = 7
+texture = ExtResource("6_80ryp")
+lifetime = 1.2
+explosiveness = 0.29
+process_material = SubResource("ParticleProcessMaterial_53w1c")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -423,7 +508,7 @@ autoplay = "RESET"
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_gdrw3")
 sprite_frames = SubResource("SpriteFrames_wfwjy")
-animation = &"jump"
+animation = &"fall"
 autoplay = "idle"
 
 [node name="FollowCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
@@ -451,18 +536,21 @@ script = ExtResource("6_5rrt8")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Fall" type="Node" parent="StateMachine" node_paths=PackedStringArray("tile_data", "character_body", "animated_sprite")]
+[node name="Fall" type="Node" parent="StateMachine" node_paths=PackedStringArray("tile_data", "character_body", "animated_sprite", "land_target", "boost_particle")]
 script = ExtResource("7_etom1")
 tile_data = NodePath("../../TileDataDetection")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
+land_target = NodePath("../../LandTarget")
+boost_particle = NodePath("../../SmallBoostParticle")
 
-[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "tile_data", "jump_sound")]
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "tile_data", "jump_sound", "land_target")]
 script = ExtResource("8_ssifo")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 tile_data = NodePath("../../TileDataDetection")
 jump_sound = NodePath("../../JumpSound")
+land_target = NodePath("../../LandTarget")
 JUMP_HORIZONTAL_SPEED = 20.0
 MAX_HORIZONTAL_JUMP_SPEED = 80.0
 
@@ -471,18 +559,21 @@ script = ExtResource("9_yn2dp")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Boost" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "boost_sound")]
+[node name="Boost" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "boost_sound", "boost_target")]
 script = ExtResource("10_k0tat")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 boost_sound = NodePath("../../BoostSound")
+boost_target = NodePath("../../LandTarget")
 
-[node name="Hover" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "tile_data", "particle")]
+[node name="Hover" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "tile_data", "particle", "hover_target", "small_hover_particle")]
 script = ExtResource("11_rj1gi")
 character_body = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 tile_data = NodePath("../../TileDataDetection")
-particle = NodePath("../../GPUParticles2D")
+particle = NodePath("../../HoverParitcle")
+hover_target = NodePath("../../HoverTarget")
+small_hover_particle = NodePath("../../SmallHoverParticle")
 
 [node name="WallJump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body", "animated_sprite", "tile_data")]
 script = ExtResource("12_iguxa")
@@ -508,6 +599,17 @@ script = ExtResource("16_0wwxk")
 player = NodePath("../..")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 
+[node name="Hit" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animated_sprite", "hit_box")]
+script = ExtResource("20_ui1ln")
+player = NodePath("../..")
+animated_sprite = NodePath("../../AnimatedSprite2D")
+hit_box = NodePath("../../HitBox/CollisionShape2D")
+
+[node name="climb" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animated_sprite")]
+script = ExtResource("21_og23y")
+player = NodePath("../..")
+animated_sprite = NodePath("../../AnimatedSprite2D")
+
 [node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("19_0poeq")
 
@@ -530,6 +632,24 @@ pitch_scale = 1.05
 [node name="WallSlideSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("23_avsg8")
 volume_db = -0.512
+
+[node name="LadderDetection4" type="RayCast2D" parent="."]
+target_position = Vector2(0, -9)
+collision_mask = 256
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="LadderDetection5" type="RayCast2D" parent="."]
+target_position = Vector2(0, 18)
+collision_mask = 256
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="LandTarget" type="Marker2D" parent="."]
+position = Vector2(0, 16)
+
+[node name="HoverTarget" type="Marker2D" parent="."]
+position = Vector2(0, 7)
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_entered" from="HitBox" to="FollowCamera" method="_on_hit_box_area_entered"]

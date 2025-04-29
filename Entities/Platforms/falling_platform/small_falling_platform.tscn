@@ -1,0 +1,162 @@
+[gd_scene load_steps=17 format=3 uid="uid://k0kr6ttm1fjg"]
+
+[ext_resource type="Script" uid="uid://de4wemwbnttg7" path="res://Entities/Platforms/falling_platform/Scripts/small_falling_platform.gd" id="1_2c7ks"]
+[ext_resource type="Texture2D" uid="uid://wk4prxlwro5n" path="res://Entities/Tile_Map/sprite_sheet_redesign.aseprite" id="1_v17yn"]
+
+[sub_resource type="Curve2D" id="Curve2D_vht6y"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224)
+}
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c446o"]
+size = Vector2(15.5, 9.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k06b6"]
+atlas = ExtResource("1_v17yn")
+region = Rect2(288, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbbrh"]
+atlas = ExtResource("1_v17yn")
+region = Rect2(304, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhqcy"]
+atlas = ExtResource("1_v17yn")
+region = Rect2(320, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6qar"]
+atlas = ExtResource("1_v17yn")
+region = Rect2(336, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onb6x"]
+atlas = ExtResource("1_v17yn")
+region = Rect2(352, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37aqd"]
+atlas = ExtResource("1_v17yn")
+region = Rect2(128, 288, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b3g2y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k06b6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbbrh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dhqcy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6qar")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onb6x")
+}],
+"loop": false,
+"name": &"break",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37aqd")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2c7ks"]
+size = Vector2(16, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vht6y"]
+size = Vector2(16, 22)
+
+[sub_resource type="Animation" id="Animation_fduo8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vht6y"]
+resource_name = "fall"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y0q7s"]
+_data = {
+&"RESET": SubResource("Animation_fduo8"),
+&"fall": SubResource("Animation_vht6y")
+}
+
+[node name="SmallFallingPlatform" type="Path2D"]
+curve = SubResource("Curve2D_vht6y")
+script = ExtResource("1_2c7ks")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+rotation = 1.5708
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]
+remote_path = NodePath("../../AnimatableBody2D")
+update_rotation = false
+update_scale = false
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_c446o")
+one_way_collision = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatableBody2D"]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_b3g2y")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="PlayerDetection" type="Area2D" parent="AnimatableBody2D"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/PlayerDetection"]
+position = Vector2(0, -16.5)
+shape = SubResource("RectangleShape2D_2c7ks")
+
+[node name="JumpDetection" type="Area2D" parent="AnimatableBody2D" groups=["FallingPlatform"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/JumpDetection"]
+position = Vector2(0, -29)
+shape = SubResource("RectangleShape2D_vht6y")
+
+[node name="RayCast2D" type="RayCast2D" parent="AnimatableBody2D"]
+position = Vector2(1.90735e-06, -10)
+target_position = Vector2(0, 13)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_y0q7s")
+}
+speed_scale = 0.75
+
+[connection signal="animation_finished" from="AnimatableBody2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="AnimatableBody2D/PlayerDetection" to="." method="_on_player_detection_area_entered"]

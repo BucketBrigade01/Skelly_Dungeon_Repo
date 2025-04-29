@@ -1,8 +1,45 @@
-[gd_scene load_steps=12 format=3 uid="uid://cx8lgy4lcbt5o"]
+[gd_scene load_steps=28 format=3 uid="uid://cx8lgy4lcbt5o"]
 
 [ext_resource type="Script" uid="uid://blgkgqpcf3syh" path="res://Entities/Birds/DodgeBird/Scripts/dodge_bird.gd" id="1_5qio6"]
+[ext_resource type="Shader" uid="uid://chjc4wcw4160e" path="res://Entities/Birds/LazerBird/Shader/Hit_Animation.tres" id="2_5qsna"]
 [ext_resource type="Texture2D" uid="uid://b2rmy3ux6r4wu" path="res://Entities/Birds/DodgeBird/Assets/dodge_bird_sheet.aseprite" id="2_gf4yy"]
+[ext_resource type="Script" uid="uid://cpqm4ukg4u3gt" path="res://Common/Resources/Enemy_Stats.gd" id="2_sst8b"]
 [ext_resource type="AudioStream" uid="uid://b7kcamyth26f2" path="res://Assets/Sound_FX/doudge_bird_bullet.wav" id="3_gf4yy"]
+[ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="4_8327g"]
+[ext_resource type="PackedScene" uid="uid://b21yboeyp6gc4" path="res://Common/Components/Hurt_Box/hurt_box.tscn" id="5_1gg8x"]
+
+[sub_resource type="Resource" id="Resource_8327g"]
+resource_local_to_scene = true
+script = ExtResource("2_sst8b")
+attack = 0
+health = 3
+metadata/_custom_type_script = "uid://cpqm4ukg4u3gt"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1gg8x"]
+resource_local_to_scene = true
+shader = ExtResource("2_5qsna")
+shader_parameter/enable = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n5lrh"]
+atlas = ExtResource("4_8327g")
+region = Rect2(0, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1c548"]
+atlas = ExtResource("4_8327g")
+region = Rect2(16, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fd0hm"]
+atlas = ExtResource("4_8327g")
+region = Rect2(32, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhmc3"]
+atlas = ExtResource("4_8327g")
+region = Rect2(48, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrsjd"]
+atlas = ExtResource("4_8327g")
+region = Rect2(64, 64, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5qsna"]
 atlas = ExtResource("2_gf4yy")
@@ -30,6 +67,26 @@ region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7gero"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n5lrh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1c548")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fd0hm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dhmc3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wrsjd")
+}],
+"loop": false,
+"name": &"dead",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5qsna")
@@ -62,16 +119,64 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m3hua"]
 size = Vector2(13, 18)
 
-[node name="DodgeBird" type="CharacterBody2D"]
+[sub_resource type="Animation" id="Animation_rdbgx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1xm43"]
+resource_name = "hit"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_7xsaf"]
+resource_name = "hit2"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wgedu"]
+_data = {
+&"RESET": SubResource("Animation_rdbgx"),
+&"hit": SubResource("Animation_1xm43"),
+&"hit2": SubResource("Animation_7xsaf")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sst8b"]
+radius = 7.0
+
+[node name="DodgeBird" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "animated_sprite", "body_collider", "hurt_box_collider") groups=["DodgeBird", "Enemy"]]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_5qio6")
+stats = SubResource("Resource_8327g")
+animation_player = NodePath("AnimationPlayer")
+animated_sprite = NodePath("AnimatedSprite2D")
+body_collider = NodePath("CollisionShape2D")
+hurt_box_collider = NodePath("HurtBox")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_1gg8x")
 sprite_frames = SubResource("SpriteFrames_7gero")
-animation = &"shoot"
-frame = 2
-frame_progress = 1.0
+animation = &"dead"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0)
@@ -84,5 +189,18 @@ position = Vector2(-1, 8)
 stream = ExtResource("3_gf4yy")
 volume_db = -6.82
 max_distance = 150.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wgedu")
+}
+
+[node name="HurtBox" parent="." instance=ExtResource("5_1gg8x")]
+collision_layer = 4
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_sst8b")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

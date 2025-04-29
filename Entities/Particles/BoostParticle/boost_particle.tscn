@@ -1,0 +1,79 @@
+[gd_scene load_steps=14 format=3 uid="uid://bdd1qwh0ol3qt"]
+
+[ext_resource type="Script" uid="uid://2eh3ckyaqeia" path="res://Entities/Particles/BoostParticle/Scripts/boost_particle.gd" id="1_nw7fk"]
+[ext_resource type="Texture2D" uid="uid://cy8mijuc2qfas" path="res://Entities/Particles/BoostParticle/Assets/boost_cloud_sheet.aseprite" id="2_58w87"]
+[ext_resource type="Texture2D" uid="uid://dg1nqcu5xdvlj" path="res://Entities/Particles/Small_boost_particles/small_boost_particle_sheet.aseprite" id="3_58w87"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ox2ia"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_mtwfq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2wqqh"]
+curve = SubResource("Curve_mtwfq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1vjlw"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(16, 2, 1)
+gravity = Vector3(0, -10, 0)
+alpha_curve = SubResource("CurveTexture_2wqqh")
+anim_offset_max = 1.0
+sub_emitter_mode = 4
+sub_emitter_amount_at_start = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mtwfq"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_2wqqh"]
+_data = [Vector2(0.717647, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1vjlw"]
+curve = SubResource("Curve_2wqqh")
+
+[sub_resource type="Curve" id="Curve_58w87"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.337079), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ox2ia"]
+curve = SubResource("Curve_58w87")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wrrbn"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 12.0
+initial_velocity_max = 14.0
+gravity = Vector3(0, -50, 0)
+scale_curve = SubResource("CurveTexture_ox2ia")
+alpha_curve = SubResource("CurveTexture_1vjlw")
+anim_offset_max = 1.0
+
+[node name="BoostParticle" type="Node2D"]
+script = ExtResource("1_nw7fk")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_ox2ia")
+emitting = false
+sub_emitter = NodePath("../CPUParticles2D")
+texture = ExtResource("2_58w87")
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_1vjlw")
+
+[node name="CPUParticles2D" type="GPUParticles2D" parent="."]
+z_index = -1
+material = SubResource("CanvasItemMaterial_mtwfq")
+amount = 13
+texture = ExtResource("3_58w87")
+lifetime = 0.75
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_wrrbn")

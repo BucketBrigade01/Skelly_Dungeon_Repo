@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bawhxt026pdml"]
+
+[ext_resource type="Script" uid="uid://dt5oply7cqb6k" path="res://Entities/Interactables/SpawnFountain/Scripts/detection_box.gd" id="1_omvy0"]
+
+[node name="DetectionBox" type="Area2D"]
+script = ExtResource("1_omvy0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

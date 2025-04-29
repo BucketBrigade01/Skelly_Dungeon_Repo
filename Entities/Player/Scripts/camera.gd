@@ -46,7 +46,7 @@ func set_snap_screen_position() -> void:
 	global_position = Vector2(x,y)
 	
 func set_follow_screen_position() -> void:
-
+	
 	if current_room_state == null or !room_manager_complete:
 		return
 	
@@ -81,7 +81,7 @@ func set_rooms(right, left, up, down, is_h) -> void:
 			current_room_state = RoomState.HORIZONTAL
 		else:
 			current_room_state = RoomState.VERTICAL
-		room_manager_complete = true
+	room_manager_complete = true
 
 func change_state(new_state : CameraStates) -> void:
 	

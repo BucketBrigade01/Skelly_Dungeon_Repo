@@ -1,9 +1,10 @@
-[gd_scene load_steps=27 format=3 uid="uid://dpjfhs44fy7jw"]
+[gd_scene load_steps=29 format=3 uid="uid://dpjfhs44fy7jw"]
 
 [ext_resource type="Script" uid="uid://byhq4xoutn4e5" path="res://Entities/Birds/UpDownBird/Scripts/up_down_bird.gd" id="1_5131k"]
 [ext_resource type="Texture2D" uid="uid://bovmy2p16nqw0" path="res://Entities/Birds/UpDownBird/Assets/updown_bird_sheet.aseprite" id="1_bv2gi"]
 [ext_resource type="Script" uid="uid://cpqm4ukg4u3gt" path="res://Common/Resources/Enemy_Stats.gd" id="2_7xsaf"]
 [ext_resource type="Texture2D" uid="uid://cp6m03hkeksr4" path="res://Entities/Player/Assets/skelly_sprites.aseprite" id="3_ls715"]
+[ext_resource type="PackedScene" uid="uid://b21yboeyp6gc4" path="res://Common/Components/Hurt_Box/hurt_box.tscn" id="5_ls715"]
 
 [sub_resource type="Resource" id="Resource_m78bi"]
 resource_local_to_scene = true
@@ -204,16 +205,24 @@ tracks/0/keys = {
 "values": [false, true, false, true, false]
 }
 
+[sub_resource type="Animation" id="Animation_7xsaf"]
+resource_name = "hit2"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wgedu"]
 _data = {
 &"RESET": SubResource("Animation_rdbgx"),
-&"hit": SubResource("Animation_1xm43")
+&"hit": SubResource("Animation_1xm43"),
+&"hit2": SubResource("Animation_7xsaf")
 }
 
-[node name="UpDownBird" type="CharacterBody2D" groups=["UpDownBird"]]
+[node name="UpDownBird" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "animated_sprite", "body_collider", "hurt_box_collider") groups=["Enemy", "UpDownBird"]]
 collision_layer = 4
 script = ExtResource("1_5131k")
 stats = SubResource("Resource_m78bi")
+animation_player = NodePath("AnimationPlayer")
+animated_sprite = NodePath("AnimatedSprite2D")
+body_collider = NodePath("CollisionShape2D")
+hurt_box_collider = NodePath("HurtBox")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
@@ -231,10 +240,11 @@ target_position = Vector2(0, 6)
 [node name="TopRay" type="RayCast2D" parent="."]
 target_position = Vector2(0, -8)
 
-[node name="HitBOx" type="Area2D" parent="." groups=["UpDownBird"]]
+[node name="HurtBox" parent="." instance=ExtResource("5_ls715")]
+collision_layer = 4
 collision_mask = 33
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBOx"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_ytj0b")
 debug_color = Color(0.694831, 0.462285, 0.486783, 0.42)
@@ -247,6 +257,5 @@ libraries = {
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="area_entered" from="HitBOx" to="." method="_on_hit_b_ox_area_entered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

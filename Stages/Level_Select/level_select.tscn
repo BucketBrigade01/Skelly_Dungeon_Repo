@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cy43c87u0lmfd"]
+
+[ext_resource type="Script" uid="uid://bnfq7ufmturi8" path="res://Stages/Level_Select/Scripts/level_select.gd" id="1_dcub6"]
+[ext_resource type="Texture2D" uid="uid://cqgpf3i2nfgjs" path="res://Entities/Damagables/Projectiles/Assets/skelly_sprites.aseprite" id="2_db7g6"]
+[ext_resource type="FontFile" uid="uid://bb4kub2tkaj1n" path="res://Assets/Fonts/TinyUnicode.ttf" id="3_al7yw"]
+
+[node name="LevelSelect" type="Node2D" groups=["LevelSelect"]]
+script = ExtResource("1_dcub6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+texture = ExtResource("2_db7g6")
+region_enabled = true
+region_rect = Rect2(103, 60, 4, 4)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -19.0
+offset_top = 1.0
+offset_right = 21.0
+offset_bottom = 24.0
+theme_override_fonts/font = ExtResource("3_al7yw")
+horizontal_alignment = 1

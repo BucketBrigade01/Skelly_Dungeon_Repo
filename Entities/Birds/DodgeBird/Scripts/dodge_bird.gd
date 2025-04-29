@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Enemy
 class_name DodgeBird
 
 @onready var projectile = preload("res://Entities/Damagables/Projectiles/small_projectile.tscn")
@@ -8,6 +8,7 @@ var can_shoot : bool = false
 var shoot_timer_node : Timer
 
 func _ready() -> void:
+	_set_target()
 	$AnimatedSprite2D.play("idle")
 	shoot()
 	start_timer()
@@ -35,7 +36,8 @@ func start_timer() -> void:
 	shoot_timer_node.start()
 	
 func reset_shoot_state() -> void:
-	can_shoot = true
+	if !dead:
+		can_shoot = true
 	
 func _on_animated_sprite_2d_animation_finished():
 	if $AnimatedSprite2D.animation == "shoot":

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://xbj8uoae5yq3"]
+[gd_scene load_steps=35 format=4 uid="uid://xbj8uoae5yq3"]
 
 [ext_resource type="Texture2D" uid="uid://bgl64vrl8cve4" path="res://Entities/Parallax_Layers/Sky.aseprite" id="1_23ild"]
 [ext_resource type="Texture2D" uid="uid://wk4prxlwro5n" path="res://Entities/Tile_Map/sprite_sheet_redesign.aseprite" id="1_legvf"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://c3dv0hso1u0wx" path="res://UI/button/button.tscn" id="14_yta85"]
 [ext_resource type="PackedScene" uid="uid://r0t4xu8vcmn1" path="res://Common/Crt_Shader/crt_shader.tscn" id="15_2q34r"]
 [ext_resource type="Texture2D" uid="uid://d1m1ejcbvpxs5" path="res://Stages/Assets/Castles/castles_sprite_background.aseprite" id="15_l3q7m"]
+[ext_resource type="PackedScene" uid="uid://cxalxxpkxx0vw" path="res://UI/Menue/menue_interface.tscn" id="16_axs11"]
 [ext_resource type="Texture2D" uid="uid://w4mmqln4ff7h" path="res://Stages/Assets/Castles/castles_sprite_foreground.aseprite" id="16_r7gwa"]
 [ext_resource type="JSON" path="res://UI/Text_Box/start.json" id="17_2q34r"]
 [ext_resource type="Script" uid="uid://b6k32de778bty" path="res://Stages/Scripts/detection_areas.gd" id="20_28hld"]
@@ -1041,6 +1042,8 @@ world = NodePath("..")
 ez_dialogue = NodePath("../EzDialogue")
 
 [node name="CRTShader" parent="." instance=ExtResource("15_2q34r")]
+
+[node name="MenueInterface" parent="." instance=ExtResource("16_axs11")]
 
 [node name="Label" parent="." instance=ExtResource("14_yta85")]
 

@@ -4,6 +4,7 @@ extends State
 @export var animated_sprite : AnimatedSprite2D
 @export var tile_data : TileDataDetection
 @export var jump_sound : AudioStreamPlayer2D
+@export var land_target : Marker2D
 
 @export_category("Jump Properties")
 @export var JUMP_HEIGHT : float = 32
@@ -18,6 +19,8 @@ extends State
 @export var JUMP_HORIZONTAL_SPEED : float
 @export var MAX_HORIZONTAL_JUMP_SPEED : float
 
+@onready var fall_particle : PackedScene = preload("res://Entities/Particles/Land_Particle/jump_particle.tscn")
+
 var JUMP_VELOCITY : float = ((2.0 * JUMP_HEIGHT) / JUMP_TIME_PEAK) * -1
 var JUMP_GRAVITY : float = ((-2.0 * JUMP_HEIGHT) / (JUMP_TIME_PEAK * JUMP_TIME_PEAK)) * -1
 var FALL_GRAVITY : float = ((-2.0 * JUMP_HEIGHT) / (JUMP_TIME_DESCENT * JUMP_TIME_DESCENT)) * -1
@@ -29,13 +32,15 @@ var walljump_timer : float = 0.5
 var can_grab_again : bool = false
 var coyote_jump : bool
 var buffer_jump : bool 
-	
+
 func on_physics_process(delta : float):
 	# REDULAR JUMP / COYOTE JUMP + GRAVITY
 	character_body.velocity.y += get_gravity() * delta
-	if (character_body.is_on_floor() or coyote_jump) and (!character_body.extra_jump and character_body.previous_state != "hover"):
+	if (character_body.is_on_floor() or coyote_jump or character_body.can_climb) and (!character_body.extra_jump and character_body.previous_state != "hover"):
 		character_body.velocity.y = JUMP_VELOCITY
 		coyote_jump = false
+		if character_body.on_falling_platform:
+			character_body.velocity.y -= 100
 	elif character_body.extra_jump and (character_body.previous_state == "hover" or GameInput.jump_input()):
 		character_body.velocity.y = EXTRA_JUMP_VELOCITY * 1.5
 		character_body.extra_jump = false
@@ -74,6 +79,10 @@ func on_physics_process(delta : float):
 	# TRANSITION TO IDLE STATE
 	if character_body.is_on_floor():
 		$"../../LandSound".play()
+		var fall_particle_inst = fall_particle.instantiate()
+		if fall_particle_inst:
+			fall_particle_inst.global_position = land_target.global_position
+			character_body.get_parent().add_child(fall_particle_inst)
 		transition.emit("idle")
 	
 	# TRANSITION TO WALLJUMP STATE
@@ -83,14 +92,19 @@ func on_physics_process(delta : float):
 	# TRANSITION TO DYING STATE 
 	if character_body.is_dying:
 		transition.emit("dying")
-
+	
+	if character_body.hit:
+		transition.emit("hit")
+	
+	if character_body.can_climb and Input.get_axis("up", "down") != 0:
+		transition.emit("climb")
+	
 func enter():
 	coyote_jump = true
 	buffer_jump = false
 	animated_sprite.play("jump")
 	character_body.current_state = "jump"
 	jump_sound.play()
-	
 	# Conditions when entering from walljump
 	if character_body.previous_state == "walljump" and !character_body.is_on_floor() and Utils.player_power_ups['wall_jump'] == true:
 		can_grab_again = true
@@ -99,6 +113,7 @@ func enter():
 		walljump_timer_node.one_shot = true
 		walljump_timer_node.connect("timeout", get_walljump_buffer)
 		add_child(walljump_timer_node)
+		
 	
 func exit():
 	if character_body.previous_state == "walljump":

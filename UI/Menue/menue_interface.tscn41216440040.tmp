@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxalxxpkxx0vw"]
+
+[ext_resource type="Script" uid="uid://sos0scitm1bv" path="res://UI/Menue/Scripts/menue_interface.gd" id="1_4mpr6"]
+[ext_resource type="PackedScene" uid="uid://c0w342g1qfvo0" path="res://UI/Menue/Menue_Item/menue_item.tscn" id="1_g0c13"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_182rd"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[node name="MenueInterface" type="CanvasLayer"]
+script = ExtResource("1_4mpr6")
+
+[node name="Menue" type="Control" parent="."]
+custom_minimum_size = Vector2(150, 112)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="Panel" type="Panel" parent="Menue"]
+custom_minimum_size = Vector2(150, 112)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -56.0
+offset_right = 64.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_182rd")
+
+[node name="MarginContainer" type="MarginContainer" parent="Menue"]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 74.0
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menue/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = -1
+
+[node name="MenueItem" parent="Menue/MarginContainer/VBoxContainer" instance=ExtResource("1_g0c13")]
+layout_mode = 2
+
+[node name="MenueItem2" parent="Menue/MarginContainer/VBoxContainer" instance=ExtResource("1_g0c13")]
+layout_mode = 2

@@ -35,7 +35,12 @@ func on_physics_process(_delta : float):
 	if character_body.is_dying:
 		transition.emit("dying")
 	
-
+	if character_body.hit:
+		transition.emit("hit")
+	
+	if character_body.can_climb and Input.get_axis("up", "down") != 0:
+		transition.emit("climb")
+	
 func enter():
 	if character_body.previous_state == "fall":
 		$"../../LandSound".play()

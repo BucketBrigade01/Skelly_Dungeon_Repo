@@ -21,6 +21,7 @@ func _physics_process(delta):
 		in_air = false
 		$CPUParticles2D.emitting = false
 		#$WorldEnvironment.environment.glow_enabled = false
+		set_physics_process(false)
 		animated_sprite.play("wall_hit")
 	
 func flip_projectile():
@@ -34,9 +35,7 @@ func _on_body_entered(body):
 		$CPUParticles2D.emitting = false
 		animated_sprite.play("wall_hit")
 		$BreakSound.play()
-		
-func _on_animated_sprite_2d_animation_finished():
-	queue_free()
+		$BreakParticle.emitting = true
 
 
 func _on_area_entered(area):
@@ -45,16 +44,21 @@ func _on_area_entered(area):
 		$CPUParticles2D.emitting = false
 		animated_sprite.play("wall_hit")
 		$BreakSound.play()
+		$BreakParticle.emitting = true
 	if area.is_in_group("Player"):
 		in_air = false
 		$CollisionShape2D.set_deferred("disabled", true)
 		$BreakSound.play()
 		animated_sprite.play("wall_hit")
 		$CPUParticles2D.emitting = false
+		$BreakParticle.emitting = true
 
 func get_despawn_timer() -> void:
 	await get_tree().create_timer(despawn_timer).timeout
 	despawn = true
-
-func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	
+func _on_break_particle_finished():
 	queue_free()
+
+func _on_animated_sprite_2d_animation_finished():
+	animated_sprite.pause()

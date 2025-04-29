@@ -1,0 +1,154 @@
+[gd_scene load_steps=20 format=3 uid="uid://chsfyswphw5jt"]
+
+[ext_resource type="Script" uid="uid://rnvvqem6bka0" path="res://Entities/Interactables/SpawnFountain/Scripts/spawn_fountain.gd" id="1_qoi13"]
+[ext_resource type="Texture2D" uid="uid://7c1ovahks0bs" path="res://Entities/Interactables/SpawnFountain/Assets/enchanted_particles.aseprite" id="1_wjscr"]
+[ext_resource type="Texture2D" uid="uid://b1ioxagelmubk" path="res://Entities/Interactables/SpawnFountain/Assets/fountain_sheet.aseprite" id="2_4u4f3"]
+[ext_resource type="Texture2D" uid="uid://b810hfomag5de" path="res://Entities/Interactables/SpawnFountain/Assets/water_particlea.aseprite" id="3_qoi13"]
+[ext_resource type="PackedScene" uid="uid://bawhxt026pdml" path="res://Common/Components/Detection_Box/detection_box.tscn" id="5_q3eju"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q3eju"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sgq48"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(10, 1, 1)
+gravity = Vector3(0, -5, 0)
+anim_offset_max = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxxhi"]
+atlas = ExtResource("2_4u4f3")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4sy8w"]
+atlas = ExtResource("2_4u4f3")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vrgc"]
+atlas = ExtResource("2_4u4f3")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h13if"]
+atlas = ExtResource("2_4u4f3")
+region = Rect2(128, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6g1pc"]
+atlas = ExtResource("2_4u4f3")
+region = Rect2(192, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4m6q"]
+atlas = ExtResource("2_4u4f3")
+region = Rect2(160, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmnqk"]
+atlas = ExtResource("2_4u4f3")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u5nx4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vxxhi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4sy8w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vrgc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h13if")
+}],
+"loop": false,
+"name": &"activate",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6g1pc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j4m6q")
+}],
+"loop": true,
+"name": &"active",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hmnqk")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_20hmh"]
+size = Vector2(30, 6)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7uqjb"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0kgry"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(8, 1, 1)
+spread = 180.0
+flatness = 1.0
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+anim_offset_max = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sgq48"]
+size = Vector2(29, 27)
+
+[node name="SpawnFountain" type="StaticBody2D" node_paths=PackedStringArray("detection_box", "animated_sprite", "water_particles", "magic_particles")]
+z_index = -1
+script = ExtResource("1_qoi13")
+detection_box = NodePath("DetectionBox")
+animated_sprite = NodePath("AnimatedSprite2D")
+water_particles = NodePath("WaterSpray")
+magic_particles = NodePath("GPUParticles2D")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_q3eju")
+emitting = false
+texture = ExtResource("1_wjscr")
+lifetime = 3.0
+process_material = SubResource("ParticleProcessMaterial_sgq48")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_u5nx4")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 21)
+shape = SubResource("RectangleShape2D_20hmh")
+
+[node name="WaterSpray" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_7uqjb")
+position = Vector2(2, 16)
+emitting = false
+texture = ExtResource("3_qoi13")
+lifetime = 0.3
+process_material = SubResource("ParticleProcessMaterial_0kgry")
+
+[node name="DetectionBox" parent="." instance=ExtResource("5_q3eju")]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionBox"]
+visible = false
+position = Vector2(0.5, 4.5)
+shape = SubResource("RectangleShape2D_sgq48")
+
+[connection signal="animation_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_changed"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

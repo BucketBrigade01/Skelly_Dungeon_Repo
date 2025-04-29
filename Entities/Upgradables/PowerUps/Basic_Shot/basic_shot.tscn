@@ -1,0 +1,80 @@
+[gd_scene load_steps=12 format=3 uid="uid://bblaig8plnpoi"]
+
+[ext_resource type="Script" uid="uid://dsp16cu3ntwkp" path="res://Entities/Upgradables/PowerUps/Basic_Shot/Scripts/basic_shot.gd" id="1_hc07s"]
+[ext_resource type="Texture2D" uid="uid://csowhja3320mi" path="res://Entities/Collectables/Key/Assets/key_sprite-Sheet.aseprite" id="2_fwjh1"]
+[ext_resource type="Texture2D" uid="uid://k10dfd7sfnlo" path="res://Entities/Upgradables/PowerUps/Basic_Shot/Assets/basic_bullet_sheet.aseprite" id="3_g5q4s"]
+[ext_resource type="AudioStream" uid="uid://b6y1l8jb4lh2x" path="res://Assets/New folder/power_up.mp3" id="4_qxugr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2x0yy"]
+radius = 7.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qc7dh"]
+atlas = ExtResource("2_fwjh1")
+region = Rect2(256, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dp14n"]
+atlas = ExtResource("2_fwjh1")
+region = Rect2(272, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ea6gd"]
+atlas = ExtResource("2_fwjh1")
+region = Rect2(288, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edqtw"]
+atlas = ExtResource("2_fwjh1")
+region = Rect2(304, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1p10b"]
+atlas = ExtResource("3_g5q4s")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xlbuw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qc7dh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dp14n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ea6gd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_edqtw")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"collect",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1p10b")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="BasicShot" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_hc07s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2x0yy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xlbuw")
+animation = &"collect"
+autoplay = "idle"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_qxugr")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]

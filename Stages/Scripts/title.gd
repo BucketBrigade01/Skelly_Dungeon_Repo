@@ -30,7 +30,7 @@ func _process(_delta: float) -> void:
 				
 		States.SELECT:
 			if GameInput.jump_input() and start_arrow.visible:
-				get_tree().call_deferred("change_scene_to_file", "res://Stages/world_1_level_0.tscn")
+				get_tree().call_deferred("change_scene_to_file", "res://Stages/overworld.tscn")
 			if GameInput.jump_input() and end_arrow.visible:
 				get_tree().quit()
 			if GameInput.selection_input() == 1:

@@ -1,4 +1,5 @@
-class_name Chicken extends CharacterBody2D
+extends Enemy
+class_name Chicken 
 
 @export var GRAVITY = 10
 @export var HORIZONTAL_SPEED = 50
@@ -9,7 +10,6 @@ class_name Chicken extends CharacterBody2D
 @onready var ray1 : RayCast2D = $RayCast2D2
 @onready var ray2 : RayCast2D = $RayCast2D
 @onready var ray3 : RayCast2D = $RayCast2D3
-@onready var target : Player
 
 var jump : bool = false
 var direction : int = -1
@@ -19,8 +19,8 @@ var explode_timer : float = 0.0
 var exploded : bool = false
 
 func _ready() -> void:
+	_set_target()
 	explode_area_collider.set_deferred("disabled", true)
-	target = get_tree().get_nodes_in_group("Player")[0]
 	get_jump_timer()
 	
 func _physics_process(delta) -> void:
@@ -37,7 +37,7 @@ func _physics_process(delta) -> void:
 	else:
 		velocity.x = HORIZONTAL_SPEED * direction
 	
-	if (!ray1.is_colliding() or !ray2.is_colliding() or !ray3.is_colliding()) and is_on_floor() and !explode_range:
+	if (!ray1.is_colliding() or !ray2.is_colliding() or !ray3.is_colliding()) and is_on_floor():
 		direction *= -1
 		ray1.position.x *= -1
 		ray2.position.x *= -1
@@ -46,9 +46,9 @@ func _physics_process(delta) -> void:
 	
 	if explode_range:
 		direction = sign((position.direction_to(target.position).x))
-		ray1.position.x *= direction
-		ray2.position.x *= direction
-		ray3.position.x *= direction
+		ray1.position.x = -ray1.position.x if animation.flip_h else ray1.position.x
+		ray2.position.x = -ray2.position.x if animation.flip_h else ray2.position.x
+		ray3.position.x = -ray3.position.x if animation.flip_h else ray3.position.x
 		animation.flip_h = direction == 1
 		if is_on_floor():
 			velocity = Vector2.ZERO
@@ -57,7 +57,8 @@ func _physics_process(delta) -> void:
 			if explode_timer > 2.0:
 				explode()
 	else:
-		$AnimationPlayer.play("RESET")
+		if !$AnimationPlayer.current_animation == "hit":
+			$AnimationPlayer.play("RESET")
 		explode_timer = 0.0
 		
 	move_and_slide()
@@ -81,7 +82,8 @@ func get_flip_timer() -> void:
 
 func get_jump_timer() -> void:
 	await get_tree().create_timer(timer).timeout
-	animation.play("charge")
+	if !exploded:
+		animation.play("charge")
 
 func _on_agro_box_area_entered(area):
 	if area.is_in_group("Player"):
@@ -106,3 +108,14 @@ func _on_fuse_box_area_entered(area):
 func _on_fuse_box_area_exited(area):
 	if area.is_in_group("Player"):
 		explode_range = false
+
+
+func _on_hit_box_area_entered(area):
+	if area.is_in_group("Bullet"):
+		stats.take_damage(1)
+		$AnimationPlayer.play("hit")
+		if stats.get_health() == 0:
+			$CollisionShape2D.set_deferred("disabled", true)
+			$HitBox/CollisionShape2D.set_deferred("disabled", true)
+			set_physics_process(false)
+			explode()

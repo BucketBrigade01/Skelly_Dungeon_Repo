@@ -3,12 +3,16 @@ extends State
 @export var tile_data : TileDataDetection
 @export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
+@export var land_target : Marker2D
+@export var boost_particle : GPUParticles2D
 
 @export_category("Fall Properties")
 @export var AIR_SPEED : int = 350
 @export var MAX_HORIZONTAL_AIR_SPEED : int = 80
 @export var coyote_timer : float = 0.1
 @export var jump_buffer_timer : float = 0.2
+
+@onready var fall_particle : PackedScene = preload("res://Entities/Particles/Land_Particle/jump_particle.tscn")
 
 var coyote_jump : bool
 var buffer_jump : bool
@@ -49,6 +53,9 @@ func on_physics_process(delta : float):
 		can_hover = false
 		transition.emit("hover")
 	
+	if character_body.velocity.y > -20 and character_body.previous_state == "boost":
+		boost_particle.emitting = false
+	
 	# TRANSITION STATES
 	
 	# TRANSITION TO JUMP STATE 
@@ -63,8 +70,12 @@ func on_physics_process(delta : float):
 	if character_body.is_on_floor() and !buffer_jump:
 		# Can hover reset when transitioning to idle
 		can_hover = true
+		var fall_particle_inst = fall_particle.instantiate()
+		if fall_particle_inst:
+			fall_particle_inst.global_position = land_target.global_position
+			character_body.get_parent().add_child(fall_particle_inst)
 		transition.emit("idle")
-	
+		
 	# TRANSITION TO DYING STATE 
 	if character_body.is_dying:
 		transition.emit("dying")
@@ -76,6 +87,9 @@ func on_physics_process(delta : float):
 			transition.emit("walljump")
 		elif character_body.previous_state == "hover":
 			transition.emit("walljump")
+	
+	if character_body.can_climb and Input.get_axis("up", "down") != 0:
+		transition.emit("climb")
 	
 func enter():
 	coyote_jump = true
@@ -91,13 +105,14 @@ func enter():
 		coyote_jump = false
 		can_wall_jump = true
 		animated_sprite.play("fall")
+		boost_particle.emitting = true
 	else:
 		animated_sprite.play("fall")
 	
 func exit():
 	character_body.previous_state = "fall"
 	animated_sprite.stop()
-
+	boost_particle.emitting = false
 # Used to get the timer for our coyote time set to 0.1 seconds
 func get_coyote_timer():
 	await get_tree().create_timer(coyote_timer).timeout

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnucefao7krr7"]
+
+[ext_resource type="Texture2D" uid="uid://wk4prxlwro5n" path="res://Entities/Tile_Map/sprite_sheet_redesign.aseprite" id="1_loyt5"]
+[ext_resource type="Script" uid="uid://d0fiipo0be646" path="res://Entities/Interactables/Ladder/Scripts/ladder.gd" id="1_wdeam"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdeam"]
+size = Vector2(14, 18)
+
+[node name="Ladder" type="Area2D" groups=["Ladder"]]
+collision_layer = 256
+collision_mask = 2
+script = ExtResource("1_wdeam")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wdeam")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_loyt5")
+region_enabled = true
+region_rect = Rect2(288, 96, 16, 16)

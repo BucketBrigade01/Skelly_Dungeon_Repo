@@ -1,0 +1,74 @@
+[gd_scene load_steps=12 format=3 uid="uid://b22t0e63otvuj"]
+
+[ext_resource type="Script" uid="uid://b888phk5alyj8" path="res://Entities/Particles/Hover_Particles/Scripts/hover_particle.gd" id="1_5yue5"]
+[ext_resource type="Texture2D" uid="uid://olnkcqm8eyag" path="res://Entities/Particles/Hover_Particles/hover_particle_sprite_sheet.aseprite" id="1_mx702"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u2kr0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5yue5"]
+atlas = ExtResource("1_mx702")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mx702"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5yue5")
+}],
+"loop": true,
+"name": &"dissolve",
+"speed": 5.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_n1rx7"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_66her"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xfs0c"]
+curve = SubResource("Curve_66her")
+
+[sub_resource type="Curve" id="Curve_5yue5"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_n1rx7"]
+curve = SubResource("Curve_5yue5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e6swx"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 15.08
+angle_curve = SubResource("CurveTexture_n1rx7")
+gravity = Vector3(0, 30, 0)
+alpha_curve = SubResource("CurveTexture_xfs0c")
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="HoverParticle" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_5yue5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_u2kr0")
+disabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mx702")
+animation = &"dissolve"
+frame_progress = 0.781742
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_n1rx7")
+emitting = false
+texture = ExtResource("1_mx702")
+one_shot = true
+explosiveness = 0.69
+process_material = SubResource("ParticleProcessMaterial_e6swx")

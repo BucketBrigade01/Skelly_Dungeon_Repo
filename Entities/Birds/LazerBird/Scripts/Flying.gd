@@ -76,6 +76,7 @@ func on_physics_process(delta : float):
 		#bird.velocity = Vector2.ZERO
 		#transition.emit("idlehatched")
 
+	
 	bird.move_and_slide()
 	
 func enter():

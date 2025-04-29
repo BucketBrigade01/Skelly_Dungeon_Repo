@@ -6,6 +6,8 @@ var can_hover : bool
 @export var animated_sprite : AnimatedSprite2D
 @export var tile_data : TileDataDetection
 @export var particle : GPUParticles2D
+@export var hover_target : Marker2D
+@export var small_hover_particle : Node2D
 
 @export_category("Hover Properties")
 @export var HOVER_SPEED : int = 20
@@ -13,6 +15,8 @@ var can_hover : bool
 @export var HOVER_GRAVITY : int = 1000
 @export var FRICTION : int = 5
 @export var hover_timer : float = 0.5
+
+@onready var hover_particle : PackedScene = preload("res://Entities/Particles/Hover_Particles/hover_particle.tscn")
 
 var timer : SceneTreeTimer
 	
@@ -58,17 +62,26 @@ func on_physics_process(delta : float):
 	
 	if character_body.is_on_floor():
 		transition.emit("idle")
-		
+	
+	if character_body.can_climb and Input.get_axis("up", "down") != 0:
+		transition.emit("climb")
+	
 func enter():
 	particle.emitting = true
 	can_hover = true
 	animated_sprite.play("hover")
 	get_hover_timer()
 	character_body.current_state = "hover"
+	var hover_particle_inst = hover_particle.instantiate()
+	if hover_particle_inst:
+		hover_particle_inst.global_position = hover_target.global_position
+		character_body.get_parent().add_child(hover_particle_inst)
+	small_hover_particle.emmit(true)
 	
 func exit():
 	particle.emitting = false
 	character_body.previous_state = "hover"
+	small_hover_particle.emmit(false)
 	animated_sprite.stop()
 	timer.set_time_left(0.0)
 # Sets hover to false after 0.5 second timer

@@ -1,0 +1,77 @@
+[gd_scene load_steps=13 format=3 uid="uid://qiltnygjn8nh"]
+
+[ext_resource type="Script" uid="uid://c04ag6e0r757u" path="res://Entities/Particles/Death_Particle/Scripts/death_particle.gd" id="1_0j73k"]
+[ext_resource type="Texture2D" uid="uid://qwyaatd5wpq5" path="res://Entities/Particles/Death_Particle/Assets/death_particle_sheet.aseprite" id="1_dk8s1"]
+[ext_resource type="Texture2D" uid="uid://dg1nqcu5xdvlj" path="res://Entities/Particles/Small_boost_particles/small_boost_particle_sheet.aseprite" id="2_e5k7d"]
+[ext_resource type="AudioStream" uid="uid://bir6ytm1yp7wt" path="res://Assets/Sound_FX/bird_dead.wav" id="4_6y7xi"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6y7xi"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_88bqk"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.976471, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ebvtf"]
+curve = SubResource("Curve_88bqk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_80ao4"]
+particle_flag_disable_z = true
+spread = 30.0
+initial_velocity_min = -30.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_ebvtf")
+anim_offset_min = 1.0
+anim_offset_max = 1.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0j73k"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_e5k7d"]
+_data = [Vector2(0.382353, 0.988764), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6y7xi"]
+curve = SubResource("Curve_e5k7d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_88bqk"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 9.0
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_6y7xi")
+anim_offset_max = 1.0
+sub_emitter_mode = 4
+sub_emitter_amount_at_start = 1
+
+[node name="DeathParticle" type="Node2D"]
+script = ExtResource("1_0j73k")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_6y7xi")
+emitting = false
+texture = ExtResource("2_e5k7d")
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_80ao4")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_0j73k")
+emitting = false
+texture = ExtResource("1_dk8s1")
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_88bqk")
+
+[node name="BirdDead" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_6y7xi")
+volume_db = -12.787
+pitch_scale = 0.8

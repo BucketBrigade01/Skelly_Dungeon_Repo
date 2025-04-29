@@ -1,0 +1,99 @@
+[gd_scene load_steps=14 format=3 uid="uid://demf6f3x3t1g2"]
+
+[ext_resource type="Script" uid="uid://bo4jwe75ur88q" path="res://Entities/Interactables/BreakableRock/Scripts/breakable_rock.gd" id="1_4r8cw"]
+[ext_resource type="AudioStream" uid="uid://bqq6odraj3jaj" path="res://Assets/Sound_FX/wall_break.wav" id="1_h2f2o"]
+[ext_resource type="Texture2D" uid="uid://wk4prxlwro5n" path="res://Entities/Tile_Map/sprite_sheet_redesign.aseprite" id="2_4r8cw"]
+[ext_resource type="PackedScene" uid="uid://b21yboeyp6gc4" path="res://Common/Components/Hurt_Box/hurt_box.tscn" id="2_tfdjn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2f2o"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4r8cw"]
+size = Vector2(36, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfdjn"]
+atlas = ExtResource("2_4r8cw")
+region = Rect2(304, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xcae"]
+atlas = ExtResource("2_4r8cw")
+region = Rect2(336, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5x6yf"]
+atlas = ExtResource("2_4r8cw")
+region = Rect2(368, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rc1y"]
+atlas = ExtResource("2_4r8cw")
+region = Rect2(400, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3onh"]
+atlas = ExtResource("2_4r8cw")
+region = Rect2(432, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_541tw"]
+atlas = ExtResource("2_4r8cw")
+region = Rect2(272, 160, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ksra1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfdjn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4xcae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5x6yf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rc1y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3onh")
+}],
+"loop": false,
+"name": &"break",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_541tw")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="LargeBreakableRock" type="StaticBody2D" node_paths=PackedStringArray("body_collider", "hurt_box", "animated_sprite", "break_sound") groups=["BreakableRock"]]
+script = ExtResource("1_4r8cw")
+body_collider = NodePath("CollisionShape2D")
+hurt_box = NodePath("HurtBox")
+animated_sprite = NodePath("AnimatedSprite2D")
+break_sound = NodePath("AudioStreamPlayer2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-8, -8)
+shape = SubResource("RectangleShape2D_h2f2o")
+
+[node name="HurtBox" parent="." instance=ExtResource("2_tfdjn")]
+collision_layer = 128
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-8, -8)
+shape = SubResource("RectangleShape2D_4r8cw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-8, -8)
+sprite_frames = SubResource("SpriteFrames_ksra1")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_h2f2o")
+volume_db = -15.344
+pitch_scale = 0.74
+
+[connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_audio_stream_player_2d_finished"]

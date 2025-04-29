@@ -24,6 +24,7 @@ func _on_body_entered(body: Node2D) -> void:
 		Utils.player_power_ups['boost'] = true
 		$BreakSound.play()
 		$UpgradeSound.play()
-		
-func _on_animated_sprite_2d_animation_finished() -> void:
+
+
+func _on_audio_stream_player_finished():
 	queue_free()

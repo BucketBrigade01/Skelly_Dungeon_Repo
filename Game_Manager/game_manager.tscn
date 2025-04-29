@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bc8ew4p20tewc"]
+
+[ext_resource type="Script" uid="uid://dgtrkurwwhchb" path="res://Game_Manager/Scripts/game_manager.gd" id="1_flcv0"]
+
+[node name="GameManager" type="Node" node_paths=PackedStringArray("world_2d", "world_gui")]
+script = ExtResource("1_flcv0")
+world_2d = NodePath("World2D")
+world_gui = NodePath("WorldGUI")
+
+[node name="World2D" type="Node2D" parent="."]
+
+[node name="WorldGUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

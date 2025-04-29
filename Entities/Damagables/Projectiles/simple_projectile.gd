@@ -123,22 +123,11 @@ func _on_animated_sprite_2d_animation_finished():
 
 
 func _on_area_entered(area):
-	if area.is_in_group("LazerBird"):
+	if area.is_in_group("HurtBox"):
 		in_air = false
 		$CPUParticles2D.emitting = false
 		animated_sprite.play(curremt_animation_wall)
 		$CollisionShape2D.set_deferred("disabled", true)
-	if area.is_in_group("Penguin"):
-		in_air = false
-		$CPUParticles2D.emitting = false
-		animated_sprite.play(curremt_animation_wall)
-		$CollisionShape2D.set_deferred("disabled", true)
-	if area.is_in_group("UpDownBird"):
-		in_air = false
-		$CPUParticles2D.emitting = false
-		animated_sprite.play(curremt_animation_wall)
-		$CollisionShape2D.set_deferred("disabled", true)
-
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()

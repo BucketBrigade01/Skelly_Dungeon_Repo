@@ -1,0 +1,87 @@
+[gd_scene load_steps=13 format=3 uid="uid://cwvtj47j31u6e"]
+
+[ext_resource type="Script" uid="uid://dgnquoch8bm1i" path="res://Entities/Particles/Land_Particle/Scripts/jump_particle.gd" id="1_a6s8c"]
+[ext_resource type="Texture2D" uid="uid://diwrhkrjprcyj" path="res://Entities/Player/Assets/particle.aseprite" id="1_ws73t"]
+[ext_resource type="Texture2D" uid="uid://dp0mmv4ft108s" path="res://Entities/Particles/Land_Particle/Asset/land_animation-Sheet.aseprite" id="2_7eicd"]
+
+[sub_resource type="Curve" id="Curve_a6s8c"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_a6s8c"]
+curve = SubResource("Curve_a6s8c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7eicd"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(4, 1, 1)
+gravity = Vector3(0, -50, 0)
+alpha_curve = SubResource("CurveTexture_a6s8c")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kagys"]
+atlas = ExtResource("2_7eicd")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqdfu"]
+atlas = ExtResource("2_7eicd")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xoorb"]
+atlas = ExtResource("2_7eicd")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vd5hc"]
+atlas = ExtResource("2_7eicd")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t3myx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kagys")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqdfu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xoorb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vd5hc")
+}],
+"loop": false,
+"name": &"fall",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r0g11"]
+radius = 6.0
+
+[node name="LandingAnimation" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_a6s8c")
+
+[node name="JumpParticle" type="GPUParticles2D" parent="."]
+position = Vector2(0, -1)
+emitting = false
+texture = ExtResource("1_ws73t")
+lifetime = 0.2
+one_shot = true
+speed_scale = 0.2
+explosiveness = 0.73
+randomness = 0.22
+process_material = SubResource("ParticleProcessMaterial_7eicd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_t3myx")
+animation = &"fall"
+autoplay = "fall"
+frame = 3
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_r0g11")

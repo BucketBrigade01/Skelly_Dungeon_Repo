@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://peme37i71xjx" path="res://Entities/Birds/BlueAutoBird/Assets/blue_bird_auto_sheet.aseprite" id="2_2q5aa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ilxce"]
-radius = 4.0
+radius = 2.0
 
 [sub_resource type="Curve" id="Curve_pbknf"]
 _data = [Vector2(0.0280899, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]

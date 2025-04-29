@@ -15,6 +15,9 @@ extends State
 @export var character_body : Player
 @export var animated_sprite : AnimatedSprite2D
 @export var boost_sound : AudioStreamPlayer2D
+@export var boost_target : Marker2D
+
+@onready var boost_particle : PackedScene = preload("res://Entities/Particles/BoostParticle/boost_particle.tscn")
 
 var JUMP_VELOCITY : float = ((2.0 * JUMP_HEIGHT) / JUMP_TIME_PEAK) * -1
 var WEAK_JUMP_VELOCITY : float = ((2.0 * WEAK_JUMP_HEIGHT) / JUMP_TIME_PEAK) * -1
@@ -35,22 +38,16 @@ func on_physics_process(delta : float):
 
 	# This is the max jump
 	if Utils.player_crouch_val >= 20 and character_body.is_on_floor() and GameInput.jump_input():
-		character_body.velocity.y = JUMP_VELOCITY
-		boost_sound.play()
-		transition.emit("fall")
+		jump(JUMP_VELOCITY)
 	
 	# This is the weak jump
 	if Utils.player_crouch_val >= 10 and Utils.player_crouch_val < 20 and character_body.is_on_floor() and GameInput.jump_input():
-		character_body.velocity.y = WEAK_JUMP_VELOCITY
-		boost_sound.play()
-		transition.emit("fall")
+		jump(WEAK_JUMP_VELOCITY)
 	
 	# This is the weakest jump
 	if Utils.player_crouch_val < 10 and character_body.is_on_floor() and GameInput.jump_input():
-		character_body.velocity.y = SUPER_WEAK_JUMP_VELOCITY
-		boost_sound.play()
-		transition.emit("fall")
-		
+		jump(SUPER_WEAK_JUMP_VELOCITY)
+			
 	character_body.move_and_slide()
 	
 	# TRANSITION STATES 
@@ -62,7 +59,22 @@ func on_physics_process(delta : float):
 	# TRANSITION TO DYING STATE 
 	if character_body.is_dying:
 		transition.emit("dying")
-		
+	
+	if character_body.hit:
+		transition.emit("hit")
+	
+	if character_body.can_climb and Input.get_axis("up", "down") != 0:
+		transition.emit("climb")
+
+func jump(jump_val : float) -> void:
+	character_body.velocity.y = jump_val
+	boost_sound.play()
+	transition.emit("fall")
+	var boost_particle_inst = boost_particle.instantiate()
+	if boost_particle_inst:
+		boost_particle_inst.global_position = boost_target.global_position
+		character_body.get_parent().add_child(boost_particle_inst)
+
 func enter():
 	# Emited so Player knows crouch state
 	timer = get_tree().create_timer(0.2)
@@ -75,6 +87,7 @@ func exit():
 	character_body.previous_state = "boost"
 	Utils.player_crouched = false
 	animated_sprite.stop()
+	
 
 func get_gravity() -> float:
 	if character_body.velocity.y > 0.0:

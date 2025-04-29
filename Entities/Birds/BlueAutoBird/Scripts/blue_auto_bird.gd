@@ -1,21 +1,22 @@
-class_name BlueAutoBird extends Area2D
+extends Enemy
+class_name BlueAutoBird 
 
 @onready var animation := $AnimatedSprite2D
 @onready var original_position := position.y
 
 var bullet : PackedScene = preload("res://Entities/Damagables/Projectiles/folllow_bullet/follow_bullet.tscn")
 
-var target : Player
 var time : float = 0.0
 var freq : float = 1
 var amp : float = 3
 var distance : Vector2
 var can_shoot : bool = false
 var timer : SceneTreeTimer
+var off_screen : bool = false
 
 func _ready() -> void:
+	_set_target()
 	animation.play("idle")
-	target = get_tree().get_nodes_in_group("Player")[0]
 	
 func _process(delta: float) -> void:
 	time += delta
@@ -23,12 +24,14 @@ func _process(delta: float) -> void:
 	position.y = original_position + sin(time * freq) * amp
 	
 	distance = (position.direction_to(target.position)).normalized()
+	var target_distance = position.distance_to(target.position)
+	var target_direction = (position.direction_to(target.position)).normalized()
 	if sign(distance.x) == -1:
 		animation.flip_h = false
 	elif sign(distance.x) == 1:
 		animation.flip_h = true
 		
-	if can_shoot:
+	if can_shoot and target_distance < 120 and sign(target_direction.y) > 0.0:
 		shoot()
 	
 func shoot() -> void:
@@ -59,10 +62,10 @@ func shoot() -> void:
 		get_shoot_timer()
 
 func get_shoot_timer() -> void:
-	print_debug("shoot")
-	timer = get_tree().create_timer(randf_range(1.0, 2.0))
+	timer = get_tree().create_timer(randf_range(2.0, 3.0))
 	await timer.timeout
-	can_shoot = true
+	if !off_screen and !dead:
+		can_shoot = true
 
 func get_animation_timer() -> void:
 	await get_tree().create_timer(1).timeout
@@ -70,6 +73,8 @@ func get_animation_timer() -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_entered():
 	get_shoot_timer()
+	off_screen = false
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	can_shoot = false
+	off_screen = true

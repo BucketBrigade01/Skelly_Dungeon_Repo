@@ -40,6 +40,12 @@ func on_physics_process(_delta : float):
 	if character_body.is_dying:
 		transition.emit("dying")
 	
+	if character_body.can_climb and Input.get_axis("up", "down") != 0:
+		transition.emit("climb")
+	
+	if character_body.hit:
+		transition.emit("hit")
+	
 func enter():
 	animated_sprite.play("walk")
 	character_body.current_state = "walk"

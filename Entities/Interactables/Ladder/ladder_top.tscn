@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcwv8q76wd0xn"]
+
+[ext_resource type="Texture2D" uid="uid://wk4prxlwro5n" path="res://Entities/Tile_Map/sprite_sheet_redesign.aseprite" id="1_6vk4c"]
+[ext_resource type="Script" uid="uid://cpusef4ryy1we" path="res://Entities/Interactables/Ladder/Scripts/ladder_top.gd" id="1_r7h50"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r7h50"]
+size = Vector2(18, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6306t"]
+size = Vector2(14, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jrai4"]
+size = Vector2(22, 12.5)
+
+[node name="LadderTop" type="StaticBody2D"]
+script = ExtResource("1_r7h50")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_r7h50")
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_6vk4c")
+region_enabled = true
+region_rect = Rect2(288, 96, 16, 16)
+
+[node name="LadderArea" type="Area2D" parent="." groups=["Ladder"]]
+collision_layer = 256
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderArea"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_6306t")
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+position = Vector2(0, -30)
+shape = SubResource("RectangleShape2D_jrai4")
+
+[connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
+[connection signal="body_exited" from="PlayerDetection" to="." method="_on_player_detection_body_exited"]

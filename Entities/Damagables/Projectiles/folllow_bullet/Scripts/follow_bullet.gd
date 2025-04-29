@@ -1,6 +1,6 @@
 class_name AutoBullet extends Area2D
 
-@export var SPEED : float = 100
+@export var SPEED : float = 75
 @export var particle : CPUParticles2D
 
 @onready var animation : AnimatedSprite2D = $AnimatedSprite2D

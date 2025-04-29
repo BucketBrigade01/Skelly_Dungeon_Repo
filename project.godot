@@ -22,11 +22,13 @@ aseprite_executable_path="C:/Program Files/Aseprite/Aseprite.exe"
 [autoload]
 
 Utils="*res://Utilities/Utils.gd"
+GlobalManager="*res://Game_Manager/Scripts/global_manager.gd"
 
 [display]
 
 window/size/viewport_width=256
 window/size/viewport_height=224
+window/size/borderless=true
 window/size/window_width_override=1024
 window/size/window_height_override=896
 window/stretch/mode="canvas_items"
@@ -97,6 +99,11 @@ debug={
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":4,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
+start={
+"deadzone": 0.2,
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":6,"pressure":0.0,"pressed":true,"script":null)
+]
+}
 
 [layer_names]
 
@@ -107,6 +114,8 @@ debug={
 2d_physics/layer_5="interactable"
 2d_physics/layer_6="projectile"
 2d_physics/layer_7="damagable"
+2d_physics/layer_8="breakable"
+2d_physics/layer_9="ladder"
 
 [rendering]
 
